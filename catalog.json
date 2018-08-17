@@ -1,0 +1,14 @@
+{
+  "ACPIBatteryManager": {
+    "kext": "ACPIBatteryManager.kext",
+  },
+  "AirportBrcmFixup": {
+    "kext": "AirportBrcmFixup.kext",
+  },
+  "AppleALC": {
+    "kext": "AppleALC.kext",
+  },
+  "ATH9KFixup": {
+    "kext": "ATH9KFixup.kext",
+  }
+}

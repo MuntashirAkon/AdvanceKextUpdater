@@ -1,0 +1,48 @@
+{
+  "name": "ACPIBatteryManager",
+  "kext": "ACPIBatteryManager.kext",
+  "description": "Implements an Advanced Configuration and Power Interface (ACPI) based battery manager kernel extension (kext/driver) for non-Apple laptops running OS X.",
+  "homepage": "https://github.com/RehabMan/OS-X-ACPI-Battery-Driver",
+  "version": "1.81.4",
+  "versions": null,
+  "target": "LE",
+  "since": "10.9",
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://bitbucket.org/RehabMan/os-x-acpi-battery-driver/downloads/RehabMan-Battery-2017-1001.zip",
+      "script": null,
+      "loc": "Debug/ACPIBatteryManager.kext"
+    },
+    "rel": {
+      "url": "https://bitbucket.org/RehabMan/os-x-acpi-battery-driver/downloads/RehabMan-Battery-2017-1001.zip",
+      "script": null,
+      "loc": "Release/ACPIBatteryManager.kext"
+    }
+  },
+  "changes": "add kernel flag abm_firstpolldelay to override FirstPollDelay; bump version 1.81.4",
+  "guide": "",
+  "time": "2017-10-01 15:07:18",
+  "license": "APSL",
+  "authors": [
+    {
+      "name": "Rehabman",
+      "email": "racerrehabman@gmail.com",
+      "homepage": null
+    },
+    {
+      "name": "gsly",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "jafd",
+      "email": null,
+      "homepage": null
+    }
+  ],
+  "require": null,
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}
