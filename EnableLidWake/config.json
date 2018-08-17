@@ -1,0 +1,41 @@
+{
+  "name": "EnableLidWake",
+  "kext": "EnableLidWake.kext",
+  "description": "Enable lid wake for Intel Graphics Card on macOS",
+  "homepage": "https://github.com/syscl/EnableLidWake",
+  "version": "1.1.4",
+  "versions": null,
+  "target": "LE",
+  "since": "10.10.2",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/MuntashirAkon/EnableLidWake/releases/download/3.7/3.7.DEBUG.zip",
+      "script": null,
+      "loc": "EnableLidWake.kext"
+    },
+    "rel": {
+      "url": "https://github.com/MuntashirAkon/EnableLidWake/releases/download/3.7/3.7.RELEASE.zip",
+      "script": null,
+      "loc": "EnableLidWake.kext"
+    },
+  },
+  "changes": "#### 1.1.4\n-Sync with Lilu 1.2.5\n-Native macOS 10.14 support",
+  "guide": "Inject correct ig-platform-id for your system.",
+  "time": "2018-03-16",
+  "license": "Custom",
+  "authors": [
+    {
+      "name": "Zhou Yating",
+      "email": null,
+      "homepage": "https://github.com/syscl"
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.0^"
+  },
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

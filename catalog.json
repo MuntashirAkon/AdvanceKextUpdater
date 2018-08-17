@@ -37,5 +37,38 @@
   },
   "EnableLidWake": {
     "kext": "EnableLidWake.kext"
+  },
+  "FakePCIID": {
+    "kext": "FakePCIID.kext"
+  },
+  "FakePCIID_AR9280_as_AR946x": {
+    "kext": "FakePCIID_AR9280_as_AR946x.kext"
+  },
+  "FakePCIID_BCM57XX_as_BCM57765": {
+    "kext": "FakePCIID_BCM57XX_as_BCM57765.kext"
+  },
+  "FakePCIID_BCM94352Z_as_BCM94360CS2": {
+    "kext": "FakePCIID_BCM94352Z_as_BCM94360CS2.kext"
+  },
+  "FakePCIID_Broadcom_WiFi": {
+    "kext": "FakePCIID_Broadcom_WiFi.kext"
+  },
+  "FakePCIID_HD4600_HD4400": {
+    "kext": "FakePCIID_HD4600_HD4400.kext"
+  },
+  "FakePCIID_Intel_GbX": {
+    "kext": "FakePCIID_Intel_GbX.kext"
+  },
+  "FakePCIID_Intel_HD_Graphics": {
+    "kext": "FakePCIID_Intel_HD_Graphics.kext"
+  },
+  "FakePCIID_Intel_HDMI_Audio": {
+    "kext": "FakePCIID_Intel_HDMI_Audio.kext"
+  },
+  "FakePCIID_XHCIMux": {
+    "kext": "FakePCIID_XHCIMux.kext"
+  },
+  "FakeSMC": {
+    "kext": "FakeSMC.kext"
   }
 }

@@ -1,0 +1,62 @@
+{
+  "name": "FakeSMC",
+  "kext": "FakeSMC.kext",
+  "description": "FakeSMC is an open source SMC device driver/emulator.",
+  "homepage": "https://github.com/RehabMan/OS-X-FakeSMC-kozlek",
+  "version": "1787",
+  "versions": null,
+  "target": "LE",
+  "since": "10.4",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": null,
+    "rel": {
+      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-fakesmc-kozlek/downloads/RehabMan-FakeSMC-2018-0403.zip",
+      "script": null,
+      "loc": "FakeSMC.kext"
+    }
+  },
+  "changes": "",
+  "guide": "",
+  "time": "2018-04-04 03:00:13",
+  "license": ["Custom", "GPLv3", "MPLv2"],
+  "authors": [
+    {
+      "name": "Netkas",
+      "email": null,
+      "homepage": "https://netkas.org"
+    },
+    {
+      "name": "Natan Zalkin",
+      "email": null,
+      "homepage": "https://github.com/kozlek"
+    },
+    {
+      "name": "RehabMan",
+      "email": "racerrehabman@gmail.com",
+      "homepage": null
+    }
+  ],
+  "require": null,
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": [
+    {
+      "name": "FakeSMC_ACPISensors",
+      "text": "To monitor ACPI sensors."
+    },
+    {
+      "name": "FakeSMC_CPUSensors",
+      "text": "To monitor CPU sensors."
+    },
+    {
+      "name": "FakeSMC_GPUSensors",
+      "text": "To monitor GPU sensors"
+    },
+    {
+      "name": "FakeSMC_LPCSensors",
+      "text": "To monitor LPC sensors"
+    }
+  ]
+}

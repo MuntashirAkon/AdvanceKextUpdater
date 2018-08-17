@@ -1,0 +1,76 @@
+{
+  "name": "FakePCIID_BCM94352Z_as_BCM94360CS2",
+  "kext": "FakePCIID_BCM94352Z_as_BCM94360CS2.kext",
+  "description": "Allow returning Fake PCI ID from IOPCIDevice. Attached to `14e4:43b1`, `14e4:4357`, `14e4:4331`, `14e4:4353`, `14e4:432b`, `14e4:43ba`, `14e4:43a3`, `14e4:43a0`, `106b:4e`, `14e4:4312`, `14e4:4313`, `14e4:4318`, `14e4:4319`, `14e4:431a`, `14e4:4320`, `14e4:4324`, `14e4:4325`, `14e4:4328`, `14e4:432c`, `14e4:432d`.",
+  "homepage": "https://github.com/RehabMan/OS-X-Fake-PCI-ID",
+  "version": "1.2.0",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-fake-pci-id/downloads/RehabMan-FakePCIID-2015-0703.zip",
+      "script": null,
+      "loc": "Debug/FakePCIID_BCM94352Z_as_BCM94360CS2.kext"
+    },
+    "rel": {
+      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-fake-pci-id/downloads/RehabMan-FakePCIID-2015-0703.zip",
+      "script": null,
+      "loc": "Release/FakePCIID_BCM94352Z_as_BCM94360CS2.kext"
+    }
+  },
+  "changes": "",
+  "guide": "@see https://github.com/RehabMan/OS-X-Fake-PCI-ID/blob/master/README.md?raw=true",
+  "time": "2015-07-04 04:19:29",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "RehabMan",
+      "email": "racerrehabman@gmail.com",
+      "homepage": null
+    },
+    {
+      "name": "the-darkvoid",
+      "email": null,
+      "homepage": null
+    }
+  ],
+  "require": {
+    "FakePCIID": "1.2.0"
+  },
+  "conflict": null,
+  "replaced_by": {
+    "since": "10.9",
+    "kexts": {
+      "FakePCIID_Broadcom_WiFi": "*"
+    }
+  },
+  "suggest": [
+    {
+      "name": "FakePCIID_AR9280_as_AR946x",
+      "text": "Used in a situation where you have an AR9280 re-branded as some other device."
+    },
+    {
+      "name": "FakePCIID_BCM57XX_as_BCM57765",
+      "text": "Attached to numerous unsupported BCM57XX Ethernet devices in order to make the native drivers work for a wider variety of BCM Ethernet chipsets that are compatible, but not supported due to probe testing of PCI device-id/subdevice-id values."
+    },
+    {
+      "name": "FakePCIID_Intel_GbX",
+      "text": "Attached to a number of Intel Ethernet devices in an attempt to make the Small Tree drivers for Intel chipset based cards work."
+    },
+    {
+      "name": "FakePCIID_Intel_HD_Graphics",
+      "text": "Attached to `8086:0412`, `8086:0416`, `8086:0a1e`, `8086:041e`, `8086:0a16`, `8086:041a`, `8086:016a`, `8086:191d`,  `8086:162a`, `8086:5917`, `8086:3e91`, `8086:3e92`."
+    },
+    {
+      "name": "FakePCIID_Intel_HDMI_Audio",
+      "text": "Attached to `8086:0c0c`, `8086:9d70`, `8086:9d71`, `8086:9d74`, `8086:a170`, `8086:a171`, `8086:a2f0`, or `8086:a348`."
+    },
+    {
+      "name": "FakePCIID_XHCIMux",
+      "text": "Attached to 8086:1e31`, `8086:9c31`, `8086:9cb1`, `8086:9c31`, and `8086:8cb1`."
+    }
+  ]
+}
