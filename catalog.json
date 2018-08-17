@@ -1,14 +1,41 @@
 {
   "ACPIBatteryManager": {
-    "kext": "ACPIBatteryManager.kext",
+    "kext": "ACPIBatteryManager.kext"
   },
   "AirportBrcmFixup": {
-    "kext": "AirportBrcmFixup.kext",
+    "kext": "AirportBrcmFixup.kext"
   },
   "AppleALC": {
-    "kext": "AppleALC.kext",
+    "kext": "AppleALC.kext"
   },
   "ATH9KFixup": {
-    "kext": "ATH9KFixup.kext",
+    "kext": "ATH9KFixup.kext"
+  },
+  "ATH9KInjector": {
+    "kext": "ATH9KInjector.kext"
+  },
+  "AtherosE2200Ethernet": {
+    "kext": "AtherosE2200Ethernet.kext"
+  },
+  "AzulPatcher4600": {
+    "kext": "AzulPatcher4600.kext"
+  },
+  "BrcmWLFixup": {
+    "kext": "BrcmWLFixup.kext"
+  },
+  "BT4LEContiunityFixup": {
+    "kext": "BT4LEContiunityFixup.kext"
+  },
+  "CodecCommander": {
+    "kext": "CodecCommander.kext"
+  },
+  "CoreDisplayFixup": {
+    "kext": "CoreDisplayFixup.kext"
+  },
+  "CPUFriend": {
+    "kext": "CPUFriend.kext"
+  },
+  "EnableLidWake": {
+    "kext": "EnableLidWake.kext"
   }
 }

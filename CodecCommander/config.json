@@ -1,0 +1,68 @@
+{
+  "name": "CodecCommander",
+  "kext": "CodecCommander.kext",
+  "description": "Handles EAPD state updating for power-managed HDA codecs",
+  "homepage": "https://github.com/RehabMan/EAPD-Codec-Commander",
+  "version": "2.6.3",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-eapd-codec-commander/downloads/RehabMan-CodecCommander-2017-0501.zip",
+      "script": null,
+      "loc": "Debug/CodecCommander.kext"
+    },
+    "rel": {
+      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-eapd-codec-commander/downloads/RehabMan-CodecCommander-2017-0501.zip",
+      "script": null,
+      "loc": "Release/CodecCommander.kext"
+    }
+  },
+  "changes": "Add ALC236 support (same as ALC283); bump version 2.6.3",
+  "guide": "@see https://github.com/RehabMan/EAPD-Codec-Commander",
+  "time": "2017-05-01 21:02:45",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "RehabMan",
+      "email": "racerrehabman@gmail.com",
+      "homepage": null
+    },
+    {
+      "name": "the-darkvoid",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "Dmitry Seryogin",
+      "email": "timewalker75a@gmail.com",
+      "homepage": "https://github.com/Dolnor"
+    },
+    {
+      "name": "Rob van Oostenrijk",
+      "email": null,
+      "homepage": "https://github.com/robvanoostenrijk"
+    },
+    {
+      "name": "Alex",
+      "email": null,
+      "homepage": "https://github.com/goodwin"
+    }
+  ],
+  "require": null,
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": [
+    {
+      "name": "AppleALC",
+      "text": "For CodecCommander to work with AppleALC, SSDT-AppleALC.aml may be necessary."
+    },
+    {
+      "name": "cloverHDA",
+      "text": "cloverHDA kexts are made by InsanelyDeepak, works with 10.11-10.13."
+    }
+  ]
+}

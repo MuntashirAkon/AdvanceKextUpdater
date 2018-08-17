@@ -1,0 +1,43 @@
+{
+  "name": "ATH9KFixup",
+  "kext": "ATH9KFixup.kext",
+  "description": "A Lilu plugin for patching AirPortAtheros40.kext hence enabling Atheros AR9K based cards in macOS.",
+  "homepage": "https://github.com/black-dragon74/ATH9KFixup",
+  "version": "1.2.0",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": null,
+    "rel": {
+      "url": "https://github.com/black-dragon74/ATH9KFixup/releases/download/1.2.0/ATH9KInjector.zip",
+      "script": null,
+      "loc": "ATH9KInjector.kext"
+    }
+  },
+  "changes": "#### v1.2.0\r\n- Added compatibility for Lilu 1.2.0\r\n- Updated Injector to ver 1.2.0",
+  "guide": "#### Features\nBoot args:\n- AR946X: (Default)\n- AR9485: `-ath9485`\n- AR9565: `-ath9565`",
+  "time": "2017-11-02 14:32:42",
+  "license": "BSD 3-Clause \"New\" or \"Revised\" License",
+  "authors": [
+    {
+      "name": "chunnann",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "black-dragon74",
+      "email": null,
+      "homepage": "https://nicksuniversum.com/"
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.0^",
+    "ATH9KFixup": "*"
+  },
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

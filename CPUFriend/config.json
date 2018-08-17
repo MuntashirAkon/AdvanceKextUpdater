@@ -1,0 +1,48 @@
+{
+  "name": "CPUFriend",
+  "kext": "CPUFriend.kext",
+  "description": "A Lilu plug-in for dynamic CPU power management data injection.",
+  "homepage": "https://github.com/PMheart/CPUFriend",
+  "version": "1.1.4",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/PMheart/CPUFriend/releases/download/1.1.4/1.1.4.DEBUG.zip",
+      "script": null,
+      "loc": "CPUFriend.kext"
+    },
+    "rel": {
+      "url": "https://github.com/PMheart/CPUFriend/releases/download/1.1.4/1.1.4.RELEASE.zip",
+      "script": null,
+      "loc": "CPUFriend.kext"
+    },
+    "post-install": "post-install.sh"
+  },
+  "changes": "#### 1.1.4\n-Sync with Lilu 1.2.5\n-Native macOS 10.14 support",
+  "guide": "@see https://github.com/PMheart/CPUFriend/blob/master/Instructions.md",
+  "time": "2018-07-19 13:12:47",
+  "license": "BSD 3-Clause License",
+  "authors": [
+    {
+      "name": "PMheart",
+      "email": null,
+      "homepage": "https://pmheart.site"
+    },
+    {
+      "name": "Alex James",
+      "email": "theracermaster@gmail.com",
+      "homepage": "https://alextjam.es"
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.0^",
+    "LiluFriend": "*"
+  },
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

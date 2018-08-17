@@ -1,0 +1,44 @@
+{
+  "name": "AtherosE2200Ethernet",
+  "kext": "AtherosE2200Ethernet.kext",
+  "description": "Qualcomm Atheros Killer E2200 driver for OS X",
+  "homepage": "https://github.com/Mieze/AtherosE2200Ethernet",
+  "version": "2.2.2",
+  "versions": null,
+  "target": "SLE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/MuntashirAkon/AtherosE2200Ethernet/releases/download/2.2.2/2.2.2.DEBUG.zip",
+      "script": null,
+      "loc": "AtherosE2200Ethernet.kext"
+    },
+    "rel": {
+      "url": "https://github.com/MuntashirAkon/AtherosE2200Ethernet/releases/download/2.2.2/2.2.2.RELEASE.zip",
+      "script": null,
+      "loc": "AtherosE2200Ethernet.kext"
+    }
+  },
+  "changes": "#### v2.2.2\n- Fixes a problem which may cause trouble when trying to change the MAC address.\n- Optimized for Sierra and High Sierra.",
+  "guide": "#### Key Features of the Driver\n- Supports Qualcomm Atheros AR816x, AR817x, Killer E220x, Killer E2400 and Killer E2500.\n- Support for multisegment packets relieving the network stack of unnecessary copy operations when assembling packets for transmission.\n- No-copy receive and transmit. Only small packets are copied on reception because creating a copy is more efficient than allocating a new buffer.\n- TCP, UDP and IPv4 checksum offload (receive and transmit).\n- Support for TCP/IPv6 and UDP/IPv6 checksum offload.\n- Makes use of the chip's TCP Segmentation Offload (TSO) feature with IPv4 and IPv6 in order to reduce CPU load while sending large amounts of data.\n- Fully optimized for Mountain Lion, Mavericks and Yosemite (64bit architecture) but version 1.x.x should work with Lion too, provided you build from source with the 10.7 SDK.\n- Wake on LAN support.\n- VLAN support is implemented but untested as I have no need for it.\n- Supports Energy Efficient Ethernet (EEE).\n- Supports jumbo frames up to 9000 bytes.",
+  "time": "2017-09-26",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "Laura Müller",
+      "email": null,
+      "homepage": "https://github.com/Mieze"
+    }
+  ],
+  "require": null,
+  "conflict": {
+    "kexts": {
+      "ALXEthernet": "*"
+    },
+    "action": "delete"
+  },
+  "replaced_by": null,
+  "suggest": null
+}

@@ -1,0 +1,52 @@
+{
+  "name": "CoreDisplayFixup",
+  "kext": "CoreDisplayFixup.kext",
+  "description": "A Lilu plug-in which patches system essentials dynamically to enable 4K or greater resolutions output on certain graphics",
+  "homepage": "https://github.com/PMheart/CoreDisplayFixup",
+  "version": "1.3.7",
+  "versions": null,
+  "target": "LE",
+  "since": "10.10",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/PMheart/CoreDisplayFixup/releases/download/1.3.7/1.3.7.DEBUG.zip",
+      "script": null,
+      "loc": "CoreDisplayFixup.kext"
+    },
+    "rel": {
+      "url": "https://github.com/PMheart/CoreDisplayFixup/releases/download/1.3.7/1.3.7.RELEASE.zip",
+      "script": null,
+      "loc": "CoreDisplayFixup.kext"
+    }
+  },
+  "changes": "Revised patch for 10.13.4/initial patch for 10.14",
+  "guide": "#### Available kernel flags\n- Add `-cdfdbg` to enable debug logging (ONLY available in DEBUG binaries).\n- Add `-cdfoff` to disable CoreDisplayFixup entirely.\n- Add `-cdfinteloff` to disable IntelPatcher, which cancels patching `IOKit` or `CoreDisplay`.\n- Add `-cdfnvoff` to disable NVPatcher that cancels patching NVidia related kexts.\n- Add `-cdfbeta` to enable CoreDisplayFixup on unsupported OS versions (Not compatible with IntelPatcher).\n\nNOTE: You may have a corrupted shared cache, to fix it up, disable CoreDisplayFixup and reboot, then run `sudo update_dyld_shared_cache -force` command in Terminal.",
+  "time": "2018-06-06 03:19:14",
+  "license": "BSD 3-Clause License",
+  "authors": [
+    {
+      "name": "PMheart",
+      "email": null,
+      "homepage": "https://pmheart.site"
+    },
+    {
+      "name": "Alex James",
+      "email": "theracermaster@gmail.com",
+      "homepage": "https://alextjam.es"
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.0^",
+    "LiluFriend": "*"
+  },
+  "conflict": null,
+  "replaced_by": {
+    "since": "10.13",
+    "kexts": {
+      "WhateverGreen": "1.2.0^"
+    }
+  },
+  "suggest": null
+}

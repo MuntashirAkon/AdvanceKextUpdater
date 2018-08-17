@@ -1,0 +1,42 @@
+{
+  "name": "AzulPatcher4600",
+  "kext": "AzulPatcher4600.kext",
+  "description": "Lilu plugin which applies common patches for the mobile HD4600 iGPU",
+  "homepage": "https://github.com/coderobe/AzulPatcher4600",
+  "version": "1.2",
+  "versions": null,
+  "target": "LE",
+  "since": "10.10",
+  "last": "10.13.6",
+  "bin": {
+    "recommend": "rel",
+    "dev": null,
+    "rel": {
+      "url": "https://github.com/coderobe/AzulPatcher4600/releases/download/1.2/AzulPatcher4600.kext.zip",
+      "script": null,
+      "loc": "AzulPatcher4600.kext"
+    }
+  },
+  "changes": "Clarify dependencies",
+  "guide": "Features\nPatches HDMI audio\nApplies the 9MB cursor patch with 2 ports only\nDisables the unused 0204 port (Fixes graphic lockups on some laptops)",
+  "time": "2017-10-17 17:31:49",
+  "license": "AGPLv3",
+  "authors": [
+    {
+      "name": "Robin B.",
+      "email": null,
+      "homepage": "https://coderobe.net"
+    },
+    {
+      "name": "Yin Ming",
+      "email": null,
+      "homepage": "https://github.com/ym2008"
+    }
+  ],
+  "require":  {
+    "Lilu": "1.2^"
+  },
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

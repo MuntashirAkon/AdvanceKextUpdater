@@ -1,0 +1,56 @@
+{
+  "name": "AirportBrcmFixup",
+  "kext": "AirportBrcmFixup.kext",
+  "description": "An open source kernel extension providing a set of patches required for non-native Airport Broadcom Wi-Fi cards.",
+  "homepage": "https://github.com/acidanthera/AirportBrcmFixup",
+  "version": "1.1.5",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/acidanthera/AirportBrcmFixup/releases/download/1.1.5/1.1.5.DEBUG.zip",
+      "script": null,
+      "loc": "AirportBrcmFixup.kext"
+    },
+    "rel": {
+      "url": "https://github.com/acidanthera/AirportBrcmFixup/releases/download/1.1.5/1.1.5.RELEASE.zip",
+      "script": null,
+      "loc": "AirportBrcmFixup.kext"
+    }
+  },
+  "changes": "Mojave compatible",
+  "guide": "#### Features\n- Supports AirPort_Brcm4360, AirPort_BrcmNIC and AirPort_BrcmNIC_MFG\n- Implements patch for chip identificator checking (0xaa52), in <=10.12 it's required for successful driver starting\n- Implements patch for \"Failed PCIe configuration patch\", required for some cards\n- Implements patch for \"Third Party Device\" (returns vendor name \"Apple\")\n- Implements patch for removing of white-list check\n- Implements 5Ghz and country code patch (US by default)\n- Implements WOWL (WoWLAN) disabler (turned on by default) - no low speed after wake\n- Implements patch to disable LPO panic in AirPortBrcmNIC\n\n#### Installation types\n- Clover Airport Fix + AirportBrcmFixup\n- Clover Airport Fix + AddProperties(fake device-id) + AirportBrcmFixup (preferable)\n- Clover Airport Fix + AirportBrcmFixup + FakePCIID + FakePCIID_Broadcom_WiFi.kext\n- AirportBrcmFixup + FakePCIID + FakePCIID_Broadcom_WiFi.kext\n\n#### Boot-args\n- `brcmfx-country=XX` changes the country code to XX (US, CN, #a, ...)\n- `-brcmfxdbg` turns on debugging output\n- `-brcmfxbeta` enables loading on unsupported osx\n- `-brcmfxoff` disables kext loading\n- `wl_msg_level=0xXXXX` & `wl_msg_level2=0xXXXX` set log level for native network kexts\n- `-brcmfxwowl` enables WOWL (WoWLAN) - it is disabled by default\n- option `brcmfx-country` also can be injected via DSDT or AddProperties/Arbitrary in Clover",
+  "time": "2018-08-13 11:02:48",
+  "license": "BSD 3-Clause \"New\" or \"Revised\" License",
+  "authors": [
+    {
+      "name": "lvs1974",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "vit9696",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "fcsd5k",
+      "email": null,
+      "homepage": null
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.4^"
+  },
+  "conflict": {
+    "kexts": {
+      "BrcmWLFixup": "*"
+    },
+    "action": "delete"
+  },
+  "replaced_by": null,
+  "suggest": null
+}

@@ -1,0 +1,47 @@
+{
+  "name": "BrcmWLFixup",
+  "kext": "BrcmWLFixup.kext",
+  "description": "A Lilu plugin that removes whitelist for Wi-Fi under macOS",
+  "homepage": "https://github.com/PMheart/BrcmWLFixup",
+  "version": "1.0.2",
+  "versions": null,
+  "target": "LE",
+  "since": "10.9",
+  "last": "10.13.6",
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/PMheart/BrcmWLFixup/releases/download/1.0.2/1.0.2.DEBUG.zip",
+      "script": null,
+      "loc": "BrcmWLFixup.kext"
+    },
+    "rel": {
+      "url": "https://github.com/PMheart/BrcmWLFixup/releases/download/1.0.2/1.0.2.RELEASE.zip",
+      "script": null,
+      "loc": "BrcmWLFixup.kext"
+    }
+  },
+  "changes": "Enlarged OS compatibility",
+  "guide": "#### Available kernel flags\nAdd `-brcmdbg` to enable debug logging (ONLY available in DEBUG binaries).\n\nAdd `-brcmoff` to disable BrcmWLFixup entirely.\n\nAdd `-brcmbeta` to enable BrcmWLFixup on unsupported OS versions.",
+  "time": "2017-07-16 11:06:10",
+  "license": "BSD 3-Clause License",
+  "authors": [
+    {
+      "name": "PMheart",
+      "email": null,
+      "homepage": "https://pmheart.site"
+    }
+  ],
+  "require": {
+    "Lilu": "1.1.6^",
+    "LiluFriend": "*"
+  },
+  "conflict": null,
+  "replaced_by": {
+    "since": "10.13",
+    "kexts": {
+      "AirportBrcmFixup": "1.1.5^"
+    }
+  },
+  "suggest": null
+}

@@ -6,7 +6,8 @@
   "version": "1.81.4",
   "versions": null,
   "target": "LE",
-  "since": "10.9",
+  "since": "10.8",
+  "last": null,
   "bin": {
     "recommend": "rel",
     "dev": {
