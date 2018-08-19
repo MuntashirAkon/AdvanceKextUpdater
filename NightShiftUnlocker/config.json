@@ -1,0 +1,37 @@
+{
+  "name": "NightShiftUnlocker",
+  "kext": "NightShiftUnlocker.kext",
+  "description": "A Lilu plugin that dynamically unlocks the Night Shift function for all Macs.",
+  "homepage": "https://github.com/0xFireWolf/NightShiftUnlocker",
+  "version": "2.2.1",
+  "versions": null,
+  "target": "LE",
+  "since": "10.12.4",
+  "last": "10.13.6",
+  "bin": {
+    "recommend": "rel",
+    "dev": null,
+    "rel": {
+      "url": "https://github.com/0xFireWolf/NightShiftUnlocker/releases/download/2.2.1/NightShiftUnlocker2.2.1.zip",
+      "script": null,
+      "loc": "NightShiftUnlocker.kext"
+    }
+  },
+  "changes": "NightShiftUnlocker 2.2.1 requires Lilu 1.2.0 or later\r\n\r\n- Fix a typo: I forgot to revert back to the original plugin configuration after I tested the new patch. NSU 2.2.1 should work on both 10.12 and 10.13. Sorry about that.",
+  "guide": "### Background Info\nApple introduced the Night Shift function as of macOS 10.12.4.  \nNight Shift is provided by a private system framework named CoreBrightness.\nIt uses a global function `CBU_IsNightShiftSupported()` and an array of supported Mac models to check whether the running machine supports Night Shift.  \nInstead of modifying the minimum version of supported Mac models, I make this function always return `true`.",
+  "time": "2017-10-15 00:54:07",
+  "license": "BSD 3-Clause License",
+  "authors": [
+    {
+      "name": "FireWolf",
+      "email": null,
+      "homepage": "https://www.firewolf.science"
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.0^"
+  },
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

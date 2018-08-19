@@ -1,7 +1,7 @@
 {
-  "name": "FakeSMC",
-  "kext": "FakeSMC.kext",
-  "description": "FakeSMC is an open source SMC device driver/emulator.",
+  "name": "FakeSMC_CPUSensors",
+  "kext": "FakeSMC_CPUSensors.kext",
+  "description": "FakeSMC is an open source SMC device driver/emulator. FakeSMC_CPUSensors monitors CPU sensors.",
   "homepage": "https://github.com/RehabMan/OS-X-FakeSMC-kozlek",
   "version": "1787",
   "versions": null,
@@ -14,7 +14,7 @@
     "rel": {
       "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-fakesmc-kozlek/downloads/RehabMan-FakeSMC-2018-0403.zip",
       "script": null,
-      "loc": "FakeSMC.kext"
+      "loc": "FakeSMC_CPUSensors.kext"
     }
   },
   "changes": "",
@@ -22,11 +22,6 @@
   "time": "2018-04-04 03:00:13",
   "license": ["Custom", "GPLv3", "MPLv2"],
   "authors": [
-    {
-      "name": "Netkas",
-      "email": null,
-      "homepage": "https://netkas.org"
-    },
     {
       "name": "Natan Zalkin",
       "email": null,
@@ -36,19 +31,37 @@
       "name": "RehabMan",
       "email": "racerrehabman@gmail.com",
       "homepage": null
+    },
+    {
+      "name": "Faragó Márton",
+      "email": null,
+      "homepage": "https://github.com/interferenc"
+    },
+    {
+      "name": "Alexey Bobkov",
+      "email": null,
+      "homepage": "http://xnova.su"
+    },
+    {
+      "name": "Koushik Dutta",
+      "email": null,
+      "homepage": "http://koush.com"
+    },
+    {
+      "name": "Andras Oravecz",
+      "email": "oraveczandrew@gmail.com",
+      "homepage": "https://oandras.hu"
     }
   ],
-  "require": null,
+  "require": {
+    "FakeSMC": "1787"
+  },
   "conflict": null,
   "replaced_by": null,
   "suggest": [
     {
       "name": "FakeSMC_ACPISensors",
       "text": "To monitor ACPI sensors."
-    },
-    {
-      "name": "FakeSMC_CPUSensors",
-      "text": "To monitor CPU sensors."
     },
     {
       "name": "FakeSMC_GPUSensors",

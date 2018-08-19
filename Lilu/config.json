@@ -1,0 +1,92 @@
+{
+  "name": "Lilu",
+  "kext": "Lilu.kext",
+  "description": "An open source kernel extension bringing a platform for arbitrary kext, library, and program patching throughout the system for macOS.",
+  "homepage": "https://github.com/PMheart/CoreDisplayFixup",
+  "version": "1.2.6",
+  "versions": null,
+  "target": "LE",
+  "since": "10.4",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/acidanthera/Lilu/releases/download/1.2.6/1.2.6.DEBUG.zip",
+      "script": null,
+      "loc": "Lilu.kext"
+    },
+    "rel": {
+      "url": "https://github.com/acidanthera/Lilu/releases/download/1.2.6/1.2.6.RELEASE.zip",
+      "script": null,
+      "loc": "Lilu.kext"
+    }
+  },
+  "changes": "#### v1.2.6\r\n- Added Cannon Lake and Ice Lake definitions\r\n- Added missing typed getOSData APIs\r\n- Added `-liluuseroff` boot-arg to disable user patcher (for e.g. shared cache manipulation)\r\n- Added `lilucpu=N` boot-arg to assume CPU generation\r\n- Added CPU topology detection APIs\r\n- Fixed routeMultiple kernel panic and log report\r\n- Switched to Apple lzvn implementation",
+  "guide": "#### Features\n- Generic kext patcher\n- Generic process patcher (64-bit with basic 32-bit functionality)\n- Generic framework/library patcher (64-bit with basic 32-bit functionality)\n- Provides a unified plugin API\n\n#### Configuration\n- Add `-liludbg` to enable debug printing (available in DEBUG binaries).\n- Add `-liludbgall` to enable debug printing in Lilu and all loaded plugins (available in DEBUG binaries).\n- Add `-liluoff` to disable Lilu.\n- Add `-liluuseroff` to disable Lilu user patcher (for e.g. dyld_shared_cache manipulations).\n- Add `-liluslow` to enable legacy user patcher.\n- Add `-lilulowmem` to disable kernel unpack (disables Lilu in recovery mode).\n- Add `-lilubeta` to enable Lilu on unsupported os versions (10.13 and below are enabled by default).\n- Add `-lilubetaall` to enable Lilu and all loaded plugins on unsupported os versions (use _very_ carefully).\n- Add `-liluforce` to enable Lilu regardless of the mode, OS, installer, or recovery.\n- Add `liludelay=1000` to enable 1 second delay after each print for troubleshooting.\n- Add `lilucpu=N` to let Lilu and plugins assume Nth CPUInfo::CpuGeneration.\n\n#### Peculiarities\nMost of the plugins cease to function in safe (`-x`) mode.  \nBy default Lilu itself does not function in single-user (`-s`) mode, unless `-liluforce` is present.\n\n#### Discussion\n[InsanelyMac topic](http://www.insanelymac.com/forum/topic/321371-lilu-—-kext-and-process-patcher/) in English  \n[AppleLife topic](https://applelife.ru/threads/lilu-patcher-kekstov-i-processov.1964133/) in Russian",
+  "time": "2018-08-13 10:52:00",
+  "license": "BSD 3-Clause \"New\" or \"Revised\" License",
+  "authors": [
+    {
+      "name": "vit9696",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "PMheart",
+      "email": null,
+      "homepage": "https://pmheart.site"
+    },
+    {
+      "name": "fcsd5k",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "Malcolm Hall",
+      "email": null,
+      "homepage": "http://www.malcolmhall.com"
+    },
+    {
+      "name": "Robin B.",
+      "email": null,
+      "homepage": "https://coderobe.net"
+    }
+  ],
+  "require": null,
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": [
+    {
+      "name": "AppleALC",
+      "text": "Native macOS HD audio for not officially supported codecs."
+    },
+    {
+      "name": "CPUFriend",
+      "text": "Dynamic power management data injection."
+    },
+    {
+      "name": "EnableLidWake",
+      "text": "Enable lid wake for Intel Graphics Card."
+    },
+    {
+      "name": "HibernationFixup",
+      "text": "Enable 3 & 25 mode hibernation on certain hardware."
+    },
+    {
+      "name": "LiluFriend",
+      "text": "A helper of Lilu for those who prefer to leave everything inside /Library/Extensions and /System/Library/Extensions."
+    },
+    {
+      "name": "NightShiftUnlocker",
+      "text": "Enables Night Shift on all the models."
+    },
+    {
+      "name": "NoTouchID",
+      "text": "Disables Touch ID checks causing hangs."
+    },
+    {
+      "name": "WhateverGreen",
+      "text": "Various patches necessary for GPUs."
+    }
+  ]
+}

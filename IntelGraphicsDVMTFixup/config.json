@@ -1,0 +1,48 @@
+{
+  "name": "IntelGraphicsDVMTFixup",
+  "kext": "IntelGraphicsDVMTFixup.kext",
+  "description": "A Lilu extension to solve small (32MB) DVMT-prealloc setting in Broadwell/Skylake/KabyLake",
+  "homepage": "https://github.com/BarbaraPalvin/IntelGraphicsDVMTFixup",
+  "version": "1.2.2",
+  "versions": null,
+  "target": "LE",
+  "since": "10.10",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": null,
+    "rel": {
+      "url": "https://github.com/BarbaraPalvin/IntelGraphicsDVMTFixup/releases/download/v1.2.2/IntelGraphicsDVMTFixup.kext_1.2.2.zip",
+      "script": null,
+      "loc": "IntelGraphicsDVMTFixup.kext"
+    }
+  },
+  "changes": "macOS 10.14 compatibility (Lilu 1.2.4 required)",
+  "guide": "#### Overview\nA common problem with Broadwell/Skylake/KabyLake is relatively small DVMT-prealloc setting by PC OEMs. \nThe Apple framebuffer kexts generally assume 64mb or larger, and most PC OEMs use only 32mb.\nAnd often, there is no way to change it easily due to limited BIOS, locked down BIOS, etc.\n\n\n#### Features\n- For users who have no way to change it easily due to limited BIOS, locked down BIOS, etc.\n- Fixes an issue related DVMT panic When entering the installation screen.\n- No need `FakeID = 0x12345678.",
+  "time": "2018-06-09 12:19:04",
+  "license": "Custom",
+  "authors": [
+    {
+      "name": "Sherlocks",
+      "email": null,
+      "homepage": "https://github.com/BarbaraPalvin"
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.4^"
+  },
+  "conflict": null,
+  "replaced_by": {
+    "since": "10.13",
+    "kexts": {
+      "WhateverGreen": "1.2.0^"
+    }
+  },
+  "suggest": [{
+    "name": "IntelGraphicsFixup",
+    "text": "An open source kernel extension providing patches to selected Intel GPUs."
+  }],
+  "hw": {
+    "match_cpu": "^Intel\\(R\\) Core\\(TM\\) i[357]-[567].*$"
+  }
+}

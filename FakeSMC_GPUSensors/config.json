@@ -1,7 +1,7 @@
 {
-  "name": "FakeSMC",
-  "kext": "FakeSMC.kext",
-  "description": "FakeSMC is an open source SMC device driver/emulator.",
+  "name": "FakeSMC_GPUSensors",
+  "kext": "FakeSMC_GPUSensors.kext",
+  "description": "FakeSMC is an open source SMC device driver/emulator. FakeSMC_GPUSensors monitors GPU sensors",
   "homepage": "https://github.com/RehabMan/OS-X-FakeSMC-kozlek",
   "version": "1787",
   "versions": null,
@@ -14,7 +14,7 @@
     "rel": {
       "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-fakesmc-kozlek/downloads/RehabMan-FakeSMC-2018-0403.zip",
       "script": null,
-      "loc": "FakeSMC.kext"
+      "loc": "FakeSMC_GPUSensors.kext"
     }
   },
   "changes": "",
@@ -22,11 +22,6 @@
   "time": "2018-04-04 03:00:13",
   "license": ["Custom", "GPLv3", "MPLv2"],
   "authors": [
-    {
-      "name": "Netkas",
-      "email": null,
-      "homepage": "https://netkas.org"
-    },
     {
       "name": "Natan Zalkin",
       "email": null,
@@ -36,9 +31,26 @@
       "name": "RehabMan",
       "email": "racerrehabman@gmail.com",
       "homepage": null
+    },
+    {
+      "name": "dmatora",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "sorenjorvang",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "Tobias Punke",
+      "email": null,
+      "homepage": "https://github.com/Gaulomatic"
     }
   ],
-  "require": null,
+  "require": {
+    "FakeSMC": "1787"
+  },
   "conflict": null,
   "replaced_by": null,
   "suggest": [
@@ -49,10 +61,6 @@
     {
       "name": "FakeSMC_CPUSensors",
       "text": "To monitor CPU sensors."
-    },
-    {
-      "name": "FakeSMC_GPUSensors",
-      "text": "To monitor GPU sensors."
     },
     {
       "name": "FakeSMC_LPCSensors",

@@ -60,6 +60,7 @@ authors[].email
 - `versions`: (Array|null) Previous/other version of the kext (use this when only necessary)
     - `versions[].version`: (String) The kext version
     - `versions[].since`: (String) The first supported macOS version
+    - `versions[].location`: (String) Relative location of the `config-*.json` for the version
 - `target`: (String) Where to install the kext (Either `LE` or `SLE`)
 - `since`: (String) The version of macOS from which the kext can be installed
 - `last`: (String|null) The version of macOS to which the kext can be installed (null = latest)
@@ -67,19 +68,55 @@ authors[].email
     - `bin.recommend`: (String|null) Recommended binary (either `dev` or `rel`)
     - `bin.dev`: (Object|null)
         - `bin.dev.url`: (String) Link to download the debug kext
-        - `bin.dev.script`: (String|null) Location of the custom script relative to this `config.json` file (see below)
+        - `bin.dev.script`: (String|null) Location of the custom script relative to this `config.json` file.
+                           [See below](#Custom script) for more information. 
         - `bin.dev.loc`: (String|null) Relative location of the kext after the file has been extracted
     - `bin.rel`: (Object) 
         - `bin.rel.url`: (String) Link to download the release kext
-        - `bin.rel.script`: (String|null) Location of the custom script relative to this `config.json` file (see below)
+        - `bin.rel.script`: (String|null) Location of the custom script relative to this `config.json` file.
+                            [See below](#Custom script) for more information.
         - `bin.rel.loc`: (String|null) Relative location of the kext after the file has been extracted
-    - `bin.post-install`: [Optional] (String) Relative location to the post-installation script. Just like custom script
-                          , it must not have any Xcode dependencies. 
+    - `bin.post-install`: [Optional] (String) Relative location to the post-installation script.
+                            [See below](#Post installation script) for more information.
+- `hw`: [Optional] (Object) Hardware configuration (to get more idea on where this kext can be installed)
+    - `hw.dspci`: [Optional] (Array|Object) Uses the same schema that `dspci` uses for the JSON object. Similar to the
+                             tool, an array of object can also be used instead of a single object.
+                             ([More on schema](https://github.com/MuntashirAkon/DPCIManager))
+    - `hw.match_audio`: [Optional] (Array|String) Matches specific audio codecs with or without revisions. Available
+                                    Formats: `AudioCodec:Revision` or `AudioCodec`
+    - `hw.match_connected`: [Optional] (Array|String) Matches the ID of specific connected device(s). Devices can be
+                                        connected via USB, etc. ID format: `VendorID:ProductID`
+    - `hw.match_cpu`: [Optional] (Array|RegEx String) Matches the specific CPU(s). CPU brand string can be found by running:
+      ```bash
+      sysctl -n machdep.cpu.brand_string
+      ```
+    - `hw.match_gpu`: [Optional] (Array|RegEx String) Matches the specific GPU(s). GPU chipset name can be found by running:
+      ```bash
+      system_profiler SPDisplaysDataType | grep "Chipset Model"
+      ```
+    - `hw.match_pci`: [Optional] (Array|String) Matches specific PCI ID(s). ID format: `VendorID:ProductID`
+                                (eg. `8086:9d21`)
+    - `hw.restrict`: [Optional] (Boolean) Whether to restrict installation of kext provided the criteria does not match
+                     (Default: true)
+- `sw`: [Option] (Object) Software configuration (to get more idea on where this kext can be installed)
+    - `sw.kernel`: [Optional] (Object|String) Kernel configuration. If applicable for a single version, set as string.
+                            Wildcard (*) is supported.
+        - `sw.kernel.min`: (String) Minimum kernel version
+        - `sw.kernel.max`: (String|null) Maximum kernel version (null = No maximum value set)
+    - `sw.os`: [Optional] (Object|String) Operating System configuration. If applicable for a single version, set as
+                        string. Available formats: `ProductVersion:BuildVersion` or `ProductVersion`. Wildcard (*) is
+                        supported.
+        - `sw.os.min`: (String) Minimum OS version
+        - `sw.os.min`: (String|null) Maximum OS version (null = No maximum value set)
+    - `sw.restrict`: [Optional] (Boolean) Whether to restrict installation of kext provided the criteria does not match
+                     (Default: true)
 - `changes`: (String) A list of changes in the latest version (Markdown Supported)
 - `guide`: (String) A general guideline on how to use the kext. This may contain boot arguments and their behavior, etc.
-            or just the content of readme.md (Markdown Supported)
+            or just the content of readme.md. You can use `@see <url>` to refer an url rather than copy-and-pasting the
+            guide itself. (Markdown Supported)
 - `time`: (String) Release date of the kext (format: `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`)
 - `license`: (String|Array|null) Kext license
+- `tags`: [Optional] (String) Tags are good for searching, should be comma separated
 - `authors`: (Array)
     - `authors[].name`: (String) Name of the author
     - `authors[].email`: (String|null) Email of the author
@@ -102,20 +139,47 @@ authors[].email
     - `replaced_by.since`: (String) The version of macOS after which the kext has been replaced
     - `replaced_by.kexts`: (Object) List of alternative kext(s). (Similar to the above example)
 - `suggest`: (Array|null) Suggest kext(s)
-    - `suggest[].name`: (String) Name of the kext
+    - `suggest[].name`: (String) Name of the kext (without extension) or supported files WITH extension. See **NOTES**
+                        for a list of supported file extensions.
     - `suggest[].text`: (String|null) Information on why this is suggested (Markdown supported)
 
-NOTE: `bin.dev.script` and `bin.dev.loc` cannot be null at the same time. Same is applicable for `bin.rel.script` and
-      `bin.rel.loc`.
-
-NOTE 2: `conflict.kexts` can contain any kext name without the extension. It also supports wildcards.
+#### Notes on the schema
+- `bin.dev.script` and `bin.dev.loc` cannot be null at the same time. Same is applicable for `bin.rel.script` and
+`bin.rel.loc`
+- 
+- `conflict.kexts` can contain any kext name without the extension. It also supports wildcards
+- `since` is just a suggestion, not a requirement. An user may disregard this if s/he wants
+- All IDs are in hexadecimal string without the `0x` prefix
+- Supported file extensions are: `.app`, `.sh`, `.pkg`, `.mkpg`, `.dmg`, `.dylib`
 
 #### Custom script
 A custom script can be used to extract the kext from the given URL. The only argument that is supplied to the script is
-the URL of the kext. The output should be a single line containing the location of the kext (including the name of the
-kext!). If no output is provided, the default location will be considered. The default location is `/tmp/name/kext`,
-`name` and `kext` are defined in the `confing.json` file.
+the URL of the kext. The necessity of getting output from the script depends on it's return code. There can be a slight
+chance that you are installing more than one kext. If this is the case, you'll have to print all the kext locations
+separated by a new line.
 
-NOTE: Custom scripts must not have any Xcode dependencies! Thus, it only supports a handful of scripting languages, eg.
-      Bash, Python2.7, PHP, Perl, etc. Custom script can be Mach-O executable. So, executables written in C/C++, Obj-C,
-      etc. are also supported.
+| Code | Output           | Meaning
+| ---- | ---------------- | -------
+| `0`  | Kext location(s) | The script has moved the kext to LE or SLE by all itself
+| `1`  | Kext location(s) | The script has extracted the kext, but did not move it to LE or SLE
+| `2`  | Optional Message | The attempt was not successful
+ 
+**Kext location** is the location of the kext along with kext name.
+
+#### Post installation script
+Sometimes it is necessary to run post-installation script to move thing in their places or just to make sure everything
+is fine. The optional output should contain a friendly message.
+
+| Code | Output           | Meaning
+| ---- | ---------------- | -------
+| `0`  | Optional Message | Everything's alright, let's proceed
+| `1`  | Optional Message | Something's went wrong, let's give the user a hint
+| `2`  | Optional Message | Something's went wrong, let's give the user a hint and also revert the kext installation
+
+If some additional task have been taken using custom script during the installation, make sure to revert them in the
+post-installation script if you're returning code `2`.
+
+#### Notes on scripts
+Both of the scripts must not have any Xcode dependencies! Thus, it only supports a handful of scripting languages,
+eg. Bash, Python2.7, PHP, Perl, etc. Custom script can be Mach-O executable. So, executables written in C/C++, Obj-C,
+etc. are also supported.

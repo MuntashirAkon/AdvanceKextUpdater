@@ -1,0 +1,37 @@
+{
+  "name": "NoTouchID",
+  "kext": "NoTouchID.kext",
+  "description": "A Lilu plugin for disabling Touch ID support.",
+  "homepage": "https://github.com/al3xtjames/NoTouchID",
+  "version": "1.0.1",
+  "versions": null,
+  "target": "LE",
+  "since": "10.13.4",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": null,
+    "rel": {
+      "url": "https://github.com/al3xtjames/NoTouchID/releases/download/1.0.1/1.0.1.RELEASE.zip",
+      "script": null,
+      "loc": "NoTouchID.kext"
+    }
+  },
+  "changes": "Enabled Mojave support by default.",
+  "guide": "### Introduction\nBiometricKit.framework in 10.13.4+ assumes a Touch ID sensor is present when a\ncompatible board ID is used, which causes lag in authentication dialogs (as\nwell as a delayed login screen). Patching this out resolves such hangs.\n\n### Configuration\n - Add `-nobiooff` to disable NoTouchID\n - Add `-nobiobeta` to enable NoTouchID on unsupported OS versions (10.13/10.14\n   are supported by default)",
+  "time": "2018-07-24 16:36:14",
+  "license": "Apache License v2.0",
+  "authors": [
+    {
+      "name": "Alex James",
+      "email": "theracermaster@gmail.com",
+      "homepage": "https://alextjam.es"
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.0^"
+  },
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

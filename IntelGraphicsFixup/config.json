@@ -1,0 +1,65 @@
+{
+  "name": "IntelGraphicsFixup",
+  "kext": "IntelGraphicsFixup.kext",
+  "description": "An open source kernel extension providing patches to selected Intel GPUs.",
+  "homepage": "https://github.com/lvs1974/IntelGraphicsFixup",
+  "version": "1.2.7",
+  "versions": null,
+  "target": "LE",
+  "since": "10.10",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/lvs1974/IntelGraphicsFixup/releases/download/v1.2.7/1.2.7.DEBUG.zip",
+      "script": null,
+      "loc": "IntelGraphicsFixup.kext"
+    },
+    "rel": {
+      "url": "https://github.com/lvs1974/IntelGraphicsFixup/releases/download/v1.2.7/1.2.7.RELEASE.zip",
+      "script": null,
+      "loc": "IntelGraphicsFixup.kext"
+    }
+  },
+  "changes": "#### v1.2.7\r\n- Add `igfxgl=1` boot argument (and `disable-metal` property) to disable Metal support\r\n- Implement Gen6Accelerator with IntelAccelerator rename to fix GVA warnings (use `igfxsnb=0` boot argument to disable)\r\n- Harden solved symbol verification to avoid panics with broken kext cache\r\n- Replace connector-less Sandy Bridge framebuffer for unsupported macmodels from 0x30030 to 0x50000\r\n\r\nIn order to boot with `igfxgl=1` on 10.13.x you may need to set the defaults:\r\n```\r\nsudo defaults write /Library/Preferences/com.apple.CoreDisplay useMetal -boolean no\r\nsudo defaults write /Library/Preferences/com.apple.CoreDisplay useIOP -boolean no\r\n```",
+  "guide": "#### Features\n- Fixes PAVP freezes with Intel Capri Graphics (HD4000), Azul Graphics (HD4400, HD4600) and Intel Skylake/Kaby Lake Graphics\n- Fixes boot logo with all known Intel Graphics starting with HD4000 (via frame buffer reset or via restoring video memory content)\n- Fixes display initialization with Intel Skylake and Kaby Lake Graphics\n- Performs necessary IGPU, digital audio, and IMEI property correction and renaming\n- Ensures a correct IGPU model in I/O Registry (when it is not specified manually)\n- Supports IGPU device-id faking (correct `device-id` should be set via device properties or ACPI)\n- Allows booting without  `-disablegfxfirmware`  boot argument with Kaby Lake Graphics in 10.13\n- Allows booting in VESA mode with Intel HD graphics (via `-igfxvesa` boot argument)\n- Performs basic framebuffer id injection when none is specified (connector-less frames will be used with discrete GPUs)\n- Allows GuC microcode loading with Intel Skylake/Kaby Lake Graphics in 10.13 (via `igfxfw=1` boot argument)\n- Renames Gen6Accelerator with IntelAccelerator for Sandy Bridge CPUs for GVA support\n- Allows booting with OpenGL-only acceleration (via `igfxgl=0` boot argument or `disable-metal` property)\n\n#### Configuration\nAdd `-igfxdbg` to enable debug printing (available in DEBUG binaries).  \nAdd `-igfxoff` to disable IntelGraphicsFixup.  \nAdd `-igfxbeta` to enable IntelGraphicsFixup on unsupported os versions (10.13 and below are enabled by default).  \nAdd `-igfxvesa` to boot Intel graphics without hardware acceleration (VESA mode).  \nAdd `igfxfw=1` to enable GuC microcode loading in 10.13 or newer.  \nAdd `igfxrst=1` to prefer drawing Apple logo at 2nd boot stage instead of framebuffer copying.  \nAdd `igfxframe=frame` to inject a dedicated framebuffer identifier into IGPU (only for TESTING purposes).  \nAdd `igfxsnb=0` to disable IntelAccelerator name fix for Sandy Bridge CPUs  \nAdd `igfxgl=0` to disable Metal support",
+  "time": "2018-04-10 15:56:07",
+  "license": "Custom",
+  "authors": [
+    {
+      "name": "lvs1974",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "vit9696",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "fcsd5k",
+      "email": null,
+      "homepage": null
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.0^"
+  },
+  "conflict": null,
+  "replaced_by": {
+    "since": "10.13",
+    "kexts": {
+      "WhateverGreen": "1.2.0^"
+    }
+  },
+  "suggest": [
+    {
+      "name": "IntelGraphicsDVMTFixup",
+      "text": "A Lilu extension to solve small (32MB) DVMT-prealloc setting in Broadwell/Skylake/KabyLake"
+    },
+    {
+      "name": "NvidiaGraphicsFixup",
+      "text": "An open source kernel extension providing patches for NVidia GPUs."
+    }
+  ]
+}

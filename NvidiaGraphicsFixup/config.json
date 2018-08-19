@@ -1,0 +1,60 @@
+{
+  "name": "NvidiaGraphicsFixup",
+  "kext": "NvidiaGraphicsFixup.kext",
+  "description": "An open source kernel extension providing patches for NVidia GPUs.",
+  "homepage": "https://github.com/lvs1974/NvidiaGraphicsFixup",
+  "version": "1.2.7",
+  "versions": null,
+  "target": "LE",
+  "since": "10.10",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/lvs1974/NvidiaGraphicsFixup/releases/download/v1.2.7/1.2.7.DEBUG.zip",
+      "script": null,
+      "loc": "NvidiaGraphicsFixup.kext"
+    },
+    "rel": {
+      "url": "https://github.com/lvs1974/NvidiaGraphicsFixup/releases/download/v1.2.7/1.2.7.RELEASE.zip",
+      "script": null,
+      "loc": "NvidiaGraphicsFixup.kext"
+    }
+  },
+  "changes": "Fix a name conflict for config variable",
+  "guide": "#### Features\n- Fixes an issue in AppleGraphicsDevicePolicy.kext so that we could use a MacPro6,1 board-id/model combination, \n  without the usual hang with a black screen. \n  [Patching AppleGraphicsDevicePolicy.kext](https://pikeralpha.wordpress.com/2015/11/23/patching-applegraphicsdevicepolicy-kext)\n- Modifies macOS to recognize NVIDIA's web drivers as platform binaries. This resolves the issue with transparent windows without content,\n  which appear for applications that use Metal and have Library Validation enabled. Common affected applications are iBooks and Little Snitch Network Monitor,\n  though this patch is universal and fixes them all.\n  [NVWebDriverLibValFix](https://github.com/mologie/NVWebDriverLibValFix)\n- Injects IOVARendererID into GPU properties (required for Shiki-based solution for non-freezing Intel and/or any discrete GPU)\n- Allows to use ports HDMI, DP, Digital DVI with audio (Injects @0connector-type - @5connector-type properties into GPU)\n- Fixes interface stuttering on 10.13 (official and web drivers)\n\n#### Boot-args\n- `-ngfxoff` disables kext loading\n- `-ngfxdbg` turns on debugging output\n- `-ngfxbeta` enables loading under unsupported osx version\n- `-ngfxnoaudio` disables all audio fixes\n- `-ngfxnoaudiocon` disables audio connectors injection\n- `-ngfxnovarenderer` disables IOVARenderer injection\n- `-ngfxlibvalfix` disables NVWebDriverLibValFix fix\n- `ngfxpatch=cfgmap` enforcing `none` into ConfigMap dictionary for system board-id\n- `ngfxpatch=vit9696` disables check for board-id , enabled by default\n- `ngfxpatch=pikera` replaces `board-id` with `board-ix`\n- `ngfxgl=1` boot argument (and `disable-metal` property) to disable Metal support\n- `ngfxcompat=1` boot argument (and `force-compat` property) to ignore compatibility check in NVDAStartupWeb\n- `ngfxsubmit=0` boot argument to disable interface stuttering fix on 10.13",
+  "time": "2018-06-06 21:45:21",
+  "license": "Custom",
+  "authors": [
+    {
+      "name": "lvs1974",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "vit9696",
+      "email": null,
+      "homepage": null
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.0^"
+  },
+  "conflict": null,
+  "replaced_by": {
+    "since": "10.13",
+    "kexts": {
+      "WhateverGreen": "1.2.0^"
+    }
+  },
+  "suggest": [
+    {
+      "name": "IntelGraphicsFixup",
+      "text": "An open source kernel extension providing patches to selected Intel GPUs."
+    },
+    {
+      "name": "IntelGraphicsDVMTFixup",
+      "text": "A Lilu extension to solve small (32MB) DVMT-prealloc setting in Broadwell/Skylake/KabyLake"
+    }
+  ]
+}

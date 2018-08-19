@@ -1,0 +1,55 @@
+{
+  "name": "RealtekRTL8100",
+  "kext": "RealtekRTL8100.kext",
+  "description": "Open source driver for the RealtekRTL8100 family.",
+  "homepage": "https://github.com/Mieze/RealtekRTL8100",
+  "version": "2.0.1",
+  "versions": [
+    {
+      "since": "10.12",
+      "version:": "2.0.0",
+      "location": "config-2.0.0.json"
+    },
+    {
+      "since": "10.8",
+      "version:": "1.0.0",
+      "location": "config-1.0.0.json"
+    },
+    {
+      "since": "10.7",
+      "version:": "1.0.0",
+      "location": "config-1.0.0.lion.json"
+    }
+  ],
+  "target": "LE",
+  "since": "10.13",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/MuntashirAkon/RealtekRTL8100/releases/download/2.0.1/2.0.1.DEBUG.zip",
+      "script": null,
+      "loc": "RealtekRTL8100.kext"
+    },
+    "rel": {
+      "url": "https://github.com/MuntashirAkon/RealtekRTL8100/releases/download/2.0.1/2.0.1.RELEASE.zip",
+      "script": null,
+      "loc": "RealtekRTL8100.kext"
+    }
+  },
+  "changes": "-Fixes a problem with retrieval of the permanent MAC address on some chips.\n-Requires High Sierra.",
+  "guide": "@see https://github.com/Mieze/RealtekRTL8100/blob/master/README.md?raw=true",
+  "time": "2018-05-10",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "Laura Müller",
+      "email": null,
+      "homepage": "https://github.com/Mieze"
+    }
+  ],
+  "require": null,
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

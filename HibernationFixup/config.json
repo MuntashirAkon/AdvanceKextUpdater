@@ -1,0 +1,46 @@
+{
+  "name": "HibernationFixup",
+  "kext": "HibernationFixup.kext",
+  "description": "An open source kernel extension providing a sync between RTC variables and NVRAM.",
+  "homepage": "https://github.com/acidanthera/HibernationFixup",
+  "version": "1.2.3",
+  "versions": null,
+  "target": "LE",
+  "since": "10.10.5",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/acidanthera/HibernationFixup/releases/download/1.2.3/1.2.3.DEBUG.zip",
+      "script": null,
+      "loc": "HibernationFixup.kext"
+    },
+    "rel": {
+      "url": "https://github.com/acidanthera/HibernationFixup/releases/download/1.2.3/1.2.3.RELEASE.zip",
+      "script": null,
+      "loc": "HibernationFixup.kext"
+    }
+  },
+  "changes": "Basic 10.14 support",
+  "guide": "#### Features\n- Enables 'native' hibernation on PC's with hardware NVRAM on 10.10.5 and later.\n  'Native' means hibernation with encryption (standard hibernate modes 3 & 25)\n- Enables dumping NVRAM to file /nvram.plist before hibernation or panic\n\n#### Boot-args\n- `-hbfx-dump-nvram` saves NVRAM to a file nvram.plist before hibernation and after kernel panic (with panic info)\n- `-hbfx-disable-patch-pci` disables patching of IOPCIFamily (this patch helps to avoid hang & black screen after resume (restoreMachineState won't be called for all devices)\n- `hbfx-patch-pci=XHC,IMEI,IGPU` allows to specify explicit device list and restoreMachineState won't  be called only for these devices)\n- `-hbfxdbg` turns on debugging output\n- `-hbfxbeta` enables loading on unsupported osx\n- `-hbfxoff` disables kext loading",
+  "time": "2018-08-13 10:59:40",
+  "license": "BSD 3-Clause \"New\" or \"Revised\" License",
+  "authors": [
+    {
+      "name": "lvs1974",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "vit9696",
+      "email": null,
+      "homepage": null
+    }
+  ],
+  "require":  {
+    "Lilu": "1.2.5^"
+  },
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

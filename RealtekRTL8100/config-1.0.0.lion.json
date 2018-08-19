@@ -1,0 +1,39 @@
+{
+  "name": "RealtekRTL8100",
+  "kext": "RealtekRTL8100.kext",
+  "description": "Open source driver for the RealtekRTL8100 family.",
+  "homepage": "https://github.com/Mieze/RealtekRTL8100",
+  "version": "1.0.0",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/MuntashirAkon/RealtekRTL8100/releases/download/1.0.0/1.0.0.DEBUG_LION.zip",
+      "script": null,
+      "loc": "RealtekRTL8100.kext"
+    },
+    "rel": {
+      "url": "https://github.com/MuntashirAkon/RealtekRTL8100/releases/download/1.0.0/1.0.0.RELEASE_LION.zip",
+      "script": null,
+      "loc": "RealtekRTL8100.kext"
+    }
+  },
+  "changes": "First official release.",
+  "guide": "@see https://github.com/Mieze/RealtekRTL8100/blob/master/README.md?raw=true",
+  "time": "2014-05-24",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "Laura Müller",
+      "email": null,
+      "homepage": "https://github.com/Mieze"
+    }
+  ],
+  "require": null,
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

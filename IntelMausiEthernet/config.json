@@ -1,0 +1,39 @@
+{
+  "name": "IntelMausiEthernet",
+  "kext": "IntelMausiEthernet.kext",
+  "description": "OS X driver for Intel onboard LAN",
+  "homepage": "https://github.com/Mieze/IntelMausiEthernet",
+  "version": "2.4.0d0",
+  "versions": null,
+  "target": "LE",
+  "since": "10.7",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-intel-network/downloads/RehabMan-IntelMausiEthernet-v2-2018-0424.zip",
+      "script": null,
+      "loc": "Debug/IntelMausiEthernet.kext"
+    },
+    "rel": {
+      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-intel-network/downloads/RehabMan-IntelMausiEthernet-v2-2018-0424.zip",
+      "script": null,
+      "loc": "Release/IntelMausiEthernet.kext"
+    }
+  },
+  "changes": "Updated Linux sources and support for CoffeeLake",
+  "guide": "@see https://github.com/Mieze/IntelMausiEthernet/blob/master/README.md?raw=true",
+  "time": "2018-04-24 20:28:39",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "Laura Müller",
+      "email": null,
+      "homepage": "https://github.com/Mieze"
+    }
+  ],
+  "require": null,
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

@@ -70,5 +70,50 @@
   },
   "FakeSMC": {
     "kext": "FakeSMC.kext"
+  },
+  "FakeSMC_ACPISensors": {
+    "kext": "FakeSMC_ACPISensors.kext"
+  },
+  "FakeSMC_CPUSensors": {
+    "kext": "FakeSMC_CPUSensors.kext"
+  },
+  "FakeSMC_GPUSensors": {
+    "kext": "FakeSMC_GPUSensors.kext"
+  },
+  "FakeSMC_LPCSensors": {
+    "kext": "FakeSMC_LPCSensors.kext"
+  },
+  "HibernationFixup": {
+    "kext": "HibernationFixup.kext"
+  },
+  "IntelGraphicsDVMTFixup": {
+    "kext": "IntelGraphicsDVMTFixup.kext"
+  },
+  "IntelGraphicsFixup": {
+    "kext": "IntelGraphicsFixup.kext"
+  },
+  "IntelMausiEthernet": {
+    "kext": "IntelMausiEthernet.kext"
+  },
+  "Lilu": {
+    "kext": "Lilu.kext"
+  },
+  "LiluFriend": {
+    "kext": "LiluFriend.kext"
+  },
+  "NightShiftUnlocker": {
+    "kext": "NightShiftUnlocker.kext"
+  },
+  "NoTouchID": {
+    "kext": "NoTouchID.kext"
+  },
+  "NvidiaGraphicsFixup": {
+    "kext": "NvidiaGraphicsFixup.kext"
+  },
+  "RealtekRTL8100": {
+    "kext": "RealtekRTL8100.kext"
+  },
+  "RealtekRTL8111": {
+    "kext": "RealtekRTL8111.kext"
   }
 }

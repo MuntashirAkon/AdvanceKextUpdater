@@ -1,0 +1,37 @@
+{
+  "name": "LiluFriend",
+  "kext": "LiluFriend.kext",
+  "description": "A helper of Lilu for those who prefer to leave everything inside /Library/Extensions and /System/Library/Extensions.",
+  "homepage": "https://github.com/PMheart/LiluFriend",
+  "version": "1.1.0",
+  "versions": null,
+  "target": "LE",
+  "since": "10.4",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": null,
+    "rel": {
+      "url": "https://github.com/PMheart/LiluFriend/releases/download/1.1.0/1.1.0.RELEASE.zip",
+      "script": null,
+      "loc": "LiluFriend.kext"
+    }
+  },
+  "changes": "Removed some examples from Info.plist",
+  "guide": "@see https://github.com/PMheart/LiluFriend/blob/master/README.md?raw=true",
+  "time": "2017-09-18 05:03:02",
+  "license": "BSD 3-Clause \"New\" or \"Revised\" License",
+  "authors": [
+    {
+      "name": "PMheart",
+      "email": null,
+      "homepage": "https://pmheart.site"
+    }
+  ],
+  "require": {
+    "Lilu": "*"
+  },
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}

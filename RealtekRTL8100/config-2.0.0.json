@@ -1,0 +1,39 @@
+{
+  "name": "RealtekRTL8100",
+  "kext": "RealtekRTL8100.kext",
+  "description": "Open source driver for the RealtekRTL8100 family.",
+  "homepage": "https://github.com/Mieze/RealtekRTL8100",
+  "version": "2.0.0",
+  "versions": null,
+  "target": "LE",
+  "since": "10.12",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://github.com/MuntashirAkon/RealtekRTL8100/releases/download/2.0.0/2.0.0.DEBUG.zip",
+      "script": null,
+      "loc": "RealtekRTL8100.kext"
+    },
+    "rel": {
+      "url": "https://github.com/MuntashirAkon/RealtekRTL8100/releases/download/2.0.0/2.0.0.RELEASE.zip",
+      "script": null,
+      "loc": "RealtekRTL8100.kext"
+    }
+  },
+  "changes": "- Uses Apple's private driver interface introduced with 10.8.\n- Supports packet scheduling with QFQ.\n- Adds support for the RTL8107E.\n- Adds support for flow control and EEE.\n- Requires Sierra.",
+  "guide": "@see https://github.com/Mieze/RealtekRTL8100/blob/master/README.md?raw=true",
+  "time": "2017-04-01",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "Laura Müller",
+      "email": null,
+      "homepage": "https://github.com/Mieze"
+    }
+  ],
+  "require": null,
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}
