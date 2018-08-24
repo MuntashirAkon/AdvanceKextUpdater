@@ -1,0 +1,381 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8700761C212D8B4E00FECD8E /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 8700761B212D8B4E00FECD8E /* config.json */; };
+		876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD993212DFC2D00D10B9D /* ConfigAuthor.m */; };
+		876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD996212E11A800D10B9D /* ConfigVersionControl.m */; };
+		876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD999212EB94700D10B9D /* ConfigMacOSVersionControl.m */; };
+		8773B715212BFD730096BFCC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B714212BFD730096BFCC /* AppDelegate.m */; };
+		8773B717212BFD760096BFCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8773B716212BFD760096BFCC /* Assets.xcassets */; };
+		8773B71A212BFD760096BFCC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8773B718212BFD760096BFCC /* MainMenu.xib */; };
+		8773B71D212BFD760096BFCC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B71C212BFD760096BFCC /* main.m */; };
+		8773B726212BFF0F0096BFCC /* KextHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B725212BFF0F0096BFCC /* KextHandler.m */; };
+		8773B72C212C06150096BFCC /* KextConfigParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B72B212C06150096BFCC /* KextConfigParser.m */; };
+		87BB8577212FB567007F4D29 /* KextConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB8576212FB567007F4D29 /* KextConfig.m */; };
+		87BB8579212FC0CD007F4D29 /* git in Resources */ = {isa = PBXBuildFile; fileRef = 87BB8578212FC0CD007F4D29 /* git */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8700761B212D8B4E00FECD8E /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		876BD992212DFC1700D10B9D /* ConfigAuthor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigAuthor.h; sourceTree = "<group>"; };
+		876BD993212DFC2D00D10B9D /* ConfigAuthor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigAuthor.m; sourceTree = "<group>"; };
+		876BD995212E066F00D10B9D /* ConfigVersionControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigVersionControl.h; sourceTree = "<group>"; };
+		876BD996212E11A800D10B9D /* ConfigVersionControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigVersionControl.m; sourceTree = "<group>"; };
+		876BD998212EB93B00D10B9D /* ConfigMacOSVersionControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigMacOSVersionControl.h; sourceTree = "<group>"; };
+		876BD999212EB94700D10B9D /* ConfigMacOSVersionControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigMacOSVersionControl.m; sourceTree = "<group>"; };
+		8773B710212BFD730096BFCC /* AdvanceKextUpdater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdvanceKextUpdater.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8773B713212BFD730096BFCC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8773B714212BFD730096BFCC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8773B716212BFD760096BFCC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8773B71B212BFD760096BFCC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8773B71C212BFD760096BFCC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8773B71E212BFD760096BFCC /* AdvanceKextUpdater.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AdvanceKextUpdater.entitlements; sourceTree = "<group>"; };
+		8773B724212BFEE40096BFCC /* KextHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextHandler.h; sourceTree = "<group>"; };
+		8773B725212BFF0F0096BFCC /* KextHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextHandler.m; sourceTree = "<group>"; };
+		8773B729212BFF4C0096BFCC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		8773B72A212C05EB0096BFCC /* KextConfigParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextConfigParser.h; sourceTree = "<group>"; };
+		8773B72B212C06150096BFCC /* KextConfigParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextConfigParser.m; sourceTree = "<group>"; };
+		87BB8575212FB55E007F4D29 /* KextConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextConfig.h; sourceTree = "<group>"; };
+		87BB8576212FB567007F4D29 /* KextConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextConfig.m; sourceTree = "<group>"; };
+		87BB8578212FC0CD007F4D29 /* git */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = git; sourceTree = "<group>"; };
+		87BB857A212FF1C3007F4D29 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8773B70D212BFD730096BFCC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		876BD991212DFBD600D10B9D /* Config Related Objects */ = {
+			isa = PBXGroup;
+			children = (
+				876BD992212DFC1700D10B9D /* ConfigAuthor.h */,
+				876BD993212DFC2D00D10B9D /* ConfigAuthor.m */,
+				876BD995212E066F00D10B9D /* ConfigVersionControl.h */,
+				876BD996212E11A800D10B9D /* ConfigVersionControl.m */,
+				876BD998212EB93B00D10B9D /* ConfigMacOSVersionControl.h */,
+				876BD999212EB94700D10B9D /* ConfigMacOSVersionControl.m */,
+				87BB8575212FB55E007F4D29 /* KextConfig.h */,
+				87BB8576212FB567007F4D29 /* KextConfig.m */,
+			);
+			name = "Config Related Objects";
+			sourceTree = "<group>";
+		};
+		8773B707212BFD730096BFCC = {
+			isa = PBXGroup;
+			children = (
+				8773B712212BFD730096BFCC /* AdvanceKextUpdater */,
+				8773B711212BFD730096BFCC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8773B711212BFD730096BFCC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8773B710212BFD730096BFCC /* AdvanceKextUpdater.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8773B712212BFD730096BFCC /* AdvanceKextUpdater */ = {
+			isa = PBXGroup;
+			children = (
+				87BB8578212FC0CD007F4D29 /* git */,
+				876BD991212DFBD600D10B9D /* Config Related Objects */,
+				8700761B212D8B4E00FECD8E /* config.json */,
+				8773B713212BFD730096BFCC /* AppDelegate.h */,
+				8773B714212BFD730096BFCC /* AppDelegate.m */,
+				8773B716212BFD760096BFCC /* Assets.xcassets */,
+				8773B718212BFD760096BFCC /* MainMenu.xib */,
+				8773B71B212BFD760096BFCC /* Info.plist */,
+				8773B71C212BFD760096BFCC /* main.m */,
+				8773B71E212BFD760096BFCC /* AdvanceKextUpdater.entitlements */,
+				8773B724212BFEE40096BFCC /* KextHandler.h */,
+				8773B725212BFF0F0096BFCC /* KextHandler.m */,
+				8773B72A212C05EB0096BFCC /* KextConfigParser.h */,
+				8773B72B212C06150096BFCC /* KextConfigParser.m */,
+				87BB857A212FF1C3007F4D29 /* PrefixHeader.pch */,
+			);
+			path = AdvanceKextUpdater;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8773B70F212BFD730096BFCC /* AdvanceKextUpdater */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8773B721212BFD760096BFCC /* Build configuration list for PBXNativeTarget "AdvanceKextUpdater" */;
+			buildPhases = (
+				8773B70C212BFD730096BFCC /* Sources */,
+				8773B70D212BFD730096BFCC /* Frameworks */,
+				8773B70E212BFD730096BFCC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AdvanceKextUpdater;
+			productName = AdvanceKextUpdater;
+			productReference = 8773B710212BFD730096BFCC /* AdvanceKextUpdater.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8773B708212BFD730096BFCC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Muntashir Al-Islam";
+				TargetAttributes = {
+					8773B70F212BFD730096BFCC = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 8773B70B212BFD730096BFCC /* Build configuration list for PBXProject "AdvanceKextUpdater" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8773B707212BFD730096BFCC;
+			productRefGroup = 8773B711212BFD730096BFCC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8773B70F212BFD730096BFCC /* AdvanceKextUpdater */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8773B70E212BFD730096BFCC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8773B717212BFD760096BFCC /* Assets.xcassets in Resources */,
+				8773B71A212BFD760096BFCC /* MainMenu.xib in Resources */,
+				8700761C212D8B4E00FECD8E /* config.json in Resources */,
+				87BB8579212FC0CD007F4D29 /* git in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8773B70C212BFD730096BFCC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */,
+				87BB8577212FB567007F4D29 /* KextConfig.m in Sources */,
+				8773B72C212C06150096BFCC /* KextConfigParser.m in Sources */,
+				876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */,
+				876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */,
+				8773B71D212BFD760096BFCC /* main.m in Sources */,
+				8773B715212BFD730096BFCC /* AppDelegate.m in Sources */,
+				8773B726212BFF0F0096BFCC /* KextHandler.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8773B718212BFD760096BFCC /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8773B729212BFF4C0096BFCC /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8773B71F212BFD760096BFCC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		8773B720212BFD760096BFCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		8773B722212BFD760096BFCC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AdvanceKextUpdater/AdvanceKextUpdater.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 6X692P9AQ8;
+				INFOPLIST_FILE = AdvanceKextUpdater/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.muntashirakon.AdvanceKextUpdater;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		8773B723212BFD760096BFCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AdvanceKextUpdater/AdvanceKextUpdater.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 6X692P9AQ8;
+				INFOPLIST_FILE = AdvanceKextUpdater/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.muntashirakon.AdvanceKextUpdater;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8773B70B212BFD730096BFCC /* Build configuration list for PBXProject "AdvanceKextUpdater" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8773B71F212BFD760096BFCC /* Debug */,
+				8773B720212BFD760096BFCC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8773B721212BFD760096BFCC /* Build configuration list for PBXNativeTarget "AdvanceKextUpdater" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8773B722212BFD760096BFCC /* Debug */,
+				8773B723212BFD760096BFCC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8773B708212BFD730096BFCC /* Project object */;
+}
