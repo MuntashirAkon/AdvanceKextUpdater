@@ -10,24 +10,24 @@
 #import "ConfigAuthor.h"
 
 @implementation ConfigAuthor
+@synthesize name;
+@synthesize email;
+@synthesize homepage;
 
 - (instancetype) init {
     return self;
 }
 
-- (instancetype) initWithDictionary: (NSDictionary *) AuthorDictionary {
-    name     = [AuthorDictionary objectForKey:@"name"];
-    email    = [AuthorDictionary objectForKey:@"email"];
-    homepage = [AuthorDictionary objectForKey:@"homepage"];
-    return self;
-}
-
 + (NSArray *) createFromArrayOfDictionary: (NSArray *) AuthorsDictionary {
-    NSMutableArray *authors;
+    NSMutableArray *authors = [NSMutableArray array];
     for (NSDictionary *author in AuthorsDictionary) {
-        [authors addObject:[[ConfigAuthor alloc] initWithDictionary:author]];
+        ConfigAuthor *authorObj = [[ConfigAuthor alloc] init];
+        [authorObj setName:[author objectForKey:@"name"]];
+        [authorObj setEmail:[author objectForKey:@"email"]];
+        [authorObj setHomepage:[author objectForKey:@"homepage"]];
+        [authors addObject:authorObj];
     }
-    return [NSMutableArray copy];
+    return [authors copy];
 }
 
 @end

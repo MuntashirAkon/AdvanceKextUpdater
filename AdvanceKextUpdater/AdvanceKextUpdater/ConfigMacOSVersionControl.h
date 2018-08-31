@@ -16,7 +16,8 @@
 
 - (BOOL) compareWith: (NSString *) macOSVersion;
 - (BOOL) compareWithCurrent;
-
++ (NSString *) getMacOSVersion;
++ (int) getMacOSVersionInInt;
 @end
 
 #endif /* ConfigMacOSVersionControl_h */

@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8700761C212D8B4E00FECD8E /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 8700761B212D8B4E00FECD8E /* config.json */; };
+		875032EA21341C8800F5278D /* ConfigKextVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 875032E921341C8800F5278D /* ConfigKextVersionControl.m */; };
+		875032ED2135049C00F5278D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875032EC2135049C00F5278D /* WebKit.framework */; };
 		876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD993212DFC2D00D10B9D /* ConfigAuthor.m */; };
 		876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD996212E11A800D10B9D /* ConfigVersionControl.m */; };
 		876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD999212EB94700D10B9D /* ConfigMacOSVersionControl.m */; };
@@ -16,13 +17,35 @@
 		8773B71A212BFD760096BFCC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8773B718212BFD760096BFCC /* MainMenu.xib */; };
 		8773B71D212BFD760096BFCC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B71C212BFD760096BFCC /* main.m */; };
 		8773B726212BFF0F0096BFCC /* KextHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B725212BFF0F0096BFCC /* KextHandler.m */; };
-		8773B72C212C06150096BFCC /* KextConfigParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B72B212C06150096BFCC /* KextConfigParser.m */; };
+		877CDB67213861C500176777 /* hasInternetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 877CDB66213861C500176777 /* hasInternetConnection.m */; };
+		877CDB6D21390C6900176777 /* MMMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877CDB6B2139093E00176777 /* MMMarkdown.framework */; };
+		877CDB6F21390CA500176777 /* MMMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877CDB6E21390CA500176777 /* MMMarkdown.framework */; };
+		877CDB7021390CA500176777 /* MMMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 877CDB6E21390CA500176777 /* MMMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		877CDB7321390E8E00176777 /* github-markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 877CDB7221390E8E00176777 /* github-markdown.css */; };
 		87BB8577212FB567007F4D29 /* KextConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB8576212FB567007F4D29 /* KextConfig.m */; };
 		87BB8579212FC0CD007F4D29 /* git in Resources */ = {isa = PBXBuildFile; fileRef = 87BB8578212FC0CD007F4D29 /* git */; };
+		87BB857C21302A02007F4D29 /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857B21302A02007F4D29 /* JSONParser.m */; };
+		87BB858021308177007F4D29 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		877CDB7121390CA500176777 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				877CDB7021390CA500176777 /* MMMarkdown.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		8700761B212D8B4E00FECD8E /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		875032E821341C3300F5278D /* ConfigKextVersionControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigKextVersionControl.h; sourceTree = "<group>"; };
+		875032E921341C8800F5278D /* ConfigKextVersionControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigKextVersionControl.m; sourceTree = "<group>"; };
+		875032EC2135049C00F5278D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		876BD992212DFC1700D10B9D /* ConfigAuthor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigAuthor.h; sourceTree = "<group>"; };
 		876BD993212DFC2D00D10B9D /* ConfigAuthor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigAuthor.m; sourceTree = "<group>"; };
 		876BD995212E066F00D10B9D /* ConfigVersionControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigVersionControl.h; sourceTree = "<group>"; };
@@ -39,12 +62,19 @@
 		8773B724212BFEE40096BFCC /* KextHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextHandler.h; sourceTree = "<group>"; };
 		8773B725212BFF0F0096BFCC /* KextHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextHandler.m; sourceTree = "<group>"; };
 		8773B729212BFF4C0096BFCC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		8773B72A212C05EB0096BFCC /* KextConfigParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextConfigParser.h; sourceTree = "<group>"; };
-		8773B72B212C06150096BFCC /* KextConfigParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextConfigParser.m; sourceTree = "<group>"; };
+		877CDB66213861C500176777 /* hasInternetConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = hasInternetConnection.m; sourceTree = "<group>"; };
+		877CDB69213908FA00176777 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMMarkdown.framework; path = ../../../../Downloads/Carthage/Build/Mac/MMMarkdown.framework; sourceTree = "<group>"; };
+		877CDB6B2139093E00176777 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MMMarkdown.framework; sourceTree = "<group>"; };
+		877CDB6E21390CA500176777 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MMMarkdown.framework; sourceTree = "<group>"; };
+		877CDB7221390E8E00176777 /* github-markdown.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "github-markdown.css"; sourceTree = "<group>"; };
 		87BB8575212FB55E007F4D29 /* KextConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextConfig.h; sourceTree = "<group>"; };
 		87BB8576212FB567007F4D29 /* KextConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextConfig.m; sourceTree = "<group>"; };
 		87BB8578212FC0CD007F4D29 /* git */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = git; sourceTree = "<group>"; };
 		87BB857A212FF1C3007F4D29 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		87BB857B21302A02007F4D29 /* JSONParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONParser.m; sourceTree = "<group>"; };
+		87BB857D21302CD9007F4D29 /* JSONParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONParser.h; sourceTree = "<group>"; };
+		87BB857E21308177007F4D29 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
+		87BB857F21308177007F4D29 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,13 +82,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				877CDB6D21390C6900176777 /* MMMarkdown.framework in Frameworks */,
+				877CDB6F21390CA500176777 /* MMMarkdown.framework in Frameworks */,
+				875032ED2135049C00F5278D /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		876BD991212DFBD600D10B9D /* Config Related Objects */ = {
+		875032EB2135049B00F5278D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				877CDB69213908FA00176777 /* MMMarkdown.framework */,
+				877CDB6B2139093E00176777 /* MMMarkdown.framework */,
+				877CDB6E21390CA500176777 /* MMMarkdown.framework */,
+				875032EC2135049C00F5278D /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		876BD991212DFBD600D10B9D /* Config Related */ = {
 			isa = PBXGroup;
 			children = (
 				876BD992212DFC1700D10B9D /* ConfigAuthor.h */,
@@ -69,8 +113,10 @@
 				876BD999212EB94700D10B9D /* ConfigMacOSVersionControl.m */,
 				87BB8575212FB55E007F4D29 /* KextConfig.h */,
 				87BB8576212FB567007F4D29 /* KextConfig.m */,
+				875032E821341C3300F5278D /* ConfigKextVersionControl.h */,
+				875032E921341C8800F5278D /* ConfigKextVersionControl.m */,
 			);
-			name = "Config Related Objects";
+			name = "Config Related";
 			sourceTree = "<group>";
 		};
 		8773B707212BFD730096BFCC = {
@@ -78,6 +124,7 @@
 			children = (
 				8773B712212BFD730096BFCC /* AdvanceKextUpdater */,
 				8773B711212BFD730096BFCC /* Products */,
+				875032EB2135049B00F5278D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,23 +139,34 @@
 		8773B712212BFD730096BFCC /* AdvanceKextUpdater */ = {
 			isa = PBXGroup;
 			children = (
-				87BB8578212FC0CD007F4D29 /* git */,
-				876BD991212DFBD600D10B9D /* Config Related Objects */,
-				8700761B212D8B4E00FECD8E /* config.json */,
+				877CDB74213918CE00176777 /* Resources */,
+				87BB857F21308177007F4D29 /* Task.h */,
+				87BB857E21308177007F4D29 /* Task.m */,
+				876BD991212DFBD600D10B9D /* Config Related */,
 				8773B713212BFD730096BFCC /* AppDelegate.h */,
 				8773B714212BFD730096BFCC /* AppDelegate.m */,
-				8773B716212BFD760096BFCC /* Assets.xcassets */,
 				8773B718212BFD760096BFCC /* MainMenu.xib */,
 				8773B71B212BFD760096BFCC /* Info.plist */,
 				8773B71C212BFD760096BFCC /* main.m */,
 				8773B71E212BFD760096BFCC /* AdvanceKextUpdater.entitlements */,
 				8773B724212BFEE40096BFCC /* KextHandler.h */,
 				8773B725212BFF0F0096BFCC /* KextHandler.m */,
-				8773B72A212C05EB0096BFCC /* KextConfigParser.h */,
-				8773B72B212C06150096BFCC /* KextConfigParser.m */,
 				87BB857A212FF1C3007F4D29 /* PrefixHeader.pch */,
+				87BB857B21302A02007F4D29 /* JSONParser.m */,
+				87BB857D21302CD9007F4D29 /* JSONParser.h */,
+				877CDB66213861C500176777 /* hasInternetConnection.m */,
 			);
 			path = AdvanceKextUpdater;
+			sourceTree = "<group>";
+		};
+		877CDB74213918CE00176777 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8773B716212BFD760096BFCC /* Assets.xcassets */,
+				877CDB7221390E8E00176777 /* github-markdown.css */,
+				87BB8578212FC0CD007F4D29 /* git */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -121,6 +179,8 @@
 				8773B70C212BFD730096BFCC /* Sources */,
 				8773B70D212BFD730096BFCC /* Frameworks */,
 				8773B70E212BFD730096BFCC /* Resources */,
+				875032E42132BACE00F5278D /* Increment Build Number */,
+				877CDB7121390CA500176777 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -169,27 +229,48 @@
 			buildActionMask = 2147483647;
 			files = (
 				8773B717212BFD760096BFCC /* Assets.xcassets in Resources */,
+				877CDB7321390E8E00176777 /* github-markdown.css in Resources */,
 				8773B71A212BFD760096BFCC /* MainMenu.xib in Resources */,
-				8700761C212D8B4E00FECD8E /* config.json in Resources */,
 				87BB8579212FC0CD007F4D29 /* git in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		875032E42132BACE00F5278D /* Increment Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Increment Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "CPV=$[ CURRENT_PROJECT_VERSION+1 ]\nsed -i '' \"s/CURRENT_PROJECT_VERSION = $CURRENT_PROJECT_VERSION/CURRENT_PROJECT_VERSION = $CPV/\" $PROJECT_NAME.xcodeproj/project.pbxproj";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8773B70C212BFD730096BFCC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BB858021308177007F4D29 /* Task.m in Sources */,
 				876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */,
 				87BB8577212FB567007F4D29 /* KextConfig.m in Sources */,
-				8773B72C212C06150096BFCC /* KextConfigParser.m in Sources */,
 				876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */,
 				876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */,
+				87BB857C21302A02007F4D29 /* JSONParser.m in Sources */,
 				8773B71D212BFD760096BFCC /* main.m in Sources */,
 				8773B715212BFD730096BFCC /* AppDelegate.m in Sources */,
+				875032EA21341C8800F5278D /* ConfigKextVersionControl.m in Sources */,
 				8773B726212BFF0F0096BFCC /* KextHandler.m in Sources */,
+				877CDB67213861C500176777 /* hasInternetConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +322,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 354;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -258,10 +340,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -299,6 +382,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 354;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -310,9 +394,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -323,13 +408,20 @@
 				CODE_SIGN_ENTITLEMENTS = AdvanceKextUpdater/AdvanceKextUpdater.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_MARKETING_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 6X692P9AQ8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/AdvanceKextUpdater/PrefixHeader.pch";
 				INFOPLIST_FILE = AdvanceKextUpdater/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.muntashirakon.AdvanceKextUpdater;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -342,13 +434,20 @@
 				CODE_SIGN_ENTITLEMENTS = AdvanceKextUpdater/AdvanceKextUpdater.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_MARKETING_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 6X692P9AQ8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/AdvanceKextUpdater/PrefixHeader.pch";
 				INFOPLIST_FILE = AdvanceKextUpdater/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.muntashirakon.AdvanceKextUpdater;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

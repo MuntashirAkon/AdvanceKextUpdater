@@ -31,4 +31,14 @@
     return YES;
 }
 
++ (NSString *) getMacOSVersion {
+    NSString *version = [[[[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"] componentsSeparatedByString:@"."] objectAtIndex:1];
+    return [NSString stringWithFormat:@"10.%@", version];
+}
+
++ (int) getMacOSVersionInInt {
+    NSString *version = [[[[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"] componentsSeparatedByString:@"."] objectAtIndex:1];
+    return version.intValue;
+}
+
 @end

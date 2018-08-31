@@ -10,12 +10,11 @@
 #define ConfigAuthor_h
 
 @interface ConfigAuthor: NSObject {
-    @public // Public properties
-    NSString *name;
-    NSString *email;
-    NSString *homepage;
 }
-- (instancetype) initWithDictionary: (NSDictionary *) AuthorDictionary;
+@property NSString *name;
+@property NSString *email;
+@property NSString *homepage;
+
 + (NSArray *) createFromArrayOfDictionary: (NSArray *) AuthorDictionary;
 @end;
 
