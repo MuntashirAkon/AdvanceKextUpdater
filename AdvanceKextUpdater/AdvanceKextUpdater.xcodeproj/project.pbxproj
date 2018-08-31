@@ -24,8 +24,8 @@
 		877CDB7321390E8E00176777 /* github-markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 877CDB7221390E8E00176777 /* github-markdown.css */; };
 		87BB8577212FB567007F4D29 /* KextConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB8576212FB567007F4D29 /* KextConfig.m */; };
 		87BB8579212FC0CD007F4D29 /* git in Resources */ = {isa = PBXBuildFile; fileRef = 87BB8578212FC0CD007F4D29 /* git */; };
-		87BB857C21302A02007F4D29 /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857B21302A02007F4D29 /* JSONParser.m */; };
 		87BB858021308177007F4D29 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
+		87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485821395BBF0069DFC2 /* JSONParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,10 +71,10 @@
 		87BB8576212FB567007F4D29 /* KextConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextConfig.m; sourceTree = "<group>"; };
 		87BB8578212FC0CD007F4D29 /* git */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = git; sourceTree = "<group>"; };
 		87BB857A212FF1C3007F4D29 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		87BB857B21302A02007F4D29 /* JSONParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONParser.m; sourceTree = "<group>"; };
 		87BB857D21302CD9007F4D29 /* JSONParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONParser.h; sourceTree = "<group>"; };
 		87BB857E21308177007F4D29 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		87BB857F21308177007F4D29 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
+		87F2485821395BBF0069DFC2 /* JSONParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,7 +152,7 @@
 				8773B724212BFEE40096BFCC /* KextHandler.h */,
 				8773B725212BFF0F0096BFCC /* KextHandler.m */,
 				87BB857A212FF1C3007F4D29 /* PrefixHeader.pch */,
-				87BB857B21302A02007F4D29 /* JSONParser.m */,
+				87F2485821395BBF0069DFC2 /* JSONParser.m */,
 				87BB857D21302CD9007F4D29 /* JSONParser.h */,
 				877CDB66213861C500176777 /* hasInternetConnection.m */,
 			);
@@ -265,8 +265,8 @@
 				87BB8577212FB567007F4D29 /* KextConfig.m in Sources */,
 				876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */,
 				876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */,
-				87BB857C21302A02007F4D29 /* JSONParser.m in Sources */,
 				8773B71D212BFD760096BFCC /* main.m in Sources */,
+				87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */,
 				8773B715212BFD730096BFCC /* AppDelegate.m in Sources */,
 				875032EA21341C8800F5278D /* ConfigKextVersionControl.m in Sources */,
 				8773B726212BFF0F0096BFCC /* KextHandler.m in Sources */,
@@ -322,7 +322,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 354;
+				CURRENT_PROJECT_VERSION = 364;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -382,7 +382,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 354;
+				CURRENT_PROJECT_VERSION = 364;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

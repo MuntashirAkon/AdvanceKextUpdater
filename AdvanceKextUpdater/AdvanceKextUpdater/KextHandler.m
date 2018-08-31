@@ -66,23 +66,23 @@
  * @return BOOL
  */
 + (BOOL) checkForDBUpdate {
-    NSString *git_exec = [[NSBundle mainBundle] pathForResource:@"git" ofType:nil];
-    NSString *path = [self kextDBPath];
-    if(![[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        // Clone if not exists
-        return [self initDB];
-    } else {
-        // Update from git
-        @try {
+    @try {
+        NSString *git_exec = [[NSBundle mainBundle] pathForResource:@"git" ofType:nil];
+        NSString *path = [self kextDBPath];
+        if(![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            // Clone if not exists
+            return [self initDB];
+        } else {
+            // Update from git
             NSTask *task = [[NSTask alloc] init];
             task.launchPath = git_exec;
             task.arguments = @[@"-C", path, @"pull"];
             [task launch];
             [task waitUntilExit];
             return [task terminationStatus] == 0 ? YES : NO;
-        } @catch(NSError *e) {
-            return NO;
         }
+    } @catch(NSError *e) {
+        return NO;
     }
 }
 
@@ -102,15 +102,15 @@
         [task waitUntilExit];
         if(task.terminationStatus == 0) {
             // move to KEXT_BRANCH
+            NSTask *task = [[NSTask alloc] init];
             task.launchPath = git_exec;
-            task.arguments = @[@"checkout", KEXT_BRANCH];
+            task.arguments = @[@"-C", [self kextDBPath], @"checkout", KEXT_BRANCH];
             [task launch];
             [task waitUntilExit];
+            return task.terminationStatus == 0 ? YES : NO;
         }
-        return task.terminationStatus == 0 ? YES : NO;
-    } @catch(NSError *e) {
-        return NO;
-    }
+    } @catch(NSError *e) {}
+    return NO;
 }
 
 - (void) checkForKextUpdate {
