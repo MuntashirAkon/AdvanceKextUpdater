@@ -11,6 +11,7 @@
 
 #import "ConfigAuthor.h"
 #import "ConfigKextVersionControl.h"
+#import "ConfigSuggestion.h"
 
 @interface KextConfig: NSObject {
     NSString *configPath;
@@ -33,7 +34,7 @@
 @property NSArray<ConfigRequiredKexts *> *requirments;// Dict|null √
 @property NSString                *shortDescription;  // String √
 @property NSString                *sinceMacOSVersion; // String
-@property NSArray<NSDictionary *> *suggestions;       // Array|null
+@property NSArray<ConfigSuggestion *> *suggestions;   // Array|null
 @property NSDictionary            *swRequirments;     // OPTIONAL Dict
 @property NSArray<NSString *>     *tags;              // OPTIONAL String: comma separated
 @property NSString                *target;            // String: kSLE or kLE

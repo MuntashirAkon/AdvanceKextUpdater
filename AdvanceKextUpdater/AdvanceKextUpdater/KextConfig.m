@@ -59,9 +59,9 @@
     self.requirments = [ConfigRequiredKexts initWithDictionaryOrNull:[configParsed objectForKey:@"require"]];// Needs own class
     self.shortDescription  = [configParsed objectForKey:@"description"];
     self.sinceMacOSVersion = [configParsed objectForKey:@"since"];// part of macOS version checker class
-    self.suggestions = [configParsed objectForKey:@"suggest"];   // Needs own class
+    self.suggestions = [ConfigSuggestion createFromArray:[configParsed objectForKey:@"suggest"]];
     self.swRequirments = [configParsed objectForKey:@"sw"];      // Needs own class
-    self.tags        = [[configParsed objectForKey:@"tags"] componentsSeparatedByString:@","]; // Trim too???
+    self.tags        = [self tagsFromString:[configParsed objectForKey:@"tags"]];
     self.target      = [configParsed objectForKey:@"target"];    // Set based on macOS version
     self.time        = [NSDate dateWithNaturalLanguageString:[configParsed objectForKey:@"time"]];
     self.version     = [configParsed objectForKey:@"version"]; // Needs own class (in relation with versions)
@@ -76,6 +76,17 @@
         licenses = license;
     }
     return [licenses copy];
+}
+
+- (NSArray *) tagsFromString: (id) tagString {
+    NSMutableArray *tags = NSMutableArray.array;
+    if(tagString != [NSNull null]) {
+        NSArray *tagsWithSpaces = [tagString componentsSeparatedByString:@","];
+        for(NSString *tag in tagsWithSpaces){
+            [tags addObject:[tag stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet]];
+        }
+    }
+    return tags.copy;
 }
 
 /**

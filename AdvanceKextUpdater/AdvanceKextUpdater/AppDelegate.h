@@ -23,6 +23,7 @@
 -(IBAction)fetchAllKextInfo:(NSTableView *)sender;
 -(IBAction)fetchInstalledKextInfo:(NSTableView *)sender;
 -(IBAction)fetchGuide:(NSButton *)sender;
+-(IBAction)fetchSuggestions:(NSButton *)sender;
 -(IBAction)repairPermissions:(NSButton *)sender;
 -(IBAction)rebuildCache:(NSButton *)sender;
 -(IBAction)gotoHomepage:(NSButton *)sender;

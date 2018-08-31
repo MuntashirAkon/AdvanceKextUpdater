@@ -166,6 +166,10 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:homepage]];
 }
 
+-(IBAction)fetchSuggestions:(NSButton *)sender {
+    
+}
+
 // Helper functions
 - (NSDictionary *) listInstalledKext {
     installedKexts = [[[KextHandler alloc] init] listInstalledKext];
@@ -348,7 +352,7 @@
     // Parse Markdown
     NSError  *error;
     NSString *guideMD = guideHTML;
-    guideHTML = [MMMarkdown HTMLStringWithMarkdown:guideMD error:&error];
+    guideHTML = [MMMarkdown HTMLStringWithMarkdown:guideMD extensions:MMMarkdownExtensionsGitHubFlavored error:&error];
     if(error != nil){
         guideHTML = @"<p>Incomplete Markdown systax!</p>";
     }

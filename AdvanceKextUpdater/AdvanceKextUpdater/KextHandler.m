@@ -76,7 +76,7 @@
             // Update from git
             NSTask *task = [[NSTask alloc] init];
             task.launchPath = git_exec;
-            task.arguments = @[@"-C", path, @"pull"];
+            task.arguments = @[@"-C", path, @"pull", @"origin", KEXT_BRANCH];
             [task launch];
             [task waitUntilExit];
             return [task terminationStatus] == 0 ? YES : NO;
@@ -97,7 +97,7 @@
         NSTask *task = [[NSTask alloc] init];
         task.launchPath = git_exec;
         // git clone KEXT_REPO KEXT_PATH
-        task.arguments = @[@"clone", KEXT_REPO, [self kextDBPath]];
+        task.arguments = @[@"clone", @"-b", KEXT_BRANCH, KEXT_REPO, [self kextDBPath]];
         [task launch];
         [task waitUntilExit];
         if(task.terminationStatus == 0) {

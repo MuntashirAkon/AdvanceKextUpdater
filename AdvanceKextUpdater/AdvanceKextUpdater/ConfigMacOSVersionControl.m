@@ -28,7 +28,7 @@
 }
 
 - (BOOL) compareWithCurrent {
-    return YES;
+    return [self compareWith:[[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"]];
 }
 
 + (NSString *) getMacOSVersion {
