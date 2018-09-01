@@ -2,7 +2,7 @@
   "name": "Lilu",
   "kext": "Lilu.kext",
   "description": "An open source kernel extension bringing a platform for arbitrary kext, library, and program patching throughout the system for macOS.",
-  "homepage": "https://github.com/PMheart/CoreDisplayFixup",
+  "homepage": "https://github.com/acidanthera/Lilu",
   "version": "1.2.6",
   "versions": null,
   "target": "LE",
