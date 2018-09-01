@@ -22,7 +22,7 @@
     }
   },
   "changes": "Add ALC236 support (same as ALC283); bump version 2.6.3",
-  "guide": "@see https://github.com/RehabMan/EAPD-Codec-Commander/README.md?raw=true",
+  "guide": "@see https://raw.githubusercontent.com/RehabMan/EAPD-Codec-Commander/master/README.md",
   "time": "2017-05-01 21:02:45",
   "license": "GPLv2",
   "authors": [
