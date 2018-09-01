@@ -2256,14 +2256,14 @@
         </window>
         <window title="Guide" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="ut3-A2-yDL" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES" utility="YES"/>
-            <rect key="contentRect" x="83" y="102" width="640" height="270"/>
+            <rect key="contentRect" x="83" y="102" width="980" height="360"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1366" height="768"/>
             <view key="contentView" misplaced="YES" id="TJK-e9-WVT">
-                <rect key="frame" x="0.0" y="0.0" width="640" height="270"/>
+                <rect key="frame" x="0.0" y="0.0" width="980" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <webView misplaced="YES" id="Suk-co-NO2">
-                        <rect key="frame" x="0.0" y="0.0" width="640" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="980" height="360"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" plugInsEnabled="NO" javaEnabled="NO" javaScriptEnabled="NO" javaScriptCanOpenWindowsAutomatically="NO">
                             <nil key="identifier"/>

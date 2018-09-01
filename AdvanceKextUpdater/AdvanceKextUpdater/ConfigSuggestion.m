@@ -14,14 +14,17 @@
 @synthesize name;
 @synthesize text;
 
-+(NSArray<ConfigSuggestion *> *) createFromArray: (NSArray *) rawSuggestions {
+- (instancetype) init { return self; }
+
++(NSArray<ConfigSuggestion *> *) createFromArray: (id) rawSuggestions {
     NSMutableArray *suggestions = NSMutableArray.array;
-    for(NSDictionary *suggestion in rawSuggestions){
-        ConfigSuggestion *suggestionObj = [ConfigSuggestion.alloc init];
-        [suggestionObj setName:[suggestion objectForKey:@"name"]];
-        [suggestionObj setText:[suggestion objectForKey:@"text"]];
-        [suggestions addObject:suggestionObj];
-    }
+    if(rawSuggestions != NSNull.null)
+        for(NSDictionary *suggestion in rawSuggestions){
+            ConfigSuggestion *suggestionObj = [ConfigSuggestion.alloc init];
+            [suggestionObj setName:[suggestion objectForKey:@"name"]];
+            [suggestionObj setText:[suggestion objectForKey:@"text"]];
+            [suggestions addObject:suggestionObj];
+        }
     return suggestions.copy;
 }
 
