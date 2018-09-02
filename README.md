@@ -63,3 +63,7 @@ I don't accept any donations.
 - [Apple](https://apple.com) for their wonderful OS
 - [@phpdev32](https://sourceforge.net/u/phpdev32) for 
   [DPCIManager](https://github.com/MuntashirAkon/DPCIManager)'s initial source code
+
+## Third-party Libraries
+- [MMMarkdown](https://github.com/mdiep/MMMarkdown) - For parsing markdown texts
+- [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) - For styling parsed markdown texts
