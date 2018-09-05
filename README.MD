@@ -74,14 +74,11 @@ authors[].email
     - `bin.rel`: (Object) 
         - `bin.rel.url`: (String) Link to download the release kext
         - `bin.rel.script`: (String|null) Location of the custom script relative to this `config.json` file.
-                            [See below](#Custom script) for more information.
+                            [See below](./#Custom-script) for more information.
         - `bin.rel.loc`: (String|null) Relative location of the kext after the file has been extracted
     - `bin.post-install`: [Optional] (String) Relative location to the post-installation script.
-                            [See below](#Post installation script) for more information.
+                            [See below](./#Post-installation-script) for more information.
 - `hw`: [Optional] (Object) Hardware configuration (to get more idea on where this kext can be installed)
-    - `hw.dspci`: [Optional] (Array|Object) Uses the same schema that `dspci` uses for the JSON object. Similar to the
-                             tool, an array of object can also be used instead of a single object.
-                             ([More on schema](https://github.com/MuntashirAkon/DPCIManager))
     - `hw.match_audio`: [Optional] (Array|String) Matches specific audio codecs with or without revisions. Available
                                     Formats: `AudioCodec:Revision` or `AudioCodec`
     - `hw.match_connected`: [Optional] (Array|String) Matches the ID of specific connected device(s). Devices can be
@@ -103,11 +100,6 @@ authors[].email
                             Wildcard (*) is supported.
         - `sw.kernel.min`: (String) Minimum kernel version
         - `sw.kernel.max`: (String|null) Maximum kernel version (null = No maximum value set)
-    - `sw.os`: [Optional] (Object|String) Operating System configuration. If applicable for a single version, set as
-                        string. Available formats: `ProductVersion:BuildVersion` or `ProductVersion`. Wildcard (*) is
-                        supported.
-        - `sw.os.min`: (String) Minimum OS version
-        - `sw.os.min`: (String|null) Maximum OS version (null = No maximum value set)
     - `sw.restrict`: [Optional] (Boolean) Whether to restrict installation of kext provided the criteria does not match
                      (Default: true)
 - `changes`: (String) A list of changes in the latest version (Markdown Supported)
@@ -148,7 +140,6 @@ authors[].email
 `bin.rel.loc`
 - 
 - `conflict.kexts` can contain any kext name without the extension. It also supports wildcards
-- `since` is just a suggestion, not a requirement. An user may disregard this if s/he wants
 - All IDs are in hexadecimal string without the `0x` prefix
 - Supported file extensions are: `.app`, `.sh`, `.pkg`, `.mkpg`, `.dmg`, `.dylib`
 
