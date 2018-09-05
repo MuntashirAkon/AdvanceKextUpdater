@@ -74,10 +74,10 @@ authors[].email
     - `bin.rel`: (Object) 
         - `bin.rel.url`: (String) Link to download the release kext
         - `bin.rel.script`: (String|null) Location of the custom script relative to this `config.json` file.
-                            [See below](./#Custom-script) for more information.
+                            [See below](./README.MD#custom-script) for more information.
         - `bin.rel.loc`: (String|null) Relative location of the kext after the file has been extracted
     - `bin.post-install`: [Optional] (String) Relative location to the post-installation script.
-                            [See below](./#Post-installation-script) for more information.
+                            [See below](./README.MD#post-installation-script) for more information.
 - `hw`: [Optional] (Object) Hardware configuration (to get more idea on where this kext can be installed)
     - `hw.match_audio`: [Optional] (Array|String) Matches specific audio codecs with or without revisions. Available
                                     Formats: `AudioCodec:Revision` or `AudioCodec`
