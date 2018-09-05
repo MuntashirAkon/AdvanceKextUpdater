@@ -169,8 +169,3 @@ is fine. The optional output should contain a friendly message.
 
 If some additional task have been taken using custom script during the installation, make sure to revert them in the
 post-installation script if you're returning code `2`.
-
-#### Notes on scripts
-Both of the scripts must not have any Xcode dependencies! Thus, it only supports a handful of scripting languages,
-eg. Bash, Python2.7, PHP, Perl, etc. Custom script can be Mach-O executable. So, executables written in C/C++, Obj-C,
-etc. are also supported.
