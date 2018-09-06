@@ -11,13 +11,19 @@
 
 #import "ConfigMacOSVersionControl.h"
 #import "KextConfig.h"
+@class KextConfig;
 
-@interface ConfigVersionControl: NSObject {
-@public
-    NSString *currentVersion;
-    NSArray<KextConfig *> *availableVersions;
-    ConfigMacOSVersionControl *macOSVersion;
-}
+@interface ConfigVersion : NSObject {}
+@property NSString *version;
+@property KextConfig *config;
+@property ConfigMacOSVersionControl *macOSVersion;
+@end
+
+@interface ConfigVersionControl: NSObject {}
+@property NSString *currentVersion;
+@property NSArray<ConfigVersion *> *availableVersions; // Actually a stack
+
+- (instancetype) initWithSelfConfig: (KextConfig *) baseConfig andOtherVersions: (id) otherVersions;
 @end
 
 #endif /* ConfigVersionControl_h */

@@ -281,7 +281,7 @@
             @"description": kextConfig.shortDescription,
             @"license": [kextConfig.license componentsJoinedByString:@", "],
             @"authors": [authors componentsJoinedByString:@", "],
-            @"since": [NSString stringWithFormat:@"macOS %@", kextConfig.sinceMacOSVersion],
+            @"since": [NSString stringWithFormat:@"macOS %@", kextConfig.macOSVersion.lowestVersion],
             @"required": requiredKexts,
             @"conflict": conflictedKexts,
             @"replacedBy": replacedByKexts,

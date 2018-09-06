@@ -10,34 +10,43 @@
 #import "ConfigMacOSVersionControl.h"
 
 @implementation ConfigMacOSVersionControl
+@synthesize higestVersion;
+@synthesize lowestVersion;
+
 - (instancetype) initWithLowest: (NSString *) lowestVersion {
-    self->lowestVersion = lowestVersion;
-    self->higestVersion = nil;
+    self.lowestVersion = lowestVersion;
+    self.higestVersion = nil;
     return self;
 }
 
-- (instancetype) initWithHighest: (NSString *) higestVersion andLowest: (NSString *) lowestVersion {
-    self->lowestVersion = lowestVersion;
-    self->higestVersion = higestVersion;
+- (instancetype) initWithHighest: (id) higestVersion andLowest: (NSString *) lowestVersion {
+    if(higestVersion == NSNull.null)
+        return [self initWithLowest:lowestVersion];
+    
+    self.lowestVersion = lowestVersion;
+    self.higestVersion = higestVersion;
     return self;
 }
 
-- (BOOL) compareWith: (NSString *) macOSVersion {
-    // TODO Compare with max version and min version
-    return YES;
+- (BOOL) installableIn: (NSString *) macOSVersion {
+    if([lowestVersion compare:macOSVersion options:NSNumericSearch] != NSOrderedDescending){
+        if(higestVersion == nil || [higestVersion compare:macOSVersion options:NSNumericSearch] == NSOrderedDescending) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
-- (BOOL) compareWithCurrent {
-    return [self compareWith:[[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"]];
+- (BOOL) installableInCurrentVersion {
+    return [self installableIn:ConfigMacOSVersionControl.getMacOSVersion];
 }
 
 + (NSString *) getMacOSVersion {
-    NSString *version = [[[[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"] componentsSeparatedByString:@"."] objectAtIndex:1];
-    return [NSString stringWithFormat:@"10.%@", version];
+    return [[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"];
 }
 
 + (int) getMacOSVersionInInt {
-    NSString *version = [[[[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"] componentsSeparatedByString:@"."] objectAtIndex:1];
+    NSString *version = [[[self getMacOSVersion] componentsSeparatedByString:@"."] objectAtIndex:1];
     return version.intValue;
 }
 

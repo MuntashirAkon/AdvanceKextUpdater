@@ -22,6 +22,8 @@
 		877CDB6F21390CA500176777 /* MMMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877CDB6E21390CA500176777 /* MMMarkdown.framework */; };
 		877CDB7021390CA500176777 /* MMMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 877CDB6E21390CA500176777 /* MMMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		877CDB7321390E8E00176777 /* github-markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 877CDB7221390E8E00176777 /* github-markdown.css */; };
+		879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F6093214112E10059D0ED /* ConfigRequirments.m */; };
+		879F6096214144900059D0ED /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 879F6095214144900059D0ED /* README.md */; };
 		87BB8577212FB567007F4D29 /* KextConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB8576212FB567007F4D29 /* KextConfig.m */; };
 		87BB8579212FC0CD007F4D29 /* git in Resources */ = {isa = PBXBuildFile; fileRef = 87BB8578212FC0CD007F4D29 /* git */; };
 		87BB858021308177007F4D29 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
@@ -68,6 +70,9 @@
 		877CDB6B2139093E00176777 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MMMarkdown.framework; sourceTree = "<group>"; };
 		877CDB6E21390CA500176777 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MMMarkdown.framework; sourceTree = "<group>"; };
 		877CDB7221390E8E00176777 /* github-markdown.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "github-markdown.css"; sourceTree = "<group>"; };
+		879F6092214112D80059D0ED /* ConfigRequirments.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigRequirments.h; sourceTree = "<group>"; };
+		879F6093214112E10059D0ED /* ConfigRequirments.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigRequirments.m; sourceTree = "<group>"; };
+		879F6095214144900059D0ED /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		87BB8575212FB55E007F4D29 /* KextConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextConfig.h; sourceTree = "<group>"; };
 		87BB8576212FB567007F4D29 /* KextConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextConfig.m; sourceTree = "<group>"; };
 		87BB8578212FC0CD007F4D29 /* git */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = git; sourceTree = "<group>"; };
@@ -120,6 +125,8 @@
 				875032E921341C8800F5278D /* ConfigKextVersionControl.m */,
 				87F2485A21399D5A0069DFC2 /* ConfigSuggestion.h */,
 				87F2485B21399D650069DFC2 /* ConfigSuggestion.m */,
+				879F6092214112D80059D0ED /* ConfigRequirments.h */,
+				879F6093214112E10059D0ED /* ConfigRequirments.m */,
 			);
 			name = "Config Related";
 			sourceTree = "<group>";
@@ -127,6 +134,7 @@
 		8773B707212BFD730096BFCC = {
 			isa = PBXGroup;
 			children = (
+				879F6095214144900059D0ED /* README.md */,
 				8773B712212BFD730096BFCC /* AdvanceKextUpdater */,
 				8773B711212BFD730096BFCC /* Products */,
 				875032EB2135049B00F5278D /* Frameworks */,
@@ -235,6 +243,7 @@
 			files = (
 				8773B717212BFD760096BFCC /* Assets.xcassets in Resources */,
 				877CDB7321390E8E00176777 /* github-markdown.css in Resources */,
+				879F6096214144900059D0ED /* README.md in Resources */,
 				8773B71A212BFD760096BFCC /* MainMenu.xib in Resources */,
 				87BB8579212FC0CD007F4D29 /* git in Resources */,
 			);
@@ -267,6 +276,7 @@
 			files = (
 				87BB858021308177007F4D29 /* Task.m in Sources */,
 				876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */,
+				879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */,
 				87BB8577212FB567007F4D29 /* KextConfig.m in Sources */,
 				87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */,
 				876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */,
@@ -328,7 +338,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 369;
+				CURRENT_PROJECT_VERSION = 379;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -388,7 +398,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 369;
+				CURRENT_PROJECT_VERSION = 379;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

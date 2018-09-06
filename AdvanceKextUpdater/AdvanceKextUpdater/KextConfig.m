@@ -15,6 +15,8 @@
 @implementation KextConfig
 - (instancetype) initWithConfig: (NSString *) configFile {
     configPath = configFile;
+    self.path = [configPath stringByDeletingLastPathComponent];
+    self.url  = nil;
     if([[NSFileManager defaultManager] fileExistsAtPath:configPath])
         [self parseConfig];
     else return nil;
@@ -24,17 +26,22 @@
 - (instancetype) initWithKextName: (NSString *) kextName {
     kextName = [kextName stringByDeletingPathExtension];
     configPath = [self searchConfigPath:kextName];
+    self.path = [configPath stringByDeletingLastPathComponent];
+    self.url  = nil;
     if([[NSFileManager defaultManager] fileExistsAtPath:configPath])
         [self parseConfig];
     else return nil;
     return self;
 }
 
-- (instancetype) initWithKextName: (NSString *) kextName URL: (NSString *) configURL {
+// BUG ALERT!!!
+- (instancetype) initWithKextName: (NSString *) kextName URL: (NSURL *) configURL {
     kextName = [kextName stringByDeletingPathExtension];
     configPath = [self appendConfigJSON:[[KextHandler kextCachePath] stringByAppendingPathComponent:kextName]];
     // Save config.json from URL to cache
-    [URLTask conditionalGet:[NSURL URLWithString:configURL] toFile:configPath];
+    [URLTask get:configURL toFile:configPath supress:YES];
+    self.path = [configPath stringByDeletingLastPathComponent];
+    self.url  = [configURL URLByDeletingLastPathComponent].absoluteString;
     if([[NSFileManager defaultManager] fileExistsAtPath:configPath])
         [self parseConfig];
     else return nil;
@@ -46,26 +53,25 @@
     // Associate parsed info with the public methods
     self.authors     = [ConfigAuthor createFromArrayOfDictionary:[configParsed objectForKey:@"authors"]];
     self.binaries    = [configParsed objectForKey:@"bin"];       // Needs own class
-    self.changes     = [configParsed objectForKey:@"changes"];   // Markdown
+    self.changes     = [configParsed objectForKey:@"changes"];
     self.conflict    = [ConfigConflictKexts initWithDictionaryOrNull:[configParsed objectForKey:@"conflict"]];
-    self.guide       = [configParsed objectForKey:@"guide"];     // Markdown or URL
+    self.guide       = [configParsed objectForKey:@"guide"];
     self.homepage    = [configParsed objectForKey:@"homepage"];
     self.hwRequirments     = [configParsed objectForKey:@"hw"];  // Needs own class
     self.kextName    = [configParsed objectForKey:@"kext"];
-    self.lastMacOSVersion  = [configParsed objectForKey:@"last"];// part of macOS version checker class
     self.license     = [self licenseToArrayOfLicense:[configParsed objectForKey:@"license"]];
+    self.macOSVersion = [ConfigMacOSVersionControl.alloc initWithHighest:[configParsed objectForKey:@"last"] andLowest:[configParsed objectForKey:@"since"]];
     self.name        = [configParsed objectForKey:@"name"];
     self.replacedBy  = [ConfigReplacedByKexts initWithDictionaryOrNull:[configParsed objectForKey:@"replaced_by"]];
-    self.requirments = [ConfigRequiredKexts initWithDictionaryOrNull:[configParsed objectForKey:@"require"]];// Needs own class
+    self.requirments = [ConfigRequiredKexts initWithDictionaryOrNull:[configParsed objectForKey:@"require"]];
     self.shortDescription  = [configParsed objectForKey:@"description"];
-    self.sinceMacOSVersion = [configParsed objectForKey:@"since"];// part of macOS version checker class
     self.suggestions = [ConfigSuggestion createFromArray:[configParsed objectForKey:@"suggest"]];
     self.swRequirments = [configParsed objectForKey:@"sw"];      // Needs own class
     self.tags        = [self tagsFromString:[configParsed objectForKey:@"tags"]];
     self.target      = [configParsed objectForKey:@"target"];    // Set based on macOS version
     self.time        = [NSDate dateWithNaturalLanguageString:[configParsed objectForKey:@"time"]];
-    self.version     = [configParsed objectForKey:@"version"]; // Needs own class (in relation with versions)
-    self.versions    = [configParsed objectForKey:@"versions"];  // Needs own class
+    self.version     = [configParsed objectForKey:@"version"];
+    self.versions    = [ConfigVersionControl.alloc initWithSelfConfig:self andOtherVersions:[configParsed objectForKey:@"versions"]];
 }
 
 - (NSArray *) licenseToArrayOfLicense: (id) license {

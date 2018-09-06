@@ -9,13 +9,14 @@
 #ifndef ConfigMacOSVersionControl_h
 #define ConfigMacOSVersionControl_h
 
-@interface ConfigMacOSVersionControl: NSObject {
-    NSString *higestVersion;
-    NSString *lowestVersion;
-}
+@interface ConfigMacOSVersionControl: NSObject {}
+@property NSString *higestVersion;
+@property NSString *lowestVersion;
 
-- (BOOL) compareWith: (NSString *) macOSVersion;
-- (BOOL) compareWithCurrent;
+- (instancetype) initWithLowest: (NSString *) lowestVersion;
+- (instancetype) initWithHighest: (id) higestVersion andLowest: (NSString *) lowestVersion;
+- (BOOL) installableIn: (NSString *) macOSVersion;
+- (BOOL) installableInCurrentVersion;
 + (NSString *) getMacOSVersion;
 + (int) getMacOSVersionInInt;
 @end

@@ -67,3 +67,9 @@ I don't accept any donations.
 ## Third-party Libraries
 - [MMMarkdown](https://github.com/mdiep/MMMarkdown) - For parsing markdown texts
 - [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) - For styling parsed markdown texts
+
+## TODO List
+- add support for `remote_url`
+- check hw and sw requirements
+- install, update, remove a kext
+- auto update kext
