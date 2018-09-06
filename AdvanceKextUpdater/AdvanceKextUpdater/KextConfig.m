@@ -57,7 +57,7 @@
     self.conflict    = [ConfigConflictKexts initWithDictionaryOrNull:[configParsed objectForKey:@"conflict"]];
     self.guide       = [configParsed objectForKey:@"guide"];
     self.homepage    = [configParsed objectForKey:@"homepage"];
-    self.hwRequirments     = [configParsed objectForKey:@"hw"];  // Needs own class
+    self.hwRequirments     = [configParsed objectForKey:@"hw"];
     self.kextName    = [configParsed objectForKey:@"kext"];
     self.license     = [self licenseToArrayOfLicense:[configParsed objectForKey:@"license"]];
     self.macOSVersion = [ConfigMacOSVersionControl.alloc initWithHighest:[configParsed objectForKey:@"last"] andLowest:[configParsed objectForKey:@"since"]];
@@ -66,7 +66,7 @@
     self.requirments = [ConfigRequiredKexts initWithDictionaryOrNull:[configParsed objectForKey:@"require"]];
     self.shortDescription  = [configParsed objectForKey:@"description"];
     self.suggestions = [ConfigSuggestion createFromArray:[configParsed objectForKey:@"suggest"]];
-    self.swRequirments = [configParsed objectForKey:@"sw"];      // Needs own class
+    self.swRequirments = [configParsed objectForKey:@"sw"];
     self.tags        = [self tagsFromString:[configParsed objectForKey:@"tags"]];
     self.target      = [configParsed objectForKey:@"target"];    // Set based on macOS version
     self.time        = [NSDate dateWithNaturalLanguageString:[configParsed objectForKey:@"time"]];

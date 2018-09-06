@@ -19,9 +19,12 @@
 @property ConfigMacOSVersionControl *macOSVersion;
 @end
 
-@interface ConfigVersionControl: NSObject {}
+@interface ConfigVersionControl: NSObject {
+    NSMutableArray<NSString *> *versions;
+}
+
 @property NSString *currentVersion;
-@property NSArray<ConfigVersion *> *availableVersions; // Actually a stack
+@property NSArray<ConfigVersion *> *availableVersions;
 
 - (instancetype) initWithSelfConfig: (KextConfig *) baseConfig andOtherVersions: (id) otherVersions;
 @end
