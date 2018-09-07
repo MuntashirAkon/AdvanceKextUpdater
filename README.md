@@ -54,7 +54,7 @@ git clone -b kext_db https://github.com/MuntashirAkon/AdvanceKextUpdater.git
 ```
 
 ## License
-MIT License. Code copied from @phpdev32 are under GPLv2.0.
+GPLv3.0
 
 ## Donations
 I don't accept any donations.
