@@ -80,7 +80,7 @@ authors[].email
                             [See below](./README.MD#post-installation-script) for more information.
 - `hw`: [Optional] (Object) Hardware configuration (to get more idea on where this kext can be installed)
     - `hw.match_audio`: [Optional] (Array|String) Matches specific audio codecs with or without revisions. Available
-                                    Formats: `AudioCodec:Revision` or `AudioCodec` (e.g: `10EC0256:0002` or `10EC0256`)
+                                    Formats: `AudioCodec:Revision` or `AudioCodec` (e.g: `10EC0256:100002` or `10EC0256`)
     - `hw.match_connected`: [Optional] (Array|String) Matches the ID of specific connected device(s). Devices can be
                                         connected via USB, etc. ID format: `VendorID:ProductID`
     - `hw.match_cpu`: [Optional] (Array|RegEx String) Matches the specific CPU(s). CPU brand string can be found by running:
