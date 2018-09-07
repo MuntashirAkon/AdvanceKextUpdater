@@ -69,7 +69,7 @@ authors[].email
     - `bin.dev`: (Object|null)
         - `bin.dev.url`: (String) Link to download the debug kext
         - `bin.dev.script`: (String|null) Location of the custom script relative to this `config.json` file.
-                           [See below](#Custom script) for more information. 
+                           [See below](./README.MD#custom-script) for more information. 
         - `bin.dev.loc`: (String|null) Relative location of the kext after the file has been extracted
     - `bin.rel`: (Object) 
         - `bin.rel.url`: (String) Link to download the release kext
@@ -97,7 +97,6 @@ authors[].email
                      (Default: true)
 - `sw`: [Option] (Object) Software configuration (to get more idea on where this kext can be installed)
     - `sw.kernel`: [Optional] (Object|String) Kernel configuration. If applicable for a single version, set as string.
-                            Wildcard (*) is supported.
         - `sw.kernel.min`: (String) Minimum kernel version
         - `sw.kernel.max`: (String|null) Maximum kernel version (null = No maximum value set)
     - `sw.restrict`: [Optional] (Boolean) Whether to restrict installation of kext provided the criteria does not match
