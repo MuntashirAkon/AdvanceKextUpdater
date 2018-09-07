@@ -14,8 +14,23 @@
 #import "ConfigVersionControl.h"
 #import "ConfigSuggestion.h"
 #import "ConfigMacOSVersionControl.h"
+#import "ConfigRequirments.h"
 
 @class ConfigVersionControl;
+
+// This serial is important!!!
+typedef enum {
+    KCCAllMatched,
+    KCCSomeMatched,
+    KCCNoneMatched,
+    KCCSomeMatchedAllRestricted,
+    KCCNoneMatchedAllRestricted,
+    KCCSomeMatchedHWRestricted,
+    KCCSomeMatchedSWRestricted,
+    KCCNoneMatchedHWRestricted,
+    KCCNoneMatchedSWRestricted,
+
+} KextConfigCriteria;
 
 @interface KextConfig: NSObject {
     NSString *configPath;
@@ -29,7 +44,7 @@
 @property NSArray<ConfigConflictKexts *> *conflict;     // Dict|null √
 @property NSString                *guide;               // String √ (maybe use a diff. object)
 @property NSString                *homepage;            // String|null √
-@property NSDictionary            *hwRequirments;       // OPTIONAL Dict
+@property ConfigHWRequirments     *hwRequirments;       // OPTIONAL Dict
 @property NSString                *kextName;            // String √
 @property NSArray                 *license;             // Array|String|null √
 @property ConfigMacOSVersionControl *macOSVersion;
@@ -39,7 +54,7 @@
 @property NSArray<ConfigRequiredKexts *> *requirments;  // Dict|null √
 @property NSString                *shortDescription;    // String √
 @property NSArray<ConfigSuggestion *> *suggestions;     // Array|null √
-@property NSDictionary            *swRequirments;       // OPTIONAL Dict
+@property ConfigSWRequirments     *swRequirments;       // OPTIONAL Dict
 @property NSArray<NSString *>     *tags;                // OPTIONAL String: comma separated √
 @property NSString                *target;              // String: kSLE or kLE
 @property NSDate                  *time;                // String: YYYY-MM-DD HH:MM:SS or YYYY-MM-DD √
@@ -50,7 +65,7 @@
 - (instancetype) initWithConfig: (NSString *) configFile;
 - (instancetype) initWithKextName: (NSString *) kextName;
 - (instancetype) initWithKextName: (NSString *) kextName URL: (NSURL *) configURL;
-
+- (KextConfigCriteria) matchesAllCriteria;
 @end
 
 #endif /* KextConfig_h */

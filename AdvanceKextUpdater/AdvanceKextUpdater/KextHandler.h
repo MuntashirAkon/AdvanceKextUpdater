@@ -23,6 +23,7 @@
 + (NSString *) kextDBPath;
 + (NSString *) kextCachePath;
 + (NSString *) guideCachePath;
++ (NSString *) pciIDsCachePath;
 + (NSString *) kextTmpPath;
 
 - (NSArray<NSString *> *) listInstalledKext;

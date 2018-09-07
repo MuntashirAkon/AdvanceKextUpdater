@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+#define COLOR_GREEN [NSColor colorWithCalibratedRed:0 green:143/255.0f blue:0 alpha:1.0f] // Success
+#define COLOR_RED [NSColor redColor] // Failure
+#define COLOR_ORANGE [NSColor orangeColor] // Warning
+
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     NSArray *installedKexts;
     NSArray *allTheKexts;

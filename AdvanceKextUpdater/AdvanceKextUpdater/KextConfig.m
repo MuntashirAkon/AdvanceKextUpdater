@@ -18,9 +18,8 @@
     self.path = [configPath stringByDeletingLastPathComponent];
     self.url  = nil;
     if([[NSFileManager defaultManager] fileExistsAtPath:configPath])
-        [self parseConfig];
+        return [self parseConfig] ? self : nil;
     else return nil;
-    return self;
 }
 
 - (instancetype) initWithKextName: (NSString *) kextName {
@@ -29,9 +28,8 @@
     self.path = [configPath stringByDeletingLastPathComponent];
     self.url  = nil;
     if([[NSFileManager defaultManager] fileExistsAtPath:configPath])
-        [self parseConfig];
+        return [self parseConfig] ? self : nil;
     else return nil;
-    return self;
 }
 
 // BUG ALERT!!!
@@ -43,12 +41,12 @@
     self.path = [configPath stringByDeletingLastPathComponent];
     self.url  = [configURL URLByDeletingLastPathComponent].absoluteString;
     if([[NSFileManager defaultManager] fileExistsAtPath:configPath])
-        [self parseConfig];
+        return [self parseConfig] ? self : nil;
     else return nil;
-    return self;
 }
 
-- (void) parseConfig {
+- (BOOL) parseConfig {
+    @try {
     configParsed = [JSONParser parseFromFile:configPath];
     // Associate parsed info with the public methods
     self.authors     = [ConfigAuthor createFromArrayOfDictionary:[configParsed objectForKey:@"authors"]];
@@ -57,7 +55,7 @@
     self.conflict    = [ConfigConflictKexts initWithDictionaryOrNull:[configParsed objectForKey:@"conflict"]];
     self.guide       = [configParsed objectForKey:@"guide"];
     self.homepage    = [configParsed objectForKey:@"homepage"];
-    self.hwRequirments     = [configParsed objectForKey:@"hw"];
+    self.hwRequirments = [ConfigHWRequirments.alloc initWithObject:[configParsed objectForKey:@"hw"]];
     self.kextName    = [configParsed objectForKey:@"kext"];
     self.license     = [self licenseToArrayOfLicense:[configParsed objectForKey:@"license"]];
     self.macOSVersion = [ConfigMacOSVersionControl.alloc initWithHighest:[configParsed objectForKey:@"last"] andLowest:[configParsed objectForKey:@"since"]];
@@ -66,12 +64,16 @@
     self.requirments = [ConfigRequiredKexts initWithDictionaryOrNull:[configParsed objectForKey:@"require"]];
     self.shortDescription  = [configParsed objectForKey:@"description"];
     self.suggestions = [ConfigSuggestion createFromArray:[configParsed objectForKey:@"suggest"]];
-    self.swRequirments = [configParsed objectForKey:@"sw"];
+    self.swRequirments = [ConfigSWRequirments.alloc initWithObject:[configParsed objectForKey:@"sw"]];
     self.tags        = [self tagsFromString:[configParsed objectForKey:@"tags"]];
     self.target      = [configParsed objectForKey:@"target"];    // Set based on macOS version
     self.time        = [NSDate dateWithNaturalLanguageString:[configParsed objectForKey:@"time"]];
     self.version     = [configParsed objectForKey:@"version"];
     self.versions    = [ConfigVersionControl.alloc initWithSelfConfig:self andOtherVersions:[configParsed objectForKey:@"versions"]];
+        return YES;
+    } @catch (NSException *e) {
+        return NO;
+    }
 }
 
 - (NSArray *) licenseToArrayOfLicense: (id) license {
@@ -93,6 +95,47 @@
         }
     }
     return tags.copy;
+}
+
+/**
+ * Check if all the criteria to install kext have been met
+ *
+ * @return KextConfigCriteria
+ */
+- (KextConfigCriteria) matchesAllCriteria {
+    short checks = 0;
+    const short total_checks = 3;
+    BOOL hw_restricted = NO;
+    BOOL sw_restricted = NO;
+    // Check if this version is installable
+    if([self.macOSVersion installableInCurrentVersion]){
+        ++checks;
+    }
+    // Check if hw requirments matched
+    if([self.hwRequirments matchCriteria]){
+        ++checks;
+    } else if ([self.hwRequirments restrictInstall]){
+        hw_restricted = YES;
+    }
+    // Check if sw requirments matched
+    if([self.swRequirments matchCriteria]){
+        ++checks;
+    } else if ([self.swRequirments restrictInstall]){
+        sw_restricted = YES;
+    }
+    if(checks == total_checks) return KCCAllMatched;
+    else if (checks == 0) { // None matched
+        if(hw_restricted && sw_restricted) return KCCNoneMatchedAllRestricted;
+        else if(hw_restricted) return KCCNoneMatchedHWRestricted;
+        else if(sw_restricted) return KCCNoneMatchedSWRestricted;
+        else return KCCNoneMatched;
+    } else {
+        if(hw_restricted && sw_restricted) return KCCSomeMatchedAllRestricted;
+        else if(hw_restricted) return KCCSomeMatchedHWRestricted;
+        else if(sw_restricted) return KCCSomeMatchedSWRestricted;
+        else return KCCSomeMatched;
+    }
+    return checks;
 }
 
 /**

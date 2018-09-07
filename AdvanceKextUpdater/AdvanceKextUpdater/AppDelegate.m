@@ -16,6 +16,7 @@
 #import "ConfigKextVersionControl.h"
 #import "hasInternetConnection.m"
 #import "ConfigAuthor.h"
+#import "PCI.h"
 
 @interface AppDelegate ()
 // Outlets
@@ -49,9 +50,9 @@
             [self applicationWillTerminate:aNotification]; // Terminate
         }
     }
-    [fm createDirectoryAtPath:[KextHandler kextCachePath] withIntermediateDirectories:YES attributes:nil error:nil];
-    [fm createDirectoryAtPath:[KextHandler guideCachePath] withIntermediateDirectories:YES attributes:nil error:nil];
-    [fm createDirectoryAtPath:[KextHandler kextTmpPath] withIntermediateDirectories:YES attributes:nil error:nil];
+    [fm createDirectoryAtPath:KextHandler.kextCachePath withIntermediateDirectories:YES attributes:nil error:nil];
+    [fm createDirectoryAtPath:KextHandler.guideCachePath withIntermediateDirectories:YES attributes:nil error:nil];
+    [fm createDirectoryAtPath:KextHandler.kextTmpPath withIntermediateDirectories:YES attributes:nil error:nil];
     // Check for kext update
     self.loadingTexts = @{
         @"titleText": @"",
@@ -63,8 +64,10 @@
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @try {
-            if(hasInternetConnection())
+            if(hasInternetConnection()){
                 [KextHandler checkForDBUpdate];
+                [pciDevice checkForDBUpdate];
+            }
         } @catch(NSException *e) {}
         if(![fm fileExistsAtPath:[KextHandler kextDBPath]]) {
             NSRunCriticalAlertPanel(@"Updating Kext database failed!", @"Failed to update kext database, please check your internet connection and try again.", nil, nil, nil);
@@ -222,6 +225,8 @@
     }
 }
 
+// Maybe in a seperate class?
+// TODO: remote_url not handled
 -(void)fetchKextInfo: (NSTableView *)sender whichDB: (BOOL) allKextsDB {
     @try {
         // Do nothing in case user supplies an invalid row
@@ -239,7 +244,38 @@
             NSRunCriticalAlertPanel(@"Missing config.json!", @"A config.json file determines the Kext behaviors and other configurations, which is somehow missing. You can create a new issue on GitHub if you are interested.", @"OK", nil, nil);
             return;
         };
-        // Set guide TODO: Use markdown
+        // Find the best version for the running macOS version
+        NSInteger best_version = kextConfig.versions.findTheBestVersion;
+        if(best_version != -1) kextConfig = [kextConfig.versions.availableVersions objectAtIndex:best_version].config;
+        // Check if criterias are matched
+        KextConfigCriteria kcc_status = [kextConfig matchesAllCriteria];
+        NSDictionary *criteria_msg;
+        switch (kcc_status){
+            case KCCAllMatched:
+                criteria_msg = @{
+                    @"text": @"✔︎ Matches all the criteria",
+                    @"color": COLOR_GREEN
+                };
+                break;
+            case KCCSomeMatched:
+                criteria_msg = @{
+                    @"text": @"✘ Didn't match some criteria",
+                    @"color": COLOR_ORANGE
+                };
+                break;
+            case KCCNoneMatched:
+                criteria_msg = @{
+                    @"text": @"✘ Didn't match any criterion",
+                    @"color": COLOR_RED
+                };
+                break;
+            default:
+                criteria_msg = @{
+                    @"text": @"✘ Kext cannot be installed",
+                    @"color": COLOR_RED
+                };
+        }
+        // Set guide
         guide = kextConfig.guide;
         // List required kexts
         NSMutableArray<NSDictionary *> *requiredKexts = [NSMutableArray array];
@@ -273,6 +309,15 @@
         for(ConfigAuthor *author in kextConfig.authors){
             [authors addObject:author.name];
         }
+        // Whether the kext is installable
+        // FIXME: Use an enum to merge all these options
+        BOOL installable = kcc_status < KCCSomeMatchedAllRestricted ? YES : NO;
+        BOOL installed = [self isInstalled:kextConfig.kextName];
+        BOOL updateAvailable = NO;
+        if(installed){
+            NSString *version = [self findInstalledVersion:kextConfig.kextName];
+            updateAvailable = [kextConfig.versions newerThanVersion:version];
+        }
         // Set properties
         homepage = kextConfig.homepage;
         self.kextProperties = @{
@@ -289,19 +334,21 @@
             @"guide_btn": @{
                 @"enabled": [kextConfig.guide isEqual:@""] ? @0 : @1
             },
-            // Messages
-            @"removeConflict": deleteConflict > 0 ? @"Conflicted kext(s) will be removed!" : @"",
-            @"criteria_btn": @{ // TODO
-                // Possible texts and colors:
-                // ✔︎ Matches all criterias     [NSColor greenColor]
-                // ✘ Didn't match any criteria  [NSColor redColor]
-                // ✘ Didn't match some criteria [NSColor orangeColor]
-                @"text": @"✔︎ Matches all criterias",
-                @"color": [NSColor greenColor]
-            },
             @"homepage_btn": @{
                 @"hidden": [self isNull:kextConfig.homepage] ? @1 : @0
-            }
+            },
+            @"install_btn": @{
+                @"enabled": (installed || !installable) ? @0 : @1
+            },
+            @"remove_btn": @{
+                @"enabled": installed ? @1 : @0
+            },
+            @"update_btn": @{
+                @"enabled": updateAvailable ? @1 : @0
+            },
+            // Messages
+            @"removeConflict": deleteConflict > 0 ? @"Conflicted kext(s) will be removed!" : @"",
+            @"criteria_btn": criteria_msg
         };
         [[self window] addChildWindow:[self kextViewer] ordered:NSWindowAbove];
     } @catch (NSError *e) {
@@ -363,16 +410,40 @@
     };
 }
 
+// Check if a kext is installed (with extension)
+- (BOOL) isInstalled: (NSString *) kextName {
+    if([installedKexts indexOfObject:kextName] != NSNotFound) {
+        return YES;
+    }
+    return NO;
+}
+
+- (NSString *) findInstalledVersion: (NSString *) kextName {
+    // [[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"]
+    NSString *plist = [NSString stringWithFormat:@"%@/%@/Contents/Info.plist", kSLE, kextName];
+    // First check at SLE
+    if(![NSFileManager.defaultManager fileExistsAtPath:plist]) {
+        if ([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){
+            // Search at LE
+            plist = [NSString stringWithFormat:@"%@/%@/Contents/Info.plist", kLE, kextName];
+            if(![NSFileManager.defaultManager fileExistsAtPath:plist])
+                @throw [NSException exceptionWithName:@"KextNotFoundException" reason:@"The requested kext not found. So, can't get a version for a kext that's not installed!" userInfo:nil];
+        } else {
+            @throw [NSException exceptionWithName:@"KextNotFoundException" reason:@"The requested kext not found. So, can't get a version for a kext that's not installed!" userInfo:nil];
+        }
+    }
+    NSString *version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleShortVersionString"];
+    if(version == nil){
+        version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleVersion"];
+    }
+    return version;
+}
+
 - (BOOL) isNull: (id) sel {
     if(sel == [NSNull null]) return true;
     else if(sel == nil) return true;
     else if([sel isEqual:@""]) return true;
     else if([sel isEqual:@0]) return true;
     return false;
-}
-
-- (void)closeAllExceptLoadingPanel {
-    [[self kextViewer] close];
-    [[self guideViewer] close];
 }
 @end

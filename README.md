@@ -70,7 +70,6 @@ I don't accept any donations.
 
 ## TODO List
 - add support for `remote_url`
-- check hw and sw requirements
 - install, update, remove a kext
 - auto update kext
 - add the ability to include `sysctl` key-values in the config.json file 

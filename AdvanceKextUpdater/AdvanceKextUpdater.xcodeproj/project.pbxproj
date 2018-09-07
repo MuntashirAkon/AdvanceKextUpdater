@@ -24,6 +24,8 @@
 		877CDB7321390E8E00176777 /* github-markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 877CDB7221390E8E00176777 /* github-markdown.css */; };
 		879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F6093214112E10059D0ED /* ConfigRequirments.m */; };
 		879F6096214144900059D0ED /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 879F6095214144900059D0ED /* README.md */; };
+		879F609A2141FE390059D0ED /* PCI.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F60982141FE380059D0ED /* PCI.m */; };
+		879F609D21423C070059D0ED /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F609C21423C070059D0ED /* utils.m */; };
 		87BB8577212FB567007F4D29 /* KextConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB8576212FB567007F4D29 /* KextConfig.m */; };
 		87BB8579212FC0CD007F4D29 /* git in Resources */ = {isa = PBXBuildFile; fileRef = 87BB8578212FC0CD007F4D29 /* git */; };
 		87BB858021308177007F4D29 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
@@ -73,6 +75,10 @@
 		879F6092214112D80059D0ED /* ConfigRequirments.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigRequirments.h; sourceTree = "<group>"; };
 		879F6093214112E10059D0ED /* ConfigRequirments.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigRequirments.m; sourceTree = "<group>"; };
 		879F6095214144900059D0ED /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		879F60982141FE380059D0ED /* PCI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCI.m; sourceTree = "<group>"; };
+		879F60992141FE390059D0ED /* PCI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCI.h; sourceTree = "<group>"; };
+		879F609C21423C070059D0ED /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
+		879F609E2142A4CE0059D0ED /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		87BB8575212FB55E007F4D29 /* KextConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextConfig.h; sourceTree = "<group>"; };
 		87BB8576212FB567007F4D29 /* KextConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextConfig.m; sourceTree = "<group>"; };
 		87BB8578212FC0CD007F4D29 /* git */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = git; sourceTree = "<group>"; };
@@ -134,9 +140,9 @@
 		8773B707212BFD730096BFCC = {
 			isa = PBXGroup;
 			children = (
+				8773B711212BFD730096BFCC /* Products */,
 				879F6095214144900059D0ED /* README.md */,
 				8773B712212BFD730096BFCC /* AdvanceKextUpdater */,
-				8773B711212BFD730096BFCC /* Products */,
 				875032EB2135049B00F5278D /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -152,9 +158,8 @@
 		8773B712212BFD730096BFCC /* AdvanceKextUpdater */ = {
 			isa = PBXGroup;
 			children = (
+				879F609B21423B490059D0ED /* Utils */,
 				877CDB74213918CE00176777 /* Resources */,
-				87BB857F21308177007F4D29 /* Task.h */,
-				87BB857E21308177007F4D29 /* Task.m */,
 				876BD991212DFBD600D10B9D /* Config Related */,
 				8773B713212BFD730096BFCC /* AppDelegate.h */,
 				8773B714212BFD730096BFCC /* AppDelegate.m */,
@@ -165,9 +170,6 @@
 				8773B724212BFEE40096BFCC /* KextHandler.h */,
 				8773B725212BFF0F0096BFCC /* KextHandler.m */,
 				87BB857A212FF1C3007F4D29 /* PrefixHeader.pch */,
-				87F2485821395BBF0069DFC2 /* JSONParser.m */,
-				87BB857D21302CD9007F4D29 /* JSONParser.h */,
-				877CDB66213861C500176777 /* hasInternetConnection.m */,
 			);
 			path = AdvanceKextUpdater;
 			sourceTree = "<group>";
@@ -180,6 +182,22 @@
 				87BB8578212FC0CD007F4D29 /* git */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		879F609B21423B490059D0ED /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				87F2485821395BBF0069DFC2 /* JSONParser.m */,
+				87BB857D21302CD9007F4D29 /* JSONParser.h */,
+				87BB857F21308177007F4D29 /* Task.h */,
+				87BB857E21308177007F4D29 /* Task.m */,
+				879F60992141FE390059D0ED /* PCI.h */,
+				879F60982141FE380059D0ED /* PCI.m */,
+				879F609E2142A4CE0059D0ED /* utils.h */,
+				879F609C21423C070059D0ED /* utils.m */,
+				877CDB66213861C500176777 /* hasInternetConnection.m */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				879F609D21423C070059D0ED /* utils.m in Sources */,
 				87BB858021308177007F4D29 /* Task.m in Sources */,
 				876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */,
 				879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */,
@@ -284,6 +303,7 @@
 				8773B71D212BFD760096BFCC /* main.m in Sources */,
 				87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */,
 				8773B715212BFD730096BFCC /* AppDelegate.m in Sources */,
+				879F609A2141FE390059D0ED /* PCI.m in Sources */,
 				875032EA21341C8800F5278D /* ConfigKextVersionControl.m in Sources */,
 				8773B726212BFF0F0096BFCC /* KextHandler.m in Sources */,
 				877CDB67213861C500176777 /* hasInternetConnection.m in Sources */,
@@ -338,7 +358,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 380;
+				CURRENT_PROJECT_VERSION = 445;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -398,7 +418,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 380;
+				CURRENT_PROJECT_VERSION = 445;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

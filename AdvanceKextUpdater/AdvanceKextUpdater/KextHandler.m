@@ -49,11 +49,15 @@
 }
 
 + (NSString *) kextCachePath {
-    return [[[self appPath] stringByAppendingPathComponent:@"Cache"] stringByAppendingPathComponent:@"kexts"];
+    return [self.appCachePath stringByAppendingPathComponent:@"kexts"];
 }
 
 + (NSString *) guideCachePath {
-    return [[[self appPath] stringByAppendingPathComponent:@"Cache"] stringByAppendingPathComponent:@"guides"];
+    return [self.appCachePath stringByAppendingPathComponent:@"guides"];
+}
+
++ (NSString *) pciIDsCachePath {
+    return [self.appCachePath stringByAppendingPathComponent:@"pciids"];
 }
 
 + (NSString *) kextTmpPath {
