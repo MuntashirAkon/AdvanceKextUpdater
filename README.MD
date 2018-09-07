@@ -139,7 +139,7 @@ authors[].email
 `bin.rel.loc`
 - 
 - `conflict.kexts` can contain any kext name without the extension. It also supports wildcards
-- All IDs are in hexadecimal string without the `0x` prefix
+- All IDs are in hexadecimal string without the `0x` prefix and ***must be in the uppercase***
 - Supported file extensions are: `.app`, `.sh`, `.pkg`, `.mkpg`, `.dmg`, `.dylib`
 
 #### Custom script
