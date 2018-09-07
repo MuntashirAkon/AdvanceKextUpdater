@@ -11,6 +11,8 @@
 
 #import "ConfigMacOSVersionControl.h"
 #import "KextConfig.h"
+#import "utils.h"
+
 @class KextConfig;
 
 @interface ConfigVersion : NSObject {}
@@ -27,6 +29,8 @@
 @property NSArray<ConfigVersion *> *availableVersions;
 
 - (instancetype) initWithSelfConfig: (KextConfig *) baseConfig andOtherVersions: (id) otherVersions;
+- (NSInteger) findTheBestVersion;
+- (BOOL) newerThanVersion: (NSString *) version;
 @end
 
 #endif /* ConfigVersionControl_h */

@@ -9,20 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "ConfigVersionControl.h"
 
-// @see https://stackoverflow.com/a/24811200/4147849
-@implementation NSString (VersionNumbers)
-- (NSString *)shortenedVersionNumberString {
-    static NSString *const unnecessaryVersionSuffix = @".0";
-    NSString *shortenedVersionNumber = self;
-    
-    while ([shortenedVersionNumber hasSuffix:unnecessaryVersionSuffix]) {
-        shortenedVersionNumber = [shortenedVersionNumber substringToIndex:shortenedVersionNumber.length - unnecessaryVersionSuffix.length];
-    }
-    
-    return shortenedVersionNumber;
-}
-@end
-
 @implementation ConfigVersion
 @synthesize version;
 @synthesize config;
@@ -71,12 +57,15 @@
     if([self.availableVersions objectAtIndex:0].macOSVersion.installableInCurrentVersion) {
         return 0;
     }
-    // Sort the versions
     NSInteger n = [versions count];
-    for(NSUInteger i = 0; i<n-1; ++i){
-        for(NSUInteger j = 0; j<n-i-1; ++j) {
-            if ([[versions objectAtIndex:i].shortenedVersionNumberString compare:[[versions objectAtIndex:i+1] shortenedVersionNumberString] options:NSNumericSearch] == NSOrderedDescending) { // Swap
-                [versions exchangeObjectAtIndex:i withObjectAtIndex:i+1];
+    // If there are no other versions, return -1
+    if(n == 0) return -1;
+    else if (n >= 2){ // Sort the versions only if n>=2
+        for(NSUInteger i = 0; i<n-1; ++i){
+            for(NSUInteger j = 0; j<n-i-1; ++j) {
+                if ([[[versions objectAtIndex:i] shortenedVersionNumberString] compare:[[versions objectAtIndex:i+1] shortenedVersionNumberString] options:NSNumericSearch] == NSOrderedDescending) { // Swap
+                    [versions exchangeObjectAtIndex:i withObjectAtIndex:i+1];
+                }
             }
         }
     }
@@ -101,5 +90,12 @@
         ++index;
     }
     return 0;
+}
+
+- (BOOL) newerThanVersion: (NSString *) version {
+    if ([[self.currentVersion shortenedVersionNumberString] compare:[version shortenedVersionNumberString] options:NSNumericSearch] == NSOrderedDescending) {
+        return YES;
+    }
+    return NO;
 }
 @end

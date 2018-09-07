@@ -30,7 +30,7 @@
 
 - (BOOL) installableIn: (NSString *) macOSVersion {
     if([lowestVersion compare:macOSVersion options:NSNumericSearch] != NSOrderedDescending){
-        if(higestVersion == nil || [higestVersion compare:macOSVersion options:NSNumericSearch] == NSOrderedDescending) {
+        if(higestVersion == nil || [higestVersion compare:macOSVersion options:NSNumericSearch] != NSOrderedAscending) {
             return YES;
         }
     }

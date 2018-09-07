@@ -73,3 +73,4 @@ I don't accept any donations.
 - check hw and sw requirements
 - install, update, remove a kext
 - auto update kext
+- add the ability to include `sysctl` key-values in the config.json file 
