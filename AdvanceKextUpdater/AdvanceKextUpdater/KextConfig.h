@@ -15,6 +15,7 @@
 #import "ConfigSuggestion.h"
 #import "ConfigMacOSVersionControl.h"
 #import "ConfigRequirments.h"
+#import "ConfigBinary.h"
 
 @class ConfigVersionControl;
 
@@ -39,7 +40,7 @@ typedef enum {
 
 // Properties are in alphabetical order, based on Schema (OPTIONAL = null)
 @property NSArray<ConfigAuthor *> *authors;             // Array √
-@property NSDictionary            *binaries;            // Dict
+@property ConfigBinary            *binaries;            // Dict
 @property NSString                *changes;             // String
 @property NSArray<ConfigConflictKexts *> *conflict;     // Dict|null √
 @property NSString                *guide;               // String √ (maybe use a diff. object)

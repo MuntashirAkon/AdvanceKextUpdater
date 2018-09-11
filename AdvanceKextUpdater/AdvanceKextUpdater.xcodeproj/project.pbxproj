@@ -31,6 +31,7 @@
 		87BB858021308177007F4D29 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
 		87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485821395BBF0069DFC2 /* JSONParser.m */; };
 		87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485B21399D650069DFC2 /* ConfigSuggestion.m */; };
+		87FAC53421486B6A00DAA453 /* ConfigBinary.m in Sources */ = {isa = PBXBuildFile; fileRef = 87FAC53321486B6A00DAA453 /* ConfigBinary.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,6 +90,8 @@
 		87F2485821395BBF0069DFC2 /* JSONParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONParser.m; sourceTree = "<group>"; };
 		87F2485A21399D5A0069DFC2 /* ConfigSuggestion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigSuggestion.h; sourceTree = "<group>"; };
 		87F2485B21399D650069DFC2 /* ConfigSuggestion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigSuggestion.m; sourceTree = "<group>"; };
+		87FAC53221486B5E00DAA453 /* ConfigBinary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigBinary.h; sourceTree = "<group>"; };
+		87FAC53321486B6A00DAA453 /* ConfigBinary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigBinary.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +136,8 @@
 				87F2485B21399D650069DFC2 /* ConfigSuggestion.m */,
 				879F6092214112D80059D0ED /* ConfigRequirments.h */,
 				879F6093214112E10059D0ED /* ConfigRequirments.m */,
+				87FAC53221486B5E00DAA453 /* ConfigBinary.h */,
+				87FAC53321486B6A00DAA453 /* ConfigBinary.m */,
 			);
 			name = "Config Related";
 			sourceTree = "<group>";
@@ -296,6 +301,7 @@
 				87BB858021308177007F4D29 /* Task.m in Sources */,
 				876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */,
 				879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */,
+				87FAC53421486B6A00DAA453 /* ConfigBinary.m in Sources */,
 				87BB8577212FB567007F4D29 /* KextConfig.m in Sources */,
 				87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */,
 				876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */,
@@ -358,7 +364,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 445;
+				CURRENT_PROJECT_VERSION = 453;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -418,7 +424,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 445;
+				CURRENT_PROJECT_VERSION = 453;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

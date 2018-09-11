@@ -50,7 +50,7 @@
     configParsed = [JSONParser parseFromFile:configPath];
     // Associate parsed info with the public methods
     self.authors     = [ConfigAuthor createFromArrayOfDictionary:[configParsed objectForKey:@"authors"]];
-    self.binaries    = [configParsed objectForKey:@"bin"];       // Needs own class
+    self.binaries    = [ConfigBinary.alloc initWithDict:[configParsed objectForKey:@"bin"]];
     self.changes     = [configParsed objectForKey:@"changes"];
     self.conflict    = [ConfigConflictKexts initWithDictionaryOrNull:[configParsed objectForKey:@"conflict"]];
     self.guide       = [configParsed objectForKey:@"guide"];

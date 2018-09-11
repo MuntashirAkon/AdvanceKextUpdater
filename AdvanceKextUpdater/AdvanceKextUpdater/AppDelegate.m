@@ -64,10 +64,12 @@
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @try {
+#ifndef DEBUG
             if(hasInternetConnection()){
                 [KextHandler checkForDBUpdate];
                 [pciDevice checkForDBUpdate];
             }
+#endif
         } @catch(NSException *e) {}
         if(![fm fileExistsAtPath:[KextHandler kextDBPath]]) {
             NSRunCriticalAlertPanel(@"Updating Kext database failed!", @"Failed to update kext database, please check your internet connection and try again.", nil, nil, nil);
