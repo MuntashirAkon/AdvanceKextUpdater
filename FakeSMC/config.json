@@ -39,7 +39,12 @@
     }
   ],
   "require": null,
-  "conflict": null,
+  "conflict": {
+    "kexts": {
+      "VirtualSMC": "*"
+    },
+    "action": "delete"
+  },
   "replaced_by": null,
   "suggest": [
     {
