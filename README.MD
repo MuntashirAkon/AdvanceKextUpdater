@@ -168,3 +168,6 @@ is fine. The optional output should contain a friendly message.
 
 If some additional task have been taken using custom script during the installation, make sure to revert them in the
 post-installation script if you're returning code `2`.
+
+#### Notes on scripts
+Currently, scripts will be run using admin privilege. In future, I'll add an option to enable or disable this.
