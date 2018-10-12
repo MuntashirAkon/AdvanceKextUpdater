@@ -47,29 +47,29 @@
 
 - (BOOL) parseConfig {
     @try {
-    configParsed = [JSONParser parseFromFile:configPath];
-    // Associate parsed info with the public methods
-    self.authors     = [ConfigAuthor createFromArrayOfDictionary:[configParsed objectForKey:@"authors"]];
-    self.binaries    = [ConfigBinary.alloc initWithDict:[configParsed objectForKey:@"bin"]];
-    self.changes     = [configParsed objectForKey:@"changes"];
-    self.conflict    = [ConfigConflictKexts initWithDictionaryOrNull:[configParsed objectForKey:@"conflict"]];
-    self.guide       = [configParsed objectForKey:@"guide"];
-    self.homepage    = [configParsed objectForKey:@"homepage"];
-    self.hwRequirments = [ConfigHWRequirments.alloc initWithObject:[configParsed objectForKey:@"hw"]];
-    self.kextName    = [configParsed objectForKey:@"kext"];
-    self.license     = [self licenseToArrayOfLicense:[configParsed objectForKey:@"license"]];
-    self.macOSVersion = [ConfigMacOSVersionControl.alloc initWithHighest:[configParsed objectForKey:@"last"] andLowest:[configParsed objectForKey:@"since"]];
-    self.name        = [configParsed objectForKey:@"name"];
-    self.replacedBy  = [ConfigReplacedByKexts initWithDictionaryOrNull:[configParsed objectForKey:@"replaced_by"]];
-    self.requirments = [ConfigRequiredKexts initWithDictionaryOrNull:[configParsed objectForKey:@"require"]];
-    self.shortDescription  = [configParsed objectForKey:@"description"];
-    self.suggestions = [ConfigSuggestion createFromArray:[configParsed objectForKey:@"suggest"]];
-    self.swRequirments = [ConfigSWRequirments.alloc initWithObject:[configParsed objectForKey:@"sw"]];
-    self.tags        = [self tagsFromString:[configParsed objectForKey:@"tags"]];
-    self.target      = [configParsed objectForKey:@"target"];    // Set based on macOS version
-    self.time        = [NSDate dateWithNaturalLanguageString:[configParsed objectForKey:@"time"]];
-    self.version     = [configParsed objectForKey:@"version"];
-    self.versions    = [ConfigVersionControl.alloc initWithSelfConfig:self andOtherVersions:[configParsed objectForKey:@"versions"]];
+        configParsed = [JSONParser parseFromFile:configPath];
+        // Associate parsed info with the public methods
+        self.authors     = [ConfigAuthor createFromArrayOfDictionary:[configParsed objectForKey:@"authors"]];
+        self.binaries    = [ConfigBinary.alloc initWithDict:[configParsed objectForKey:@"bin"]];
+        self.changes     = [configParsed objectForKey:@"changes"];
+        self.conflict    = [ConfigConflictKexts initWithDictionaryOrNull:[configParsed objectForKey:@"conflict"]];
+        self.guide       = [configParsed objectForKey:@"guide"];
+        self.homepage    = [configParsed objectForKey:@"homepage"];
+        self.hwRequirments = [ConfigHWRequirments.alloc initWithObject:[configParsed objectForKey:@"hw"]];
+        self.kextName    = [configParsed objectForKey:@"kext"];
+        self.license     = [self licenseToArrayOfLicense:[configParsed objectForKey:@"license"]];
+        self.macOSVersion = [ConfigMacOSVersionControl.alloc initWithHighest:[configParsed objectForKey:@"last"] andLowest:[configParsed objectForKey:@"since"]];
+        self.name        = [configParsed objectForKey:@"name"];
+        self.replacedBy  = [ConfigReplacedByKexts initWithDictionaryOrNull:[configParsed objectForKey:@"replaced_by"]];
+        self.requirments = [ConfigRequiredKexts initWithDictionaryOrNull:[configParsed objectForKey:@"require"]];
+        self.shortDescription  = [configParsed objectForKey:@"description"];
+        self.suggestions = [ConfigSuggestion createFromArray:[configParsed objectForKey:@"suggest"]];
+        self.swRequirments = [ConfigSWRequirments.alloc initWithObject:[configParsed objectForKey:@"sw"]];
+        self.tags        = [self tagsFromString:[configParsed objectForKey:@"tags"]];
+        self.target      = [configParsed objectForKey:@"target"];    // Set based on macOS version
+        self.time        = [NSDate dateWithNaturalLanguageString:[configParsed objectForKey:@"time"]];
+        self.version     = [configParsed objectForKey:@"version"];
+        self.versions    = [ConfigVersionControl.alloc initWithSelfConfig:self andOtherVersions:[configParsed objectForKey:@"versions"]];
         return YES;
     } @catch (NSException *e) {
         return NO;

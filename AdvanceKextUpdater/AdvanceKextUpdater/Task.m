@@ -106,7 +106,7 @@ static char kLockKey;
 +(NSAppleEventDescriptor *)adminExec:(NSString *)command{
     NSDictionary *error;
     NSAppleEventDescriptor *evt = [[[NSAppleScript alloc] initWithSource:[NSString stringWithFormat:@"do shell script \"%@\" with administrator privileges", command]] executeAndReturnError:&error];
-    if(error != nil)
+    if(!evt)
         @throw [NSError errorWithDomain:APP_NAME code:232 userInfo:@{
              @"details": [error objectForKey:@"NSAppleScriptErrorBriefMessage"]
         }];

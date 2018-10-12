@@ -30,7 +30,6 @@ typedef enum {
     KCCSomeMatchedSWRestricted,
     KCCNoneMatchedHWRestricted,
     KCCNoneMatchedSWRestricted,
-
 } KextConfigCriteria;
 
 @interface KextConfig: NSObject {
@@ -47,7 +46,7 @@ typedef enum {
 @property NSString                *homepage;            // String|null √
 @property ConfigHWRequirments     *hwRequirments;       // OPTIONAL Dict
 @property NSString                *kextName;            // String √
-@property NSArray                 *license;             // Array|String|null √
+@property NSArray<NSString *>     *license;             // Array|String|null √
 @property ConfigMacOSVersionControl *macOSVersion;
 @property NSString                *name;                // String √
 @property NSString                *path;

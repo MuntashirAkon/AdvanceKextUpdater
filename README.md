@@ -67,6 +67,7 @@ I don't accept any donations.
 ## Third-party Libraries
 - [MMMarkdown](https://github.com/mdiep/MMMarkdown) - For parsing markdown texts
 - [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) - For styling parsed markdown texts
+- [STPrivilegedTask](https://github.com/sveinbjornt/STPrivilegedTask) - For running task as administrator
 
 ## TODO List
 - add support for `remote_url`

@@ -35,6 +35,18 @@
 @synthesize kextProperties;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    // Check if Xcode components are installed
+    // There are complication with `xcode-select --install`
+    // I may use it instead in future version
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = [NSBundle.mainBundle pathForResource:@"git" ofType:nil];
+    task.arguments = @[@"help"];
+    [task launch];
+    [task waitUntilExit];
+    if(task.terminationStatus != 0){
+        NSRunCriticalAlertPanel(@"No Xcode Command Line Tools!", @"Xcode command line tools are required! Unlike the  Xcode itself the command line tools don't take much space.", nil, nil, nil);
+        [self applicationWillTerminate:aNotification]; // Terminate
+    }
     // Set window levels
     [[self guideViewer]  setLevel:NSNormalWindowLevel];
     [[self kextViewer]   setLevel:NSNormalWindowLevel];
@@ -64,17 +76,13 @@
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @try {
-#ifndef DEBUG
+#ifndef DEBUG // Don't disturb me on DEBUG builds
             if(hasInternetConnection()){
                 [KextHandler checkForDBUpdate];
                 [pciDevice checkForDBUpdate];
             }
 #endif
         } @catch(NSException *e) {}
-        if(![fm fileExistsAtPath:[KextHandler kextDBPath]]) {
-            NSRunCriticalAlertPanel(@"Updating Kext database failed!", @"Failed to update kext database, please check your internet connection and try again.", nil, nil, nil);
-            [self applicationWillTerminate:aNotification]; // Terminate
-        }
         // Initialize table
         self.overview = [self listInstalledKext];
         self.allKexts = [self listAllKext:YES];
@@ -82,6 +90,10 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [[self loadingSpinner] stopAnimation:self];
             [[self loadingPanel] close];
+            if(![fm fileExistsAtPath:[KextHandler kextDBPath]]) {
+                NSRunCriticalAlertPanel(@"Updating Kext database failed!", @"Failed to update kext database, please check your internet connection and try again.", nil, nil, nil);
+                [self applicationWillTerminate:aNotification]; // Terminate
+            }
         });
     });
 }
@@ -421,7 +433,6 @@
 }
 
 - (NSString *) findInstalledVersion: (NSString *) kextName {
-    // [[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"]
     NSString *plist = [NSString stringWithFormat:@"%@/%@/Contents/Info.plist", kSLE, kextName];
     // First check at SLE
     if(![NSFileManager.defaultManager fileExistsAtPath:plist]) {

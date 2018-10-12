@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42C2C299B4C109D4CD8071BC /* libPods-AdvanceKextUpdater.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 552750B645769569286DABA2 /* libPods-AdvanceKextUpdater.a */; };
 		875032EA21341C8800F5278D /* ConfigKextVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 875032E921341C8800F5278D /* ConfigKextVersionControl.m */; };
 		875032ED2135049C00F5278D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875032EC2135049C00F5278D /* WebKit.framework */; };
 		876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD993212DFC2D00D10B9D /* ConfigAuthor.m */; };
@@ -19,7 +20,6 @@
 		8773B726212BFF0F0096BFCC /* KextHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B725212BFF0F0096BFCC /* KextHandler.m */; };
 		877CDB67213861C500176777 /* hasInternetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 877CDB66213861C500176777 /* hasInternetConnection.m */; };
 		877CDB6D21390C6900176777 /* MMMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877CDB6B2139093E00176777 /* MMMarkdown.framework */; };
-		877CDB6F21390CA500176777 /* MMMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877CDB6E21390CA500176777 /* MMMarkdown.framework */; };
 		877CDB7021390CA500176777 /* MMMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 877CDB6E21390CA500176777 /* MMMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		877CDB7321390E8E00176777 /* github-markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 877CDB7221390E8E00176777 /* github-markdown.css */; };
 		879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F6093214112E10059D0ED /* ConfigRequirments.m */; };
@@ -49,6 +49,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		552750B645769569286DABA2 /* libPods-AdvanceKextUpdater.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AdvanceKextUpdater.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		875032E821341C3300F5278D /* ConfigKextVersionControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigKextVersionControl.h; sourceTree = "<group>"; };
 		875032E921341C8800F5278D /* ConfigKextVersionControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigKextVersionControl.m; sourceTree = "<group>"; };
 		875032EC2135049C00F5278D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -92,6 +93,9 @@
 		87F2485B21399D650069DFC2 /* ConfigSuggestion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigSuggestion.m; sourceTree = "<group>"; };
 		87FAC53221486B5E00DAA453 /* ConfigBinary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigBinary.h; sourceTree = "<group>"; };
 		87FAC53321486B6A00DAA453 /* ConfigBinary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigBinary.m; sourceTree = "<group>"; };
+		87FAC5372148FD4100DAA453 /* CacheController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CacheController.h; sourceTree = "<group>"; };
+		932982072E9F7C002824E4BC /* Pods-AdvanceKextUpdater.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdvanceKextUpdater.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdvanceKextUpdater/Pods-AdvanceKextUpdater.debug.xcconfig"; sourceTree = "<group>"; };
+		F19B3845A38EB411B95B7A32 /* Pods-AdvanceKextUpdater.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdvanceKextUpdater.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdvanceKextUpdater/Pods-AdvanceKextUpdater.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +104,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				877CDB6D21390C6900176777 /* MMMarkdown.framework in Frameworks */,
-				877CDB6F21390CA500176777 /* MMMarkdown.framework in Frameworks */,
 				875032ED2135049C00F5278D /* WebKit.framework in Frameworks */,
+				42C2C299B4C109D4CD8071BC /* libPods-AdvanceKextUpdater.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +119,7 @@
 				877CDB6B2139093E00176777 /* MMMarkdown.framework */,
 				877CDB6E21390CA500176777 /* MMMarkdown.framework */,
 				875032EC2135049C00F5278D /* WebKit.framework */,
+				552750B645769569286DABA2 /* libPods-AdvanceKextUpdater.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -145,10 +150,11 @@
 		8773B707212BFD730096BFCC = {
 			isa = PBXGroup;
 			children = (
-				8773B711212BFD730096BFCC /* Products */,
 				879F6095214144900059D0ED /* README.md */,
 				8773B712212BFD730096BFCC /* AdvanceKextUpdater */,
 				875032EB2135049B00F5278D /* Frameworks */,
+				8773B711212BFD730096BFCC /* Products */,
+				8BE2E6DC4A3E4A5E36DFB53F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -201,8 +207,18 @@
 				879F609E2142A4CE0059D0ED /* utils.h */,
 				879F609C21423C070059D0ED /* utils.m */,
 				877CDB66213861C500176777 /* hasInternetConnection.m */,
+				87FAC5372148FD4100DAA453 /* CacheController.h */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		8BE2E6DC4A3E4A5E36DFB53F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				932982072E9F7C002824E4BC /* Pods-AdvanceKextUpdater.debug.xcconfig */,
+				F19B3845A38EB411B95B7A32 /* Pods-AdvanceKextUpdater.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +228,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8773B721212BFD760096BFCC /* Build configuration list for PBXNativeTarget "AdvanceKextUpdater" */;
 			buildPhases = (
+				E39419973DB1B28402D64D44 /* [CP] Check Pods Manifest.lock */,
 				8773B70C212BFD730096BFCC /* Sources */,
 				8773B70D212BFD730096BFCC /* Frameworks */,
 				8773B70E212BFD730096BFCC /* Resources */,
@@ -233,7 +250,7 @@
 		8773B708212BFD730096BFCC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Muntashir Al-Islam";
 				TargetAttributes = {
 					8773B70F212BFD730096BFCC = {
@@ -287,7 +304,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "CPV=$[ CURRENT_PROJECT_VERSION+1 ]\nsed -i '' \"s/CURRENT_PROJECT_VERSION = $CURRENT_PROJECT_VERSION/CURRENT_PROJECT_VERSION = $CPV/\" $PROJECT_NAME.xcodeproj/project.pbxproj";
+			shellScript = "CPV=$[ CURRENT_PROJECT_VERSION+1 ]\nsed -i '' \"s/CURRENT_PROJECT_VERSION = $CURRENT_PROJECT_VERSION/CURRENT_PROJECT_VERSION = $CPV/\" $PROJECT_NAME.xcodeproj/project.pbxproj\n";
+			showEnvVarsInLog = 0;
+		};
+		E39419973DB1B28402D64D44 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AdvanceKextUpdater-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -364,7 +399,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 453;
+				CURRENT_PROJECT_VERSION = 467;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -424,7 +459,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 453;
+				CURRENT_PROJECT_VERSION = 467;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -445,6 +480,7 @@
 		};
 		8773B722212BFD760096BFCC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 932982072E9F7C002824E4BC /* Pods-AdvanceKextUpdater.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AdvanceKextUpdater/AdvanceKextUpdater.entitlements;
@@ -471,6 +507,7 @@
 		};
 		8773B723212BFD760096BFCC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F19B3845A38EB411B95B7A32 /* Pods-AdvanceKextUpdater.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AdvanceKextUpdater/AdvanceKextUpdater.entitlements;
