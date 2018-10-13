@@ -66,6 +66,7 @@
     [fm createDirectoryAtPath:KextHandler.guideCachePath withIntermediateDirectories:YES attributes:nil error:nil];
     [fm createDirectoryAtPath:KextHandler.kextTmpPath withIntermediateDirectories:YES attributes:nil error:nil];
     // Check for kext update
+    self->kextHandler = KextHandler.alloc.init;
     self.loadingTexts = @{
         @"titleText": @"",
         @"subtitleText": @"",
@@ -83,14 +84,13 @@
             }
 #endif
         } @catch(NSException *e) {}
-        // Initialize table
-        self->kextHandler = KextHandler.alloc.init;
-        self.overview = [self listInstalledKext];
-        self.allKexts = [self listAllKext:YES];
         // Main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             [[self loadingSpinner] stopAnimation:self];
             [[self loadingPanel] close];
+            // Initialize table
+            self.overview = [self listInstalledKext];
+            self.allKexts = [self listAllKext:YES];
             if(![fm fileExistsAtPath:[KextHandler kextDBPath]]) {
                 NSRunCriticalAlertPanel(@"Updating Kext database failed!", @"Failed to update kext database, please check your internet connection and try again.", nil, nil, nil);
                 [self applicationWillTerminate:aNotification]; // Terminate
@@ -370,6 +370,7 @@
             @"removeConflict": deleteConflict > 0 ? @"Conflicted kext(s) will be removed!" : @"",
             @"criteria_btn": criteria_msg
         };
+//        [NSApp runModalForWindow:[self kextViewer]];
         [[self window] addChildWindow:[self kextViewer] ordered:NSWindowAbove];
     } @catch (NSError *e) {
         // Do nothing

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		42C2C299B4C109D4CD8071BC /* libPods-AdvanceKextUpdater.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 552750B645769569286DABA2 /* libPods-AdvanceKextUpdater.a */; };
+		871386A52170F87D0004DDBB /* KextInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 871386A42170F87D0004DDBB /* KextInstaller.m */; };
+		872395D62171DD9000B6FE27 /* KIHelperAgrumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872395D52171DD9000B6FE27 /* KIHelperAgrumentController.m */; };
+		872395E22171E55700B6FE27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 872395E12171E55700B6FE27 /* main.m */; };
+		872395E62171E7B100B6FE27 /* KextHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B725212BFF0F0096BFCC /* KextHandler.m */; };
 		875032EA21341C8800F5278D /* ConfigKextVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 875032E921341C8800F5278D /* ConfigKextVersionControl.m */; };
 		875032ED2135049C00F5278D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875032EC2135049C00F5278D /* WebKit.framework */; };
 		876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD993212DFC2D00D10B9D /* ConfigAuthor.m */; };
@@ -35,6 +39,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		872395DD2171E55700B6FE27 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		877CDB7121390CA500176777 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -50,6 +63,12 @@
 
 /* Begin PBXFileReference section */
 		552750B645769569286DABA2 /* libPods-AdvanceKextUpdater.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AdvanceKextUpdater.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		871386A32170F84F0004DDBB /* KextInstaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextInstaller.h; sourceTree = "<group>"; };
+		871386A42170F87D0004DDBB /* KextInstaller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextInstaller.m; sourceTree = "<group>"; };
+		872395D42171DD8600B6FE27 /* KIHelperAgrumentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KIHelperAgrumentController.h; sourceTree = "<group>"; };
+		872395D52171DD9000B6FE27 /* KIHelperAgrumentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KIHelperAgrumentController.m; sourceTree = "<group>"; };
+		872395DF2171E55700B6FE27 /* AdvanceKextUpdaterHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdvanceKextUpdaterHelper; sourceTree = BUILT_PRODUCTS_DIR; };
+		872395E12171E55700B6FE27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		875032E821341C3300F5278D /* ConfigKextVersionControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigKextVersionControl.h; sourceTree = "<group>"; };
 		875032E921341C8800F5278D /* ConfigKextVersionControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigKextVersionControl.m; sourceTree = "<group>"; };
 		875032EC2135049C00F5278D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -99,6 +118,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		872395DC2171E55700B6FE27 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8773B70D212BFD730096BFCC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -112,6 +138,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		872395E02171E55700B6FE27 /* AdvanceKextUpdaterHelper */ = {
+			isa = PBXGroup;
+			children = (
+				872395E12171E55700B6FE27 /* main.m */,
+			);
+			path = AdvanceKextUpdaterHelper;
+			sourceTree = "<group>";
+		};
 		875032EB2135049B00F5278D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +186,7 @@
 			children = (
 				879F6095214144900059D0ED /* README.md */,
 				8773B712212BFD730096BFCC /* AdvanceKextUpdater */,
+				872395E02171E55700B6FE27 /* AdvanceKextUpdaterHelper */,
 				875032EB2135049B00F5278D /* Frameworks */,
 				8773B711212BFD730096BFCC /* Products */,
 				8BE2E6DC4A3E4A5E36DFB53F /* Pods */,
@@ -162,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				8773B710212BFD730096BFCC /* AdvanceKextUpdater.app */,
+				872395DF2171E55700B6FE27 /* AdvanceKextUpdaterHelper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -181,6 +217,10 @@
 				8773B724212BFEE40096BFCC /* KextHandler.h */,
 				8773B725212BFF0F0096BFCC /* KextHandler.m */,
 				87BB857A212FF1C3007F4D29 /* PrefixHeader.pch */,
+				871386A32170F84F0004DDBB /* KextInstaller.h */,
+				871386A42170F87D0004DDBB /* KextInstaller.m */,
+				872395D42171DD8600B6FE27 /* KIHelperAgrumentController.h */,
+				872395D52171DD9000B6FE27 /* KIHelperAgrumentController.m */,
 			);
 			path = AdvanceKextUpdater;
 			sourceTree = "<group>";
@@ -224,6 +264,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		872395DE2171E55700B6FE27 /* AdvanceKextUpdaterHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 872395E32171E55700B6FE27 /* Build configuration list for PBXNativeTarget "AdvanceKextUpdaterHelper" */;
+			buildPhases = (
+				872395DB2171E55700B6FE27 /* Sources */,
+				872395DC2171E55700B6FE27 /* Frameworks */,
+				872395DD2171E55700B6FE27 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AdvanceKextUpdaterHelper;
+			productName = AdvanceKextUpdaterHelper;
+			productReference = 872395DF2171E55700B6FE27 /* AdvanceKextUpdaterHelper */;
+			productType = "com.apple.product-type.tool";
+		};
 		8773B70F212BFD730096BFCC /* AdvanceKextUpdater */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8773B721212BFD760096BFCC /* Build configuration list for PBXNativeTarget "AdvanceKextUpdater" */;
@@ -253,6 +310,9 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Muntashir Al-Islam";
 				TargetAttributes = {
+					872395DE2171E55700B6FE27 = {
+						CreatedOnToolsVersion = 10.0;
+					};
 					8773B70F212BFD730096BFCC = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -272,6 +332,7 @@
 			projectRoot = "";
 			targets = (
 				8773B70F212BFD730096BFCC /* AdvanceKextUpdater */,
+				872395DE2171E55700B6FE27 /* AdvanceKextUpdaterHelper */,
 			);
 		};
 /* End PBXProject section */
@@ -328,12 +389,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		872395DB2171E55700B6FE27 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				872395E62171E7B100B6FE27 /* KextHandler.m in Sources */,
+				872395E22171E55700B6FE27 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8773B70C212BFD730096BFCC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				879F609D21423C070059D0ED /* utils.m in Sources */,
 				87BB858021308177007F4D29 /* Task.m in Sources */,
+				872395D62171DD9000B6FE27 /* KIHelperAgrumentController.m in Sources */,
 				876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */,
 				879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */,
 				87FAC53421486B6A00DAA453 /* ConfigBinary.m in Sources */,
@@ -346,6 +417,7 @@
 				8773B715212BFD730096BFCC /* AppDelegate.m in Sources */,
 				879F609A2141FE390059D0ED /* PCI.m in Sources */,
 				875032EA21341C8800F5278D /* ConfigKextVersionControl.m in Sources */,
+				871386A52170F87D0004DDBB /* KextInstaller.m in Sources */,
 				8773B726212BFF0F0096BFCC /* KextHandler.m in Sources */,
 				877CDB67213861C500176777 /* hasInternetConnection.m in Sources */,
 			);
@@ -365,6 +437,33 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		872395E42171E55700B6FE27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6X692P9AQ8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		872395E52171E55700B6FE27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6X692P9AQ8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		8773B71F212BFD760096BFCC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -399,7 +498,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 467;
+				CURRENT_PROJECT_VERSION = 486;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -459,7 +558,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 467;
+				CURRENT_PROJECT_VERSION = 486;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -535,6 +634,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		872395E32171E55700B6FE27 /* Build configuration list for PBXNativeTarget "AdvanceKextUpdaterHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				872395E42171E55700B6FE27 /* Debug */,
+				872395E52171E55700B6FE27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		8773B70B212BFD730096BFCC /* Build configuration list for PBXProject "AdvanceKextUpdater" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
