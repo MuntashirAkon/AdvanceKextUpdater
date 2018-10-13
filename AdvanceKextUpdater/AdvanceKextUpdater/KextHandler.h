@@ -13,8 +13,10 @@
 #define KEXT_BRANCH @"kext_db"
 
 @interface KextHandler: NSObject {
-    NSArray *kextNames;
-    NSMutableArray *kexts;
+    NSArray<NSString *> *kextNames;
+    NSMutableArray<NSString *> *kexts;
+    NSDictionary *catalog;
+    NSMutableDictionary<NSString *, NSURL *> *remoteKexts; // kextName => remoteURL
 }
 + (BOOL) initDB;
 + (BOOL) checkForDBUpdate;
@@ -24,9 +26,11 @@
 + (NSString *) kextCachePath;
 + (NSString *) guideCachePath;
 + (NSString *) pciIDsCachePath;
++ (NSString *) tmpPath;
 + (NSString *) kextTmpPath;
 
 - (NSArray<NSString *> *) listInstalledKext;
 - (NSArray<NSString *> *) listKext;
+- (NSDictionary<NSString *, NSURL *> *) listRemoteKext;
 @end
 #endif /* KextHandler_h */

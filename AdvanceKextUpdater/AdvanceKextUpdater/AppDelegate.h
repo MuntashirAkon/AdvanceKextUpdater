@@ -7,14 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KextHandler.h"
 
 #define COLOR_GREEN [NSColor colorWithCalibratedRed:0 green:143/255.0f blue:0 alpha:1.0f] // Success
 #define COLOR_RED [NSColor redColor] // Failure
 #define COLOR_ORANGE [NSColor orangeColor] // Warning
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
-    NSArray *installedKexts;
-    NSArray *allTheKexts;
+    KextHandler *kextHandler;
+    NSArray<NSString *> *installedKexts;
+    NSArray<NSString *> *allTheKexts;
+    NSDictionary<NSString *, NSURL *> *remoteKexts;
     // For kextConfig
     NSString *guide;
     NSString *homepage;

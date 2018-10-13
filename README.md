@@ -53,6 +53,8 @@ if you forgot how to do this:
 git clone -b kext_db https://github.com/MuntashirAkon/AdvanceKextUpdater.git
 ```
 
+If you're compiling the `dev` repo on macOS 10.7, please don't update using pod (this is due to compatibility problem).
+
 ## License
 GPLv3.0
 
@@ -73,4 +75,7 @@ I don't accept any donations.
 - add support for `remote_url`
 - install, update, remove a kext
 - auto update kext
+- show suggestions
 - add the ability to include `sysctl` key-values in the config.json file 
+- check for installed kext(s) using kextstat and identifier, too as their are multiple ways of installing a kext other than just LE and SLE
+- add kext remove script

@@ -84,6 +84,7 @@
 #endif
         } @catch(NSException *e) {}
         // Initialize table
+        self->kextHandler = KextHandler.alloc.init;
         self.overview = [self listInstalledKext];
         self.allKexts = [self listAllKext:YES];
         // Main thread
@@ -189,7 +190,7 @@
 
 // Helper functions
 - (NSDictionary *) listInstalledKext {
-    installedKexts = [[[KextHandler alloc] init] listInstalledKext];
+    installedKexts = self->kextHandler.listInstalledKext;
     int sn = 0;
     NSMutableArray *kexts = [NSMutableArray array];
     for(NSString *kext in installedKexts) {
@@ -202,7 +203,8 @@
 }
 
 - (NSDictionary *) listAllKext: (BOOL) deviceOnly { // TODO
-    allTheKexts = [[KextHandler alloc] init].listKext;
+    allTheKexts = self->kextHandler.listKext;
+    remoteKexts = self->kextHandler.listRemoteKext;
     int sn = 0;
     NSMutableArray *kexts = [NSMutableArray array];
     for(NSString *kext in allTheKexts) {
@@ -240,7 +242,6 @@
 }
 
 // Maybe in a seperate class?
-// TODO: remote_url not handled
 -(void)fetchKextInfo: (NSTableView *)sender whichDB: (BOOL) allKextsDB {
     @try {
         // Do nothing in case user supplies an invalid row
@@ -252,7 +253,12 @@
         [[self window] removeChildWindow:[self kextViewer]];
         // Load kext config
         NSString *kext = allKextsDB ? [allTheKexts objectAtIndex:[sender clickedRow]] : [installedKexts objectAtIndex:[sender clickedRow]];
-        KextConfig *kextConfig = [[KextConfig alloc] initWithKextName:kext];
+        KextConfig *kextConfig;
+        if([remoteKexts objectForKey:kext] != nil) {
+            kextConfig = [KextConfig.alloc initWithKextName:kext URL:[remoteKexts objectForKey:kext]];
+        } else {
+            kextConfig = [KextConfig.alloc initWithKextName:kext];
+        }
         // If unable to load any kext
         if(kextConfig == nil) {
             NSRunCriticalAlertPanel(@"Missing config.json!", @"A config.json file determines the Kext behaviors and other configurations, which is somehow missing. You can create a new issue on GitHub if you are interested.", @"OK", nil, nil);

@@ -19,18 +19,23 @@
     path = [path stringByAppendingPathComponent:@"catalog"];
     path = [path stringByAppendingPathExtension:@"json"];
     if([[NSFileManager defaultManager] fileExistsAtPath:path]){
-        NSDictionary *catalog = [JSONParser parseFromFile:path];
+        catalog = [JSONParser parseFromFile:path];
         kextNames = [catalog allKeys];
         NSMutableArray *kextList = [NSMutableArray array];
         for(NSString *kextName in kextNames){
             [kextList addObject:[kextName stringByAppendingPathExtension:@"kext"]];
+            id kextInfo = [catalog objectForKey:kextName];
+            if([kextInfo isKindOfClass:NSDictionary.class]){
+                if([kextInfo objectForKey:@"remote_url"] != nil) {
+                    [remoteKexts setObject:[NSURL URLWithString:[kextInfo objectForKey:@"remote_url"]] forKey:kextName];
+                }
+            }
         }
         kexts = kextList;
         // TODO: handle remote_url
-    } else {
-        kexts = nil;
+        return self;
     }
-    return self;
+    return nil;
 }
 
 + (NSString *) appPath {
@@ -60,8 +65,12 @@
     return [self.appCachePath stringByAppendingPathComponent:@"pciids"];
 }
 
++ (NSString *) tmpPath {
+    return [@"/tmp" stringByAppendingPathComponent:APP_NAME];
+}
+
 + (NSString *) kextTmpPath {
-    return [[@"/tmp" stringByAppendingPathComponent:APP_NAME] stringByAppendingPathComponent:@"kexts"];
+    return [self.tmpPath stringByAppendingPathComponent:@"kexts"];
 }
 
 /**
@@ -145,19 +154,10 @@
 }
 
 - (NSArray<NSString *> *) listKext {
-    return kexts;
+    return kexts.copy;
 }
 
-- (void) installKext {
-    // Install kext at SLE or LE (macOS 10.11 or later)
+- (NSDictionary<NSString *, NSURL *> *) listRemoteKext {
+    return remoteKexts.copy;
 }
-
-- (void) repairPermissions: (NSArray *) kexts {
-    // Repair permission for all or a single kext
-}
-
-- (void) updateKernelCache {
-    // Update kernel cache
-}
-
 @end
