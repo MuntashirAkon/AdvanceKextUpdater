@@ -3,7 +3,7 @@
   "kext": "CodecCommander.kext",
   "description": "Handles EAPD state updating for power-managed HDA codecs",
   "homepage": "https://github.com/RehabMan/EAPD-Codec-Commander",
-  "version": "2.6.3",
+  "version": "2.7.1",
   "versions": null,
   "target": "LE",
   "since": "10.8",
@@ -11,7 +11,7 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-eapd-codec-commander/downloads/RehabMan-CodecCommander-2017-0501.zip",
+      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-eapd-codec-commander/downloads/RehabMan-CodecCommander-2018-1003.zip",
       "script": null,
       "loc": "Debug/CodecCommander.kext"
     },
@@ -21,7 +21,7 @@
       "loc": "Release/CodecCommander.kext"
     }
   },
-  "changes": "Add ALC236 support (same as ALC283); bump version 2.6.3",
+  "changes": "- Detect AppleALC for automatic disable of \"Perform Reset\" and \"Perform Reset on External Wake\" (so SSDT-AppleALC.aml not needed usually)\n- Added support for AppleALC by reading `alc-layout-id` property (if present) for layout-id determination\n-Added kernel flags `-ccoff` and `-ccpioff`",
   "guide": "@see https://raw.githubusercontent.com/RehabMan/EAPD-Codec-Commander/master/README.md",
   "time": "2017-05-01 21:02:45",
   "license": "GPLv2",
