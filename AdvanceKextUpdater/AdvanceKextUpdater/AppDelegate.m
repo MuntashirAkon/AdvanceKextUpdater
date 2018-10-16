@@ -10,7 +10,7 @@
 #import "KextConfig.h"
 #import "KextHandler.h"
 #import <Webkit/Webkit.h> // for WebView
-#import <MMMarkdown/MMMarkdown.h>
+#import "MarkdownToHTML.h"
 #import "Task.h"
 #import "ConfigMacOSVersionControl.h"
 #import "ConfigKextVersionControl.h"
@@ -34,7 +34,8 @@
 @synthesize allKexts;
 @synthesize kextProperties;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+// Handle kext:// url scheme
+-(void)applicationWillFinishLaunching:(NSNotification *)aNotification {
     // Check if Xcode components are installed
     // There are complication with `xcode-select --install`
     // I may use it instead in future version
@@ -47,6 +48,54 @@
         NSRunCriticalAlertPanel(@"No Xcode Command Line Tools!", @"Xcode command line tools are required! Unlike the  Xcode itself the command line tools don't take much space.", nil, nil, nil);
         [self applicationWillTerminate:aNotification]; // Terminate
     }
+    // Init KextHandler
+    self->kextHandler = KextHandler.alloc.init;
+    // Initialize table
+    self.overview = [self listInstalledKext];
+    self.allKexts = [self listAllKext:YES];
+
+    NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventManager];
+    [appleEventManager setEventHandler:self
+                           andSelector:@selector(handleGetURLEvent:withReplyEvent:)
+                         forEventClass:kInternetEventClass andEventID:kAEGetURL];
+}
+
+- (void)handleGetURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
+    NSString *path = [[[event paramDescriptorForKeyword:keyDirectObject] stringValue] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    // Currently only supports kext://<verb>/<kext-name>
+    // Supported verbs: kext (optional), guide, install, remove
+    if([path hasPrefix:@"kext://"]){
+        path = [path substringFromIndex:7];
+        // Extract kext name
+        NSString *kextName = [path lastPathComponent];
+        path = [path stringByDeletingLastPathComponent];
+        // Extract verb
+        NSString *verb = [path lastPathComponent];
+        NSLog(@"%@: %@", verb, kextName);
+        // Just open the app if kextName is nil
+        if(kextName == nil) return;
+        // Verfiy if it's in the database
+        if(([allTheKexts indexOfObject:[kextName stringByAppendingPathExtension:@"kext"]] != NSNotFound) || [allTheKexts indexOfObject:kextName] != NSNotFound){
+            // The kext IS in the database
+            // Perform necessary actions
+            [self fetchKextInfo:kextName];
+            // Run tasks based on verbs
+            // NOTE: we do not require this condition: verb == nil || [verb isEqual:@"kext"]
+            // as it is the default behavior
+            if([verb isEqual:@"guide"]) {
+                [self fetchGuide:nil];
+            } else if ([verb isEqual:@"install"]) {
+                // TODO: install/update the kext (with a prompt)
+            } else if ([verb isEqual:@"remove"]) {
+                // TODO: remove a kext (with a prompt)
+            }
+        } else {
+            NSRunCriticalAlertPanel(@"Kext not found!", @"The kext (%@) you are trying to open is not found!", nil, nil, nil, kextName);
+        }
+    }
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Set window levels
     [[self guideViewer]  setLevel:NSNormalWindowLevel];
     [[self kextViewer]   setLevel:NSNormalWindowLevel];
@@ -66,7 +115,6 @@
     [fm createDirectoryAtPath:KextHandler.guideCachePath withIntermediateDirectories:YES attributes:nil error:nil];
     [fm createDirectoryAtPath:KextHandler.kextTmpPath withIntermediateDirectories:YES attributes:nil error:nil];
     // Check for kext update
-    self->kextHandler = KextHandler.alloc.init;
     self.loadingTexts = @{
         @"titleText": @"",
         @"subtitleText": @"",
@@ -88,9 +136,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [[self loadingSpinner] stopAnimation:self];
             [[self loadingPanel] close];
-            // Initialize table
-            self.overview = [self listInstalledKext];
-            self.allKexts = [self listAllKext:YES];
             if(![fm fileExistsAtPath:[KextHandler kextDBPath]]) {
                 NSRunCriticalAlertPanel(@"Updating Kext database failed!", @"Failed to update kext database, please check your internet connection and try again.", nil, nil, nil);
                 [self applicationWillTerminate:aNotification]; // Terminate
@@ -243,16 +288,19 @@
 
 // Maybe in a seperate class?
 -(void)fetchKextInfo: (NSTableView *)sender whichDB: (BOOL) allKextsDB {
+    // Do nothing in case user supplies an invalid row
+    if([sender clickedRow] < 0) return;
+    // Get the kext name
+    NSString *kextName = allKextsDB ? [allTheKexts objectAtIndex:[sender clickedRow]] : [installedKexts objectAtIndex:[sender clickedRow]];
+    [self fetchKextInfo:kextName];
+}
+-(void)fetchKextInfo: (NSString *)kext {
     @try {
-        // Do nothing in case user supplies an invalid row
-        if([sender clickedRow] < 0) return;
         // Remove all the child-windows
         [[self guideViewer] close];
         [[self kextViewer] close];
         [[self kextViewer] removeChildWindow:[self guideViewer]];
         [[self window] removeChildWindow:[self kextViewer]];
-        // Load kext config
-        NSString *kext = allKextsDB ? [allTheKexts objectAtIndex:[sender clickedRow]] : [installedKexts objectAtIndex:[sender clickedRow]];
         KextConfig *kextConfig;
         if([remoteKexts objectForKey:kext] != nil) {
             kextConfig = [KextConfig.alloc initWithKextName:kext URL:[remoteKexts objectForKey:kext]];
@@ -355,7 +403,7 @@
                 @"enabled": [kextConfig.guide isEqual:@""] ? @0 : @1
             },
             @"homepage_btn": @{
-                @"hidden": [self isNull:kextConfig.homepage] ? @1 : @0
+                @"hidden": isNull(kextConfig.homepage) ? @1 : @0
             },
             @"install_btn": @{
                 @"enabled": (installed || !installable) ? @0 : @1
@@ -417,16 +465,8 @@
         // Guide is provided as a string
         guideHTML = guide;
     }
-    // Parse Markdown
-    NSError  *error;
-    NSString *guideMD = guideHTML;
-    guideHTML = [MMMarkdown HTMLStringWithMarkdown:guideMD extensions:MMMarkdownExtensionsGitHubFlavored error:&error];
-    if(error != nil){
-        guideHTML = @"<p>Incomplete Markdown systax!</p>";
-    }
-    NSString *cssFile = [NSBundle.mainBundle pathForResource:@"github-markdown" ofType:@"css"];
     return @{
-         @"guide": [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>%@</style><style> .markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;} @media (max-width: 767px) {.markdown-body{padding:15px;}} </style><article class=\"markdown-body\">%@</article>", [NSString stringWithContentsOfFile:cssFile encoding:NSUTF8StringEncoding error:nil], guideHTML],
+         @"guide": [MarkdownToHTML.alloc initWithMarkdown:guideHTML].render,
          @"url": url
     };
 }
@@ -457,13 +497,5 @@
         version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleVersion"];
     }
     return version;
-}
-
-- (BOOL) isNull: (id) sel {
-    if(sel == [NSNull null]) return true;
-    else if(sel == nil) return true;
-    else if([sel isEqual:@""]) return true;
-    else if([sel isEqual:@0]) return true;
-    return false;
 }
 @end

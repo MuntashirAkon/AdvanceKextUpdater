@@ -12,6 +12,7 @@
 		872395D62171DD9000B6FE27 /* KIHelperAgrumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872395D52171DD9000B6FE27 /* KIHelperAgrumentController.m */; };
 		872395E22171E55700B6FE27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 872395E12171E55700B6FE27 /* main.m */; };
 		872395E62171E7B100B6FE27 /* KextHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B725212BFF0F0096BFCC /* KextHandler.m */; };
+		873DFC492174966000B33DB5 /* MarkdownToHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 873DFC482174966000B33DB5 /* MarkdownToHTML.m */; };
 		875032EA21341C8800F5278D /* ConfigKextVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 875032E921341C8800F5278D /* ConfigKextVersionControl.m */; };
 		875032ED2135049C00F5278D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875032EC2135049C00F5278D /* WebKit.framework */; };
 		876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD993212DFC2D00D10B9D /* ConfigAuthor.m */; };
@@ -69,6 +70,11 @@
 		872395D52171DD9000B6FE27 /* KIHelperAgrumentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KIHelperAgrumentController.m; sourceTree = "<group>"; };
 		872395DF2171E55700B6FE27 /* AdvanceKextUpdaterHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdvanceKextUpdaterHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		872395E12171E55700B6FE27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		872395EB2172013600B6FE27 /* KextViewerWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextViewerWindowController.h; sourceTree = "<group>"; };
+		872395EC2172014600B6FE27 /* KextViewerWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextViewerWindowController.m; sourceTree = "<group>"; };
+		872395EE217204DB00B6FE27 /* KextViewerWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KextViewerWindowController.xib; sourceTree = "<group>"; };
+		873DFC472174965400B33DB5 /* MarkdownToHTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarkdownToHTML.h; sourceTree = "<group>"; };
+		873DFC482174966000B33DB5 /* MarkdownToHTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarkdownToHTML.m; sourceTree = "<group>"; };
 		875032E821341C3300F5278D /* ConfigKextVersionControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigKextVersionControl.h; sourceTree = "<group>"; };
 		875032E921341C8800F5278D /* ConfigKextVersionControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigKextVersionControl.m; sourceTree = "<group>"; };
 		875032EC2135049C00F5278D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -221,6 +227,9 @@
 				871386A42170F87D0004DDBB /* KextInstaller.m */,
 				872395D42171DD8600B6FE27 /* KIHelperAgrumentController.h */,
 				872395D52171DD9000B6FE27 /* KIHelperAgrumentController.m */,
+				872395EB2172013600B6FE27 /* KextViewerWindowController.h */,
+				872395EC2172014600B6FE27 /* KextViewerWindowController.m */,
+				872395EE217204DB00B6FE27 /* KextViewerWindowController.xib */,
 			);
 			path = AdvanceKextUpdater;
 			sourceTree = "<group>";
@@ -248,6 +257,8 @@
 				879F609C21423C070059D0ED /* utils.m */,
 				877CDB66213861C500176777 /* hasInternetConnection.m */,
 				87FAC5372148FD4100DAA453 /* CacheController.h */,
+				873DFC472174965400B33DB5 /* MarkdownToHTML.h */,
+				873DFC482174966000B33DB5 /* MarkdownToHTML.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -411,6 +422,7 @@
 				87BB8577212FB567007F4D29 /* KextConfig.m in Sources */,
 				87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */,
 				876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */,
+				873DFC492174966000B33DB5 /* MarkdownToHTML.m in Sources */,
 				876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */,
 				8773B71D212BFD760096BFCC /* main.m in Sources */,
 				87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */,
@@ -498,7 +510,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 486;
+				CURRENT_PROJECT_VERSION = 536;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -558,7 +570,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 486;
+				CURRENT_PROJECT_VERSION = 536;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

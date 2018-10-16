@@ -9,7 +9,7 @@
 #include <SystemConfiguration/SystemConfiguration.h>
 
 // @see https://stackoverflow.com/a/18750343/4147849
-static BOOL hasInternetConnection() {
+static inline BOOL hasInternetConnection() {
     BOOL returnValue = NO;
     
     struct sockaddr zeroAddress;

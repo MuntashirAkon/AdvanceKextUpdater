@@ -38,4 +38,12 @@ NS_INLINE NSOpenPanel* DirectoryChooser() {
     return temp;
 }
 
+NS_INLINE BOOL isNull(id sel) {
+    if(sel == [NSNull null]) return true;
+    else if(sel == nil) return true;
+    else if([sel isEqual:@""]) return true;
+    else if([sel isEqual:@0]) return true;
+    return false;
+}
+
 #endif /* PrefixHeader_pch */

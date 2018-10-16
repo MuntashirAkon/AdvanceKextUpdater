@@ -34,6 +34,12 @@ The final release will contain the following features. Already implemented featu
   * The macOS version prior to which the kext is available, etc.
 - (`Done`) View suggested Kext(s)
 - (`Done`) Ability to repair permissions, update kernel cache
+- View, install, update, remove a kext from URL (`kext://`)
+  * (`Done`) Open AdvanceKextUpdater using `kext://`
+  * (`Done`) View kext using `kext://kext/<kext-name>` or simply `kext://<kext-name>`
+  * (`Done`) View guide using `kext://guide/<kext-name>`
+  * Install/update kext using `kext://install/<kext-name>` (with a prompt)
+  * Remove kext using `kext://remove/<kext-name>` (with a prompt)
 
 In this app, you can only install/update a kext if all the criterias presents in the config file are matched. If they
 don't match, based on the config file, we can either revoke the installation or warn you of the potential harm that might
