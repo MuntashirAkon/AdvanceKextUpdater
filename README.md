@@ -1,7 +1,7 @@
 # AdvanceKextUpdater
 Keep your kexts up-to-date all the time starting from macOS 10.7
 
-**NOTE:** This project is still in progress.
+**NOTE:** This project is still in progress. You can track current progress [here](https://github.com/MuntashirAkon/AdvanceKextUpdater/projects/1).
 
 ## Introduction
 AdvanceKextUpdater is a huge project similar to a GUI based package manager, consisting of an App and a database.
@@ -16,13 +16,13 @@ This style makes this project wholly separate from any other project and can be 
 which is used by many PHP devs to keep their external libraries up-to-date.
 
 ## Features
-The final release will contain the following features. Already implemented features are marked as `Done`.
+The final release will contain the following features. You can track current progress [here](https://github.com/MuntashirAkon/AdvanceKextUpdater/projects/1).
 
 - Search, download, install, update kext(s) right from the App
 - Not only install a kext but also its dependencies and remove all the potential conflicts
 - Check for new updates on startup
 - Ability to update kext(s) automatically (with certain restrictions, of course)
-- (`Done`) View all information about the kext, they includes:
+- View all information about the kext, they includes:
   * Short description
   * Guide (if available) which may be useful for some kext
   * Changes in the new version of the kext
@@ -32,12 +32,12 @@ The final release will contain the following features. Already implemented featu
   * Conflicts
   * Replaced by (if the kext is obsolete and replaced by another kext)
   * The macOS version prior to which the kext is available, etc.
-- (`Done`) View suggested Kext(s)
-- (`Done`) Ability to repair permissions, update kernel cache
+- View suggested Kext(s)
+- Ability to repair permissions, update kernel cache
 - View, install, update, remove a kext from URL (`kext://`)
-  * (`Done`) Open AdvanceKextUpdater using `kext://`
-  * (`Done`) View kext using `kext://kext/<kext-name>` or simply `kext://<kext-name>`
-  * (`Done`) View guide using `kext://guide/<kext-name>`
+  * Open AdvanceKextUpdater using `kext://`
+  * View kext using `kext://kext/<kext-name>` or simply `kext://<kext-name>`
+  * View guide using `kext://guide/<kext-name>`
   * Install/update kext using `kext://install/<kext-name>` (with a prompt)
   * Remove kext using `kext://remove/<kext-name>` (with a prompt)
 
@@ -76,12 +76,3 @@ I don't accept any donations.
 - [MMMarkdown](https://github.com/mdiep/MMMarkdown) - For parsing markdown texts
 - [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) - For styling parsed markdown texts
 - [STPrivilegedTask](https://github.com/sveinbjornt/STPrivilegedTask) - For running task as administrator
-
-## TODO List
-- add support for `remote_url`
-- install, update, remove a kext
-- auto update kext
-- show suggestions
-- add the ability to include `sysctl` key-values in the config.json file 
-- check for installed kext(s) using kextstat and identifier, too as their are multiple ways of installing a kext other than just LE and SLE
-- add kext remove script
