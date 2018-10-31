@@ -3,7 +3,7 @@
   "kext": "AppleALC.kext",
   "description": "An open source kernel extension enabling native macOS HD audio for not officially supported codecs without any filesystem modifications.",
   "homepage": "https://github.com/acidanthera/AppleALC",
-  "version": "1.3.1",
+  "version": "1.3.3",
   "versions": null,
   "target": "LE",
   "since": "10.8",
@@ -11,19 +11,19 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https://github.com/acidanthera/AppleALC/releases/download/1.3.1/1.3.1.DEBUG.zip",
+      "url": "https://github.com/acidanthera/AppleALC/releases/download/1.3.3/1.3.3.DEBUG.zip",
       "script": null,
       "loc": "AppleALC.kext"
     },
     "rel": {
-      "url": "https://github.com/acidanthera/AppleALC/releases/download/1.3.1/1.3.1.RELEASE.zip",
+      "url": "https://github.com/acidanthera/AppleALC/releases/download/1.3.3/1.3.3.RELEASE.zip",
       "script": null,
       "loc": "AppleALC.kext"
     }
   },
-  "changes": "#### v1.3.1\r\n- Fixed incorrect unused HDAU termination\r\n- Fixed pinconfig refresh causing random init failures\r\n- Added ALC225/ALC3253 layout-id 30 for Dell Inspiron 17-7779 by Constanta\r\n- Added ALC295 layout-id 12 for Asus UX430 by hieplpvip\r\n- Added Realtek ALC256 (3246) layout-id 11 for dell 7559 by Rockjesus\r\n- Added ALC887 layout-id 50 for Asus PRIME B250-PLUS by 0th3r\r\n- Added ALC295 layout-id 12 for HP Envy x360 15-bp107tx by Damon",
+  "changes": "#### v1.3.3\r\n- Added ability to disable controller patching by injecting property 'no-controller-patch' (for use of FakePCIID_Intel_HDMI_Audio)\r\n- Fixed volume control for CX8200 with Wern Apfel patch from CX20724\r\n- Fixed patches for IDT92HD872_4 (IDT 76d9)\r\n- Added ALC235 layout-id 14 for Lenovo Y520/Y720 series by the-braveknight\r\n- Added ALC230 layout-id 20 for Lenovo Ideapad 320 by maiconjs\r\n- Added ALC887-VD AD0 layout-id 20 for Asus Z97M-PLUS/BR by maiconjs\r\n- Added ALC887-VD layout-id 40 for Asus B85-ME by maiconjs\r\n- Added ALC236 layout-id 16 for Lenovo Ideapad 320s 14ikb by RodionS\r\n- Added ALC885 layout-id 15 for GA-G33M-DS2R by MacPeet\r\n- Added ALC662 layout-id 15 for Acer Aspire A7600U All in One by MacPeet\r\n- Added ALC255 layout-id 30 for XiaoMi Notebook Air by HongyuS\r\n- Added CX20590 layout-id 13 and 14 for Lenovo T420 by tluck\r\n- Added ALC283 layout-id 44 for ThinkCentre M93z 10AF ALC283 by giesteira\r\n- Added ALC662v3 layout-id 16 for Lenovo ThinkCentre M92P SFF by phucnguyen.2411\r\n- Added ALC282 layout-id 22 for Lenovo Y430P  by lovert\r\n- Fixed CX20756 layout-id 13\r\n- Added ALC892 layout-id 15 for MSi Z97S SLI Krait Edition by MacPeet\r\n- Fix volume control for CX20756 layout-id 13 and external mic minor changes/fixes",
   "guide": "#### Features\n- Digital and analog audio support starting from the OS installation\n- Recovery HD/macOS Installer audio support\n- Automated codec detection\n- Unsupported audio controller enabling (internal and external)\n- Arbitrary kext patching\n- Custom platform/layout injection\n- Works with SIP / El Capitan\n- Currently compatible with 10.8-10.14\n\n#### Installation\nThe minimal instruction is available on the [wiki](https://github.com/vit9696/AppleALC/wiki).\nThe prebuilt binaries are available on [releases](https://github.com/vit9696/AppleALC/releases) page.\n\n#### Support and discussion\n[InsanelyMac topic](http://www.insanelymac.com/forum/topic/311293-applealc-—-dynamic-applehda-patching/) in English\n[AppleLife topic](https://applelife.ru/threads/applealc-dinamicheskij-patching-applehda.1171672/) in Russian",
-  "time": "2018-08-13 10:57:37",
+  "time": "2018-10-30 11:09:26",
   "license": "BSD 3-Clause \"New\" or \"Revised\" License",
   "authors": [
     {
