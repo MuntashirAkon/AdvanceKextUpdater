@@ -21,6 +21,8 @@
                 <outlet property="kextViewer" destination="Q4v-Ar-X72" id="Sj5-oJ-MEF"/>
                 <outlet property="loadingPanel" destination="0T8-2f-BKz" id="Cjy-50-WRR"/>
                 <outlet property="loadingSpinner" destination="Orz-Z4-soq" id="vGe-Xl-FLg"/>
+                <outlet property="taskInfoView" destination="NyV-6u-ZIh" id="xAr-Hp-8Wq"/>
+                <outlet property="taskViewer" destination="X5v-g9-xFh" id="s8w-MY-m55"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -2141,6 +2143,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
+                            <action selector="installKext:" target="Voe-Tx-rLC" id="KaX-2D-RjE"/>
                             <binding destination="N97-Sh-ORT" name="enabled" keyPath="selection.install_btn.enabled" id="SdT-US-wjO"/>
                         </connections>
                     </button>
@@ -2152,6 +2155,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
+                            <action selector="updateKext:" target="Voe-Tx-rLC" id="Hw2-pr-wNu"/>
                             <binding destination="N97-Sh-ORT" name="enabled" keyPath="selection.update_btn.enabled" id="Fml-sq-oOT"/>
                         </connections>
                     </button>
@@ -2219,6 +2223,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
+                            <action selector="removeKext:" target="Voe-Tx-rLC" id="wwX-E8-XZZ"/>
                             <binding destination="N97-Sh-ORT" name="enabled" keyPath="selection.remove_btn.enabled" id="nGJ-o6-g9l"/>
                         </connections>
                     </button>
@@ -2271,7 +2276,7 @@
                     </webView>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="83" y="529"/>
+            <point key="canvasLocation" x="85" y="761"/>
         </window>
         <objectController id="Bje-ns-7sV" userLabel="Overview">
             <connections>
@@ -2345,5 +2350,51 @@
                 <binding destination="Voe-Tx-rLC" name="contentObject" keyPath="allKexts" id="ibg-hf-sc4"/>
             </connections>
         </objectController>
+        <window title="Task Confirmation Panel" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titleVisibility="hidden" id="X5v-g9-xFh" customClass="NSPanel">
+            <windowStyleMask key="styleMask" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="130" y="63" width="421" height="378"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="768"/>
+            <view key="contentView" id="6Py-Vm-LGp">
+                <rect key="frame" x="0.0" y="0.0" width="421" height="378"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <webView id="NyV-6u-ZIh">
+                        <rect key="frame" x="0.0" y="61" width="421" height="317"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" plugInsEnabled="NO" javaEnabled="NO" javaScriptEnabled="NO" javaScriptCanOpenWindowsAutomatically="NO">
+                            <nil key="identifier"/>
+                        </webPreferences>
+                    </webView>
+                    <button verticalHuggingPriority="750" id="kuV-Xm-Wwm">
+                        <rect key="frame" x="318" y="13" width="89" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Confirm" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tDz-nI-uA3">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <color key="contentTintColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
+                        <connections>
+                            <action selector="runTask:" target="Voe-Tx-rLC" id="Hbv-YP-3se"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="ZhV-kS-lbU">
+                        <rect key="frame" x="237" y="13" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jHe-Am-vb0">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="closeTaskViwer:" target="Voe-Tx-rLC" id="fJ9-6q-hpm"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="-57.5" y="761"/>
+        </window>
     </objects>
 </document>

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <STPrivilegedTask/STPrivilegedTask.h>
 #import "KextInstaller.h"
 #import "KextHandler.h"
 
@@ -81,7 +80,7 @@
             [[KextInstaller.alloc initWithKextName:reqKext] copyAllTo:tmpDir];
     }
     // 4. conflicted kexts (script only)
-    // TODO
+    // TODO Scripts are allowed in furute
     return NO;
 }
 

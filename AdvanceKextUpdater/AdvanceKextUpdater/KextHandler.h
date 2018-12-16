@@ -28,6 +28,10 @@
 + (NSString *) pciIDsCachePath;
 + (NSString *) tmpPath;
 + (NSString *) kextTmpPath;
++ (NSString *) lockFile;
++ (NSString *) stdinPath;
++ (NSString *) stdoutPath;
++ (NSString *) stderrPath;
 
 - (NSArray<NSString *> *) listInstalledKext;
 - (NSArray<NSString *> *) listKext;

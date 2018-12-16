@@ -9,14 +9,13 @@
 #ifndef KIHelperAgrumentController_h
 #define KIHelperAgrumentController_h
 
-// USAGE: helper <verb> [..]
+// USAGE: <verb> [..]
 // Verbs with args:
 // install <kextName> - install a kext
 // update <kextName> - update a kext
 // remove <kextName> - remove/uninstall a kext
 // rebuildcache - Rebuild kernel cache
 // repairpermissions - Repair permissions
-#define INPUT_FILE @"args.in" // Don't change this
 
 @interface KIHelperAgrumentController : NSObject
 

@@ -73,6 +73,23 @@
     return [self.tmpPath stringByAppendingPathComponent:@"kexts"];
 }
 
+// lock file exists when tasks is running
++ (NSString *) lockFile {
+    return [self.tmpPath stringByAppendingPathComponent:@"lockfile"];
+}
+
++ (NSString *) stdinPath {
+    return [self.tmpPath stringByAppendingPathComponent:@"in"];
+}
+
++ (NSString *) stdoutPath {
+    return [self.tmpPath stringByAppendingPathComponent:@"out"];
+}
+
++ (NSString *) stderrPath {
+    return self.stdoutPath;
+}
+
 /**
  * Fetch latest version from the git repo
  *

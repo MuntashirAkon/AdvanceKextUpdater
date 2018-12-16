@@ -33,7 +33,7 @@
 }
 
 + (BOOL) setArg: (NSString *) arg {
-    return [arg writeToFile:[KextHandler.tmpPath stringByAppendingPathComponent:INPUT_FILE] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    return [arg writeToFile:KextHandler.stdinPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
 @end

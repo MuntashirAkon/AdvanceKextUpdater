@@ -13,6 +13,12 @@
 #define COLOR_RED [NSColor redColor] // Failure
 #define COLOR_ORANGE [NSColor orangeColor] // Warning
 
+typedef enum {
+    KextInstall,
+    KextUpdate,
+    KextRemove
+} KextInstallerType;
+
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     KextHandler *kextHandler;
     NSArray<NSString *> *installedKexts;
@@ -21,6 +27,8 @@
     // For kextConfig
     NSString *guide;
     NSString *homepage;
+    // For Task
+    KextInstallerType taskType;
 }
 @property NSDictionary *overview;
 @property NSDictionary *allKexts;
@@ -34,6 +42,10 @@
 -(IBAction)repairPermissions:(NSButton *)sender;
 -(IBAction)rebuildCache:(NSButton *)sender;
 -(IBAction)gotoHomepage:(NSButton *)sender;
-
+-(IBAction)installKext:(NSButton *)sender;
+-(IBAction)updateKext:(NSButton *)sender;
+-(IBAction)removeKext:(NSButton *)sender;
+-(IBAction)closeTaskViwer:(NSButton *)sender;
+-(IBAction)runTask:(NSButton *)sender;
 @end
 
