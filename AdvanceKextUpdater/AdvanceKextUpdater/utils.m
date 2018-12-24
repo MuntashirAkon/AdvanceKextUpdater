@@ -7,7 +7,32 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <SystemConfiguration/SystemConfiguration.h>
 #import "utils.h"
+
+// @see https://stackoverflow.com/a/18750343/4147849
+BOOL hasInternetConnection() {
+    BOOL returnValue = NO;
+    
+    struct sockaddr zeroAddress;
+    bzero(&zeroAddress, sizeof(zeroAddress));
+    zeroAddress.sa_len = sizeof(zeroAddress);
+    zeroAddress.sa_family = AF_INET;
+
+    SCNetworkReachabilityRef reachabilityRef = SCNetworkReachabilityCreateWithAddress(NULL, (const struct sockaddr*)&zeroAddress);
+    
+    if (reachabilityRef != NULL){
+        SCNetworkReachabilityFlags flags = 0;
+        if(SCNetworkReachabilityGetFlags(reachabilityRef, &flags)) {
+            BOOL isReachable = ((flags & kSCNetworkFlagsReachable) != 0);
+            BOOL connectionRequired = ((flags & kSCNetworkFlagsConnectionRequired) != 0);
+            returnValue = (isReachable && !connectionRequired) ? YES : NO;
+        }
+        CFRelease(reachabilityRef);
+    }
+    
+    return returnValue;
+}
 
 // @see https://stackoverflow.com/a/24811200/4147849
 @implementation NSString (VersionNumbers)

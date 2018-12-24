@@ -14,7 +14,7 @@
 #import "Task.h"
 #import "ConfigMacOSVersionControl.h"
 #import "ConfigKextVersionControl.h"
-#import "hasInternetConnection.m"
+#import "utils.h"
 #import "ConfigAuthor.h"
 #import "PCI.h"
 #import "KextInstaller.h"
@@ -44,6 +44,9 @@
     // There are complication with `xcode-select --install`
     // I may use it instead in future version
     NSTask *task = [[NSTask alloc] init];
+    NSFileHandle *nullFileHandle = [NSFileHandle fileHandleWithNullDevice];
+    [task setStandardOutput:nullFileHandle];
+    [task setStandardError:nullFileHandle];
     task.launchPath = [NSBundle.mainBundle pathForResource:@"git" ofType:nil];
     task.arguments = @[@"help"];
     [task launch];
@@ -395,6 +398,7 @@
         // If unable to load any kext
         if(kextConfig == nil) {
             NSRunCriticalAlertPanel(@"Missing config.json!", @"A config.json file determines the Kext behaviors and other configurations, which is somehow missing. You can create a new issue on GitHub if you are interested.", @"OK", nil, nil);
+            // FIXME: Memory leaking of kextConfig
             return;
         };
         // Find the best version for the running macOS version
@@ -587,26 +591,56 @@
     // Create, Copy and Load the launch agent
     //
     NSString *launchAgentName = @"io.github.muntashirakon.advancekextupdater.helper.agent";
-    NSDictionary *launchAgent = @{
-      @"Label": launchAgentName,
-      @"Program": [NSBundle.mainBundle URLForResource:@"AdvanceKextUpdaterHelper" withExtension:nil], // /Applications/AdvanceKextUpdater.app/Contents/Resources/AdvanceKextUpdaterHelper
-      @"RunAtLoad": @YES,
-      @"WorkingDirectory": KextHandler.tmpPath,
-      @"StandardInPath": KextHandler.stdinPath,
-      @"StandardOutPath": KextHandler.stdoutPath,
-      @"StandardErrorPath": KextHandler.stderrPath
-    };
+    NSString *launchAgent = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+        "<plist version=\"1.0\">\n"
+        "    <dict>\n"
+        "        <key>Label</key>\n"
+        "        <string>%@</string>"
+        "        <key>Program</key>\n"
+        "        <string>%@</string>"
+        "        <key>RunAtLoad</key>\n"
+        "        <true/>"
+        "        <key>WorkingDirectory</key>\n"
+        "        <string>%@</string>"
+        "        <key>StandardInPath</key>\n"
+        "        <string>%@</string>"
+        "        <key>StandardOutPath</key>\n"
+        "        <string>%@</string>"
+        "        <key>StandardErrorPath</key>\n"
+        "        <string>%@</string>"
+        "    </dict>\n"
+        "</plist>\n", launchAgentName, [NSBundle.mainBundle pathForResource:@"AdvanceKextUpdaterHelper" ofType:nil],
+KextHandler.tmpPath, KextHandler.stdinPath, KextHandler.stdoutPath, KextHandler.stderrPath];
+//    NSDictionary *launchAgent = @{
+//      @"Label": launchAgentName,
+//      @"Program": [NSBundle.mainBundle URLForResource:@"AdvanceKextUpdaterHelper" withExtension:nil], // /Applications/AdvanceKextUpdater.app/Contents/Resources/AdvanceKextUpdaterHelper
+//      @"RunAtLoad": @YES,
+//      @"WorkingDirectory": KextHandler.tmpPath,
+//      @"StandardInPath": KextHandler.stdinPath,
+//      @"StandardOutPath": KextHandler.stdoutPath,
+//      @"StandardErrorPath": KextHandler.stderrPath
+//    };
     NSString *agentPlist = [[KextHandler.tmpPath stringByAppendingPathComponent:launchAgentName] stringByAppendingPathExtension:@"plist"];
     // Save Info.plist @ tmpPath
-    if (@available(macOS 10.13, *)) {
-        [launchAgent writeToURL:[NSURL URLWithString:agentPlist] error:nil];
-    } else {
-        [launchAgent writeToFile:agentPlist atomically:YES];
-    }
+    [NSFileManager.defaultManager createFileAtPath:agentPlist contents:[launchAgent dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+//    if (@available(macOS 10.13, *)) {
+//        [launchAgent writeToURL:[NSURL URLWithString:agentPlist] error:nil];
+//    } else {
+//        [launchAgent writeToFile:agentPlist atomically:YES];
+//    }
     // Copy & load
-    NSString *launchDaemonsRootDir = @"/Library/LaunchDaemons/";
-    NSString *launchDaemonFile = [[launchDaemonsRootDir stringByAppendingPathComponent:launchAgentName] stringByAppendingPathExtension:@"plist"];
-    [AScript adminExec:[NSString stringWithFormat:@"cp %@ %@ && launchctl load %@", agentPlist, launchDaemonsRootDir, launchDaemonFile]];
+    @try{
+        NSString *launchDaemonsRootDir = @"/Library/LaunchDaemons/";
+        NSString *launchDaemonFile = [[launchDaemonsRootDir stringByAppendingPathComponent:launchAgentName] stringByAppendingPathExtension:@"plist"];
+        [AScript adminExec:[NSString stringWithFormat:@"cp %@ %@ && launchctl load %@", agentPlist, launchDaemonsRootDir, launchDaemonFile]];
+    } @catch (NSError *e){
+        // FIXME: delete STDIN file?
+#ifdef DEBUG
+        NSLog(@"User cancelled");
+#endif
+        return;
+    }
     // Check for the background tasks until they are complete
     while([NSFileManager.defaultManager fileExistsAtPath:KextHandler.lockFile]) {
         // TODO: Check for changes, update message if necessary

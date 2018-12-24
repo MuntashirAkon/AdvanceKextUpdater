@@ -28,6 +28,7 @@
 //    return self;
 //}
 
+// FIXME: NSDictionary writeToURL:error: doesn't work!!!
 - (BOOL) copyAllTo: (NSString *) tmpDir {
     // Declare directories
     NSString *scripts_dir = [tmpDir stringByAppendingPathComponent:@"scripts"];
@@ -40,36 +41,91 @@
     // Create Info.plist
     BinaryHandler *current = self.binaries.recommended; // FIXME let user choose the value
     NSMutableArray<NSString *> *required = NSMutableArray.array;
-    for(ConfigRequiredKexts *req in self.requirments){
-        [required addObject:req.kextName];
-    }
-    NSMutableArray<NSString *> *conflicted = NSMutableArray.array;
-    for(ConfigConflictKexts *con in self.conflict){
-        [conflicted addObject:con.kextName];
-    }
-    NSDictionary *info = @{
-        @"preinstallscript": current.script,
-        @"postinstallscript": self.binaries.postInstallScript,
-        @"required": required,
-        @"conflicted": conflicted
-    };
-    // Save Info.plist @ tmpDir
-    NSString *infoPlist = [[tmpDir stringByAppendingPathComponent:@"Info"] stringByAppendingPathExtension:@"plist"];
-    if (@available(macOS 10.13, *)) {
-        [info writeToURL:[NSURL URLWithString:infoPlist] error:nil];
+    NSMutableString *requiredStr = NSMutableString.string;
+    if(self.requirments.count > 0){
+        [requiredStr appendString:@"        <array>\n"];
+        for(ConfigRequiredKexts *req in self.requirments){
+            [requiredStr appendString:[NSString stringWithFormat:@"            <string>%@</string>\n", req.kextName]];
+            [required addObject:req.kextName];
+        }
+        [requiredStr appendString:@"        </array>\n"];
     } else {
-        [info writeToFile:infoPlist atomically:YES];
+        [requiredStr appendString:@"        <false/>\n"];
     }
+    // FIXME: See if it is installed
+    NSMutableArray<NSString *> *conflicted = NSMutableArray.array;
+    NSMutableString *conflictedStr = NSMutableString.string;
+    if(self.conflict.count > 0){
+        [conflictedStr appendString:@"        <array>\n"];
+        for(ConfigConflictKexts *con in self.conflict){
+            [conflictedStr appendString:[NSString stringWithFormat:@"            <string>%@</string>\n", con.kextName]];
+            [conflicted addObject:con.kextName];
+        }
+        [conflictedStr appendString:@"        </array>\n"];
+    } else {
+        [conflictedStr appendString:@"        <false/>\n"];
+    }
+    NSString *preinstallscript = (current.script == nil ? @"        <false/>\n" : [NSString stringWithFormat:@"        <string>%@</string>\n", current.script]);
+    NSString *postinstallscript = (self.binaries.postInstallScript == nil ? @"        <false/>\n" : [NSString stringWithFormat:@"        <string>%@</string>\n", self.binaries.postInstallScript]);
+//    NSDictionary *info;
+    NSString *infoPlist = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+        "<plist version=\"1.0\">\n"
+        "    <dict>\n"
+        "        <key>preinstallscript</key>\n"
+        "%@"
+        "        <key>postinstallscript</key>\n"
+        "%@"
+        "        <key>required</key>\n"
+        "%@"
+        "        <key>conflicted</key>\n"
+        "%@"
+        "    </dict>\n"
+        "</plist>\n", preinstallscript, postinstallscript, requiredStr, conflictedStr];
+//    @try {
+//        info = @{
+//            @"preinstallscript": (current.script == nil ? @NO : current.script),
+//            @"postinstallscript": (self.binaries.postInstallScript == nil ? @NO : self.binaries.postInstallScript),
+//            @"required": (required.count > 0 ? required.copy : @NO),
+//            @"conflicted": (conflicted.count > 0 ? conflicted.copy : @NO)
+//        };
+//    } @catch (NSException *e){
+//#ifdef DEBUG
+//        NSLog(@"KextInstaller@Dictionary");
+//        NSLog(@"Script: %@", current.script);
+//        NSLog(@"PIScript: %@", self.binaries.postInstallScript);
+//        NSLog(@"Required: %@", [required copy]);
+//        NSLog(@"Conflicts: %@", [conflicted copy]);
+//#endif
+//    }
+    // Save Info.plist @ tmpDir
+    NSString *infoPlistFile = [[tmpDir stringByAppendingPathComponent:@"Info"] stringByAppendingPathExtension:@"plist"];
+    // Save the plist
+    [NSFileManager.defaultManager createFileAtPath:infoPlistFile contents:[infoPlist dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+//    if (@available(macOS 10.13, *)) {
+//        NSLog(@"Written: %hhd", [info writeToURL:[NSURL URLWithString:[infoPlistFile stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] error:nil]);
+//    } else {
+//        [info writeToFile:infoPlistFile atomically:YES];
+//    }
+#ifdef DEBUG
+    if(![NSFileManager.defaultManager fileExistsAtPath:infoPlistFile]){
+        NSLog(@"Couldn't write Info.plist at %@", infoPlistFile);
+    }
+#endif
     // Copy necessary files to the directory
     // 1. preinstallation script
     NSURL *tmpURL;
-    if(self.url != nil) tmpURL = [[NSURL URLWithString:self.url] URLByAppendingPathComponent:current.script];
-    else tmpURL = [[NSURL URLWithString:self.path] URLByAppendingPathComponent:current.script];
-    [self copy:tmpURL to:scripts_dir];
+    if(current.script != nil){
+        if(self.url != nil) tmpURL = [[NSURL URLWithString:self.url] URLByAppendingPathComponent:current.script];
+        else tmpURL = [[NSURL URLWithString:self.path] URLByAppendingPathComponent:current.script];
+        [self copy:tmpURL to:scripts_dir];
+    }
     // 2. postinstallation script
-    if(self.url != nil) tmpURL = [[NSURL URLWithString:self.url] URLByAppendingPathComponent:self.binaries.postInstallScript];
-    else tmpURL = [[NSURL URLWithString:self.path] URLByAppendingPathComponent:self.binaries.postInstallScript];
-    [self copy:tmpURL to:scripts_dir];
+    if(self.binaries.postInstallScript != nil){
+        if(self.url != nil) tmpURL = [[NSURL URLWithString:self.url] URLByAppendingPathComponent:self.binaries.postInstallScript];
+        else tmpURL = [[NSURL URLWithString:self.path] URLByAppendingPathComponent:self.binaries.postInstallScript];
+        [self copy:tmpURL to:scripts_dir];
+    }
     // 3. required kexts
     NSDictionary *remoteKexts = [KextHandler.alloc init].listRemoteKext;
     for(NSString *reqKext in required){
@@ -85,7 +141,12 @@
 }
 
 - (BOOL) copy: (NSURL *) file to: (NSString *) dir {
+    @try {
     return [NSFileManager.defaultManager copyItemAtURL:file toURL:[NSURL URLWithString:dir] error:nil];
+    } @catch (NSException *e) {
+        NSLog(@"file: %@", file);
+        NSLog(@"target: %@", dir);
+    }
 }
 
 - (BOOL) create: (NSString *) dir {

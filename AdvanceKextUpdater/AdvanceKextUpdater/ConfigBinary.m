@@ -17,7 +17,7 @@
 - (instancetype) initWithDict: (id) binaryDict {
     if(binaryDict == [NSNull null]) return nil;
     self->url = [binaryDict objectForKey:@"url"];
-    self->script = [binaryDict objectForKey:@"script"];
+    self->script = isNull([binaryDict objectForKey:@"script"]) ? nil : [binaryDict objectForKey:@"script"];
     self->location = [binaryDict objectForKey:@"loc"];
     return self;
 }
@@ -40,7 +40,8 @@
         self->recommended = self.rel;
     }
     if(self->recommended == nil) @throw [NSException exceptionWithName:@"ConfigBinaryException" reason:@"The recommended/rel binary doesn't exist!" userInfo:nil];
-    self->postInstallScript = [binaryDict objectForKey:@"post-install"];
+    id post_install = [binaryDict objectForKey:@"post-install"];
+    self->postInstallScript = isNull(post_install) ? nil : post_install;
     return self;
 }
 @end

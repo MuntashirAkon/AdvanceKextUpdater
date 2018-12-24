@@ -9,6 +9,8 @@
 #ifndef utils_h
 #define utils_h
 
+BOOL hasInternetConnection(void);
+
 @interface NSString (VersionNumbers)
 - (NSString *) shortenedVersionNumberString;
 @end
