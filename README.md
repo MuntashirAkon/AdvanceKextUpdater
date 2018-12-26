@@ -3,6 +3,8 @@ Keep your kexts up-to-date all the time starting from macOS 10.7
 
 **NOTE:** This project is still in progress. You can track current progress [here](https://github.com/MuntashirAkon/AdvanceKextUpdater/projects/1).
 
+Latest beta release is available [here](https://github.com/MuntashirAkon/AdvanceKextUpdater/releases/latest).
+
 ## Introduction
 AdvanceKextUpdater is a huge project similar to a GUI based package manager, consisting of an App and a database.
 
@@ -75,4 +77,3 @@ I don't accept any donations.
 ## Third-party Libraries
 - [MMMarkdown](https://github.com/mdiep/MMMarkdown) - For parsing markdown texts
 - [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) - For styling parsed markdown texts
-- [STPrivilegedTask](https://github.com/sveinbjornt/STPrivilegedTask) - For running task as administrator
