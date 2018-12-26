@@ -125,7 +125,7 @@ authors[].email
 - `conflict`: (Object|null) 
     - `conflict.kexts`: (Object) Contains a list of kext along with their versions that have conflict(s) with this kext.
                         (Similar to the above example)
-    - `conflict.action`: (String) Either `delete` or `none`
+    - ~~`conflict.action`: (String) Either `delete` or `none`~~ Conflicts will be deleted
 - `replaced_by`: (Object|null) The kext has been replaced by others.
     - `replaced_by.since`: (String) The version of macOS after which the kext has been replaced
     - `replaced_by.kexts`: (Object) List of alternative kext(s). (Similar to the above example)
