@@ -8,6 +8,7 @@
 
 #ifndef KextHandler_h
 #define KextHandler_h
+#import <Foundation/Foundation.h>
 
 #define KEXT_REPO @"https://github.com/MuntashirAkon/AdvanceKextUpdater.git"
 #define KEXT_BRANCH @"kext_db"
@@ -29,6 +30,7 @@
 + (NSString *) tmpPath;
 + (NSString *) kextTmpPath;
 + (NSString *) lockFile;
++ (NSString *) messageFile;
 + (NSString *) stdinPath;
 + (NSString *) stdoutPath;
 + (NSString *) stderrPath;

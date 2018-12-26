@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
-        <plugIn identifier="com.apple.WebKitIBPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.WebKitIBPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -930,18 +930,18 @@
                         </textFieldCell>
                     </textField>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="V1t-W2-XKO" userLabel="Quick Help Text">
-                        <rect key="frame" x="468" y="37" width="152" height="183"/>
+                        <rect key="frame" x="468" y="33" width="152" height="187"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Y0e-Xu-ZCv">
-                            <rect key="frame" x="0.0" y="0.0" width="152" height="183"/>
+                            <rect key="frame" x="0.0" y="0.0" width="152" height="187"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView focusRingType="none" editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="XR1-ws-tVS">
-                                    <rect key="frame" x="0.0" y="0.0" width="152" height="183"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="152" height="187"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="152" height="183"/>
+                                    <size key="minSize" width="152" height="187"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
@@ -1771,10 +1771,10 @@
                         </scroller>
                     </scrollView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Zfh-Ky-kqN" userLabel="Copyright Text">
-                        <rect key="frame" x="466" y="12" width="156" height="17"/>
+                        <rect key="frame" x="466" y="12" width="156" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="© Muntashir Al-Islam" id="lwI-k1-goq">
-                            <font key="font" metaFont="system"/>
+                            <font key="font" metaFont="system" size="10"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>

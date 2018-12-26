@@ -16,6 +16,7 @@
 #import "ConfigMacOSVersionControl.h"
 #import "ConfigRequirments.h"
 #import "ConfigBinary.h"
+#import "ConfigTarget.h"
 
 @class ConfigVersionControl;
 
@@ -56,7 +57,7 @@ typedef enum {
 @property NSArray<ConfigSuggestion *> *suggestions;     // Array|null √
 @property ConfigSWRequirments     *swRequirments;       // OPTIONAL Dict
 @property NSArray<NSString *>     *tags;                // OPTIONAL String: comma separated √
-@property NSString                *target;              // String: kSLE or kLE
+@property ConfigTarget            *target;              // String: kSLE or kLE
 @property NSDate                  *time;                // String: YYYY-MM-DD HH:MM:SS or YYYY-MM-DD √
 
 @property NSString                *version;             // String

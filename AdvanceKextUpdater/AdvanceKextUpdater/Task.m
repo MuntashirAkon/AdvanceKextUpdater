@@ -210,7 +210,7 @@ static char kLockKey;
     
 +(bool)get:(NSURL *)url toFile:(NSString *)file supress:(BOOL) suppressErr {
     NSError *err;
-    // Creat file if not exists
+    // Create file if not exists
     if(![NSFileManager.defaultManager fileExistsAtPath:file])
     [NSFileManager.defaultManager createFileAtPath:file contents:nil attributes:nil];
     if (![[NSData dataWithContentsOfURL:url] writeToFile:file options:NSDataWritingAtomic error:&err]){
@@ -278,24 +278,24 @@ static char kLockKey;
 
 @end
 
-@implementation NSAlert (HyperlinkAdditions)
-
-+(NSTextView *)hyperlink:(NSString *)hyperlink title:(NSString *)title{
-    NSDictionary *link = @{NSFontAttributeName:[NSFont systemFontOfSize:NSFont.smallSystemFontSize], NSLinkAttributeName:hyperlink, NSForegroundColorAttributeName:[NSColor blueColor], NSUnderlineStyleAttributeName:@(NSSingleUnderlineStyle)};
-    CGSize size = [title sizeWithAttributes:link];
-    NSTextView *temp = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, size.width, size.height)];
-    [temp.textStorage setAttributedString:[[NSAttributedString alloc] initWithString:title attributes:link]];
-    [temp setEditable:false];
-    [temp setDrawsBackground:false];
-    return temp;
-}
-+(NSAlert *)alertWithMessageTextAndView:(NSString *)message defaultButton:(NSString *)defaultButton alternateButton:(NSString *)alternateButton otherButton:(NSString *)otherButton accessoryView:(NSView *)view informativeTextWithFormat:(NSString *)format, ...{
-    va_list args;
-    va_start(args, format);
-    NSAlert *temp = [NSAlert alertWithMessageText:message defaultButton:defaultButton alternateButton:alternateButton otherButton:otherButton informativeTextWithFormat:@"%@", [[NSString alloc] initWithFormat:format arguments:args]];
-    va_end(args);
-    [temp setAccessoryView:view];
-    return temp;
-}
-
-@end
+//@implementation NSAlert (HyperlinkAdditions)
+//
+//+(NSTextView *)hyperlink:(NSString *)hyperlink title:(NSString *)title{
+//    NSDictionary *link = @{NSFontAttributeName:[NSFont systemFontOfSize:NSFont.smallSystemFontSize], NSLinkAttributeName:hyperlink, NSForegroundColorAttributeName:[NSColor blueColor], NSUnderlineStyleAttributeName:@(NSSingleUnderlineStyle)};
+//    CGSize size = [title sizeWithAttributes:link];
+//    NSTextView *temp = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, size.width, size.height)];
+//    [temp.textStorage setAttributedString:[[NSAttributedString alloc] initWithString:title attributes:link]];
+//    [temp setEditable:false];
+//    [temp setDrawsBackground:false];
+//    return temp;
+//}
+//+(NSAlert *)alertWithMessageTextAndView:(NSString *)message defaultButton:(NSString *)defaultButton alternateButton:(NSString *)alternateButton otherButton:(NSString *)otherButton accessoryView:(NSView *)view informativeTextWithFormat:(NSString *)format, ...{
+//    va_list args;
+//    va_start(args, format);
+//    NSAlert *temp = [NSAlert alertWithMessageText:message defaultButton:defaultButton alternateButton:alternateButton otherButton:otherButton informativeTextWithFormat:@"%@", [[NSString alloc] initWithFormat:format arguments:args]];
+//    va_end(args);
+//    [temp setAccessoryView:view];
+//    return temp;
+//}
+//
+//@end

@@ -17,7 +17,6 @@
 #define kSLE @"/System/Library/Extensions"
 #define APP_NAME @"AdvanceKextUpdater"
 
-
 // 2012 (c) phpdev32
 
 NS_INLINE NSError* ModalError(NSError *error){

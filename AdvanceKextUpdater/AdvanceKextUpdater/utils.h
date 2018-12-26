@@ -9,7 +9,15 @@
 #ifndef utils_h
 #define utils_h
 
+void _fprintf(FILE *stream, NSString *format, ...);
+void _printf(NSString *format, ...);
+
+int tty(NSString *cmd, _Nullable id *output);
+
 BOOL hasInternetConnection(void);
+
+BOOL isRootUser(void);
+NSString *getMainUser(void);
 
 @interface NSString (VersionNumbers)
 - (NSString *) shortenedVersionNumberString;

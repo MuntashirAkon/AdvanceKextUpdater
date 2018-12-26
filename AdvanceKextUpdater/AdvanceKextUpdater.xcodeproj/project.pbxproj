@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,21 @@
 		8773B71A212BFD760096BFCC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8773B718212BFD760096BFCC /* MainMenu.xib */; };
 		8773B71D212BFD760096BFCC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B71C212BFD760096BFCC /* main.m */; };
 		8773B726212BFF0F0096BFCC /* KextHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B725212BFF0F0096BFCC /* KextHandler.m */; };
+		87753DD021D1AF9E0072FCAC /* KextHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8773B725212BFF0F0096BFCC /* KextHandler.m */; };
+		87753DD121D1AFF50072FCAC /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485821395BBF0069DFC2 /* JSONParser.m */; };
+		87753DD221D1AFFF0072FCAC /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
+		87753DD321D1B0060072FCAC /* PCI.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F60982141FE380059D0ED /* PCI.m */; };
+		87753DD421D1B00D0072FCAC /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F609C21423C070059D0ED /* utils.m */; };
+		87753DD521D1B0250072FCAC /* ConfigAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD993212DFC2D00D10B9D /* ConfigAuthor.m */; };
+		87753DD621D1B02B0072FCAC /* ConfigVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD996212E11A800D10B9D /* ConfigVersionControl.m */; };
+		87753DD721D1B02F0072FCAC /* ConfigMacOSVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD999212EB94700D10B9D /* ConfigMacOSVersionControl.m */; };
+		87753DD821D1B0340072FCAC /* KextConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB8576212FB567007F4D29 /* KextConfig.m */; };
+		87753DD921D1B0390072FCAC /* ConfigKextVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 875032E921341C8800F5278D /* ConfigKextVersionControl.m */; };
+		87753DDA21D1B0430072FCAC /* ConfigSuggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485B21399D650069DFC2 /* ConfigSuggestion.m */; };
+		87753DDB21D1B0500072FCAC /* ConfigRequirments.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F6093214112E10059D0ED /* ConfigRequirments.m */; };
+		87753DDC21D1B05A0072FCAC /* ConfigBinary.m in Sources */ = {isa = PBXBuildFile; fileRef = 87FAC53321486B6A00DAA453 /* ConfigBinary.m */; };
+		87753DDE21D20AE20072FCAC /* KextInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 871386A42170F87D0004DDBB /* KextInstaller.m */; };
+		87753DDF21D2238E0072FCAC /* KextAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 87753DCC21D132920072FCAC /* KextAction.m */; };
 		877CDB6D21390C6900176777 /* MMMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877CDB6B2139093E00176777 /* MMMarkdown.framework */; };
 		877CDB7021390CA500176777 /* MMMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 877CDB6E21390CA500176777 /* MMMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		877CDB7321390E8E00176777 /* github-markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 877CDB7221390E8E00176777 /* github-markdown.css */; };
@@ -30,6 +45,8 @@
 		87BB8577212FB567007F4D29 /* KextConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB8576212FB567007F4D29 /* KextConfig.m */; };
 		87BB8579212FC0CD007F4D29 /* git in Resources */ = {isa = PBXBuildFile; fileRef = 87BB8578212FC0CD007F4D29 /* git */; };
 		87BB858021308177007F4D29 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
+		87E3DC9E21D348BD00462D27 /* ConfigTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E3DC9D21D348BD00462D27 /* ConfigTarget.m */; };
+		87E3DC9F21D348BD00462D27 /* ConfigTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E3DC9D21D348BD00462D27 /* ConfigTarget.m */; };
 		87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485821395BBF0069DFC2 /* JSONParser.m */; };
 		87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485B21399D650069DFC2 /* ConfigSuggestion.m */; };
 		87FAC53421486B6A00DAA453 /* ConfigBinary.m in Sources */ = {isa = PBXBuildFile; fileRef = 87FAC53321486B6A00DAA453 /* ConfigBinary.m */; };
@@ -89,6 +106,9 @@
 		8773B724212BFEE40096BFCC /* KextHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextHandler.h; sourceTree = "<group>"; };
 		8773B725212BFF0F0096BFCC /* KextHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextHandler.m; sourceTree = "<group>"; };
 		8773B729212BFF4C0096BFCC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		87753DCB21D132820072FCAC /* KextAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextAction.h; sourceTree = "<group>"; };
+		87753DCC21D132920072FCAC /* KextAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextAction.m; sourceTree = "<group>"; };
+		87753DDD21D1B5620072FCAC /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		877CDB69213908FA00176777 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMMarkdown.framework; path = ../../../../Downloads/Carthage/Build/Mac/MMMarkdown.framework; sourceTree = "<group>"; };
 		877CDB6B2139093E00176777 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MMMarkdown.framework; sourceTree = "<group>"; };
 		877CDB6E21390CA500176777 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MMMarkdown.framework; sourceTree = "<group>"; };
@@ -107,6 +127,8 @@
 		87BB857D21302CD9007F4D29 /* JSONParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONParser.h; sourceTree = "<group>"; };
 		87BB857E21308177007F4D29 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		87BB857F21308177007F4D29 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
+		87E3DC9C21D348A800462D27 /* ConfigTarget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigTarget.h; sourceTree = "<group>"; };
+		87E3DC9D21D348BD00462D27 /* ConfigTarget.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigTarget.m; sourceTree = "<group>"; };
 		87F2485821395BBF0069DFC2 /* JSONParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONParser.m; sourceTree = "<group>"; };
 		87F2485A21399D5A0069DFC2 /* ConfigSuggestion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigSuggestion.h; sourceTree = "<group>"; };
 		87F2485B21399D650069DFC2 /* ConfigSuggestion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigSuggestion.m; sourceTree = "<group>"; };
@@ -139,6 +161,9 @@
 			isa = PBXGroup;
 			children = (
 				872395E12171E55700B6FE27 /* main.m */,
+				87753DCB21D132820072FCAC /* KextAction.h */,
+				87753DCC21D132920072FCAC /* KextAction.m */,
+				87753DDD21D1B5620072FCAC /* PrefixHeader.pch */,
 			);
 			path = AdvanceKextUpdaterHelper;
 			sourceTree = "<group>";
@@ -173,6 +198,8 @@
 				879F6093214112E10059D0ED /* ConfigRequirments.m */,
 				87FAC53221486B5E00DAA453 /* ConfigBinary.h */,
 				87FAC53321486B6A00DAA453 /* ConfigBinary.m */,
+				87E3DC9C21D348A800462D27 /* ConfigTarget.h */,
+				87E3DC9D21D348BD00462D27 /* ConfigTarget.m */,
 			);
 			name = "Config Related";
 			sourceTree = "<group>";
@@ -307,7 +334,7 @@
 				};
 			};
 			buildConfigurationList = 8773B70B212BFD730096BFCC /* Build configuration list for PBXProject "AdvanceKextUpdater" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -344,7 +371,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87753DD321D1B0060072FCAC /* PCI.m in Sources */,
+				87753DDF21D2238E0072FCAC /* KextAction.m in Sources */,
+				87753DDE21D20AE20072FCAC /* KextInstaller.m in Sources */,
+				87753DD221D1AFFF0072FCAC /* Task.m in Sources */,
+				87753DD921D1B0390072FCAC /* ConfigKextVersionControl.m in Sources */,
+				87753DD721D1B02F0072FCAC /* ConfigMacOSVersionControl.m in Sources */,
+				87753DD521D1B0250072FCAC /* ConfigAuthor.m in Sources */,
+				87E3DC9F21D348BD00462D27 /* ConfigTarget.m in Sources */,
+				87753DDC21D1B05A0072FCAC /* ConfigBinary.m in Sources */,
+				87753DD821D1B0340072FCAC /* KextConfig.m in Sources */,
 				872395E22171E55700B6FE27 /* main.m in Sources */,
+				87753DD421D1B00D0072FCAC /* utils.m in Sources */,
+				87753DDB21D1B0500072FCAC /* ConfigRequirments.m in Sources */,
+				87753DDA21D1B0430072FCAC /* ConfigSuggestion.m in Sources */,
+				87753DD121D1AFF50072FCAC /* JSONParser.m in Sources */,
+				87753DD021D1AF9E0072FCAC /* KextHandler.m in Sources */,
+				87753DD621D1B02B0072FCAC /* ConfigVersionControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +405,7 @@
 				87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */,
 				876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */,
 				873DFC492174966000B33DB5 /* MarkdownToHTML.m in Sources */,
+				87E3DC9E21D348BD00462D27 /* ConfigTarget.m in Sources */,
 				876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */,
 				8773B71D212BFD760096BFCC /* main.m in Sources */,
 				87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */,
@@ -395,6 +439,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CONFIGURATION_BUILD_DIR = /Applications/AdvanceKextUpdater.app/Contents/Resources;
 				DEVELOPMENT_TEAM = 6X692P9AQ8;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/AdvanceKextUpdaterHelper/PrefixHeader.pch";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -410,6 +455,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CONFIGURATION_BUILD_DIR = /Applications/AdvanceKextUpdater.app/Contents/Resources;
 				DEVELOPMENT_TEAM = 6X692P9AQ8;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/AdvanceKextUpdaterHelper/PrefixHeader.pch";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

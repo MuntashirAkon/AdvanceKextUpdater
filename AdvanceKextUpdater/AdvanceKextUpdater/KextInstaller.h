@@ -31,25 +31,11 @@
 // 4. Install kext
 // 5. Run post-install script
 
-@interface KextInstaller : KextConfig {
-//    ConfigBinary *bin;
-//    BinaryHandler *currentBin;
-//    STPrivilegedTask *adminTask;
-//    int returnCode; // set after runPreInstallTask is executed
-//    NSArray<NSString *> *kexts;
-}
+#define launchDaemonName @"io.github.muntashirakon.advancekextupdater.helper.agent"
+
+@interface KextInstaller : KextConfig
 @property (strong, nonatomic, readonly) KextConfig *config;
-
-//- (instancetype) initWithConfig: (KextConfig *) config;
-- (BOOL) copyAllTo: (NSString *) tmpDir;
-- (BOOL) copy: (NSURL *) file to: (NSString *) dir;
-//- (int) runPreInstallTask;
-//- (id) installRequiredKexts;
-//- (id) removeConflictedKexts;
-//- (id) installKexts;
-//- (id) revertInstallation;
-//- (NSString *) runPostInstallTask;
-
++ (NSString *) launchDaemonPlistFile;
 @end
 
 #endif /* KextInstaller_h */

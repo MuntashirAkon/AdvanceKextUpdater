@@ -21,7 +21,7 @@ typedef enum {
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     KextHandler *kextHandler;
-    NSArray<NSString *> *installedKexts;
+    NSMutableArray<NSString *> *installedKexts;
     NSArray<NSString *> *allTheKexts;
     NSDictionary<NSString *, NSURL *> *remoteKexts;
     // For kextConfig

@@ -4,6 +4,7 @@
 //  Created by PHPdev32 on 10/13/12.
 //  Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt
 //
+#import <Foundation/Foundation.h>
 @interface NSTask (TaskAdditions)
 
 @property SEL callback;
@@ -56,9 +57,9 @@
 
 @end
 
-@interface NSAlert (HyperlinkAdditions)
-
-+(NSTextView *)hyperlink:(NSString *)hyperlink title:(NSString *)title;
-+(NSAlert *)alertWithMessageTextAndView:(NSString *)message defaultButton:(NSString *)defaultButton alternateButton:(NSString *)alternateButton otherButton:(NSString *)otherButton accessoryView:(NSView *)view informativeTextWithFormat:(NSString *)format, ...;
-
-@end
+//@interface NSAlert (HyperlinkAdditions)
+//
+//+(NSTextView *)hyperlink:(NSString *)hyperlink title:(NSString *)title;
+//+(NSAlert *)alertWithMessageTextAndView:(NSString *)message defaultButton:(NSString *)defaultButton alternateButton:(NSString *)alternateButton otherButton:(NSString *)otherButton accessoryView:(NSView *)view informativeTextWithFormat:(NSString *)format, ...;
+//
+//@end

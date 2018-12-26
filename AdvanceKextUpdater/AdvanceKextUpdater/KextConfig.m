@@ -66,7 +66,7 @@
         self.suggestions = [ConfigSuggestion createFromArray:[configParsed objectForKey:@"suggest"]];
         self.swRequirments = [ConfigSWRequirments.alloc initWithObject:[configParsed objectForKey:@"sw"]];
         self.tags        = [self tagsFromString:[configParsed objectForKey:@"tags"]];
-        self.target      = [configParsed objectForKey:@"target"];    // Set based on macOS version
+        self.target      = [ConfigTarget.alloc initWithTarget:[configParsed objectForKey:@"target"]];
         self.time        = [NSDate dateWithNaturalLanguageString:[configParsed objectForKey:@"time"]];
         self.version     = [configParsed objectForKey:@"version"];
         self.versions    = [ConfigVersionControl.alloc initWithSelfConfig:self andOtherVersions:[configParsed objectForKey:@"versions"]];

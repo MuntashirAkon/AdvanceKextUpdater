@@ -1,0 +1,39 @@
+//
+//  PrefixHeader.pch
+//  AdvanceKextUpdater
+//
+//  Created by Muntashir Al-Islam on 25/12/18.
+//  Copyright © 2018 Muntashir Al-Islam. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#endif
+
+#define kLE  @"/Library/Extensions"
+#define kSLE @"/System/Library/Extensions"
+#define APP_NAME @"AdvanceKextUpdater"
+
+NS_INLINE BOOL ModalError(NSError *error){
+    if (error)
+        @throw error;
+    return NO;
+}
+
+NS_INLINE BOOL isNull(id anyID) {
+    if ([anyID isKindOfClass:NSNull.class]
+        || anyID == nil
+        || [anyID isEqual:@0])
+        return YES;
+    if([anyID isKindOfClass:NSString.class] && (
+                                                [anyID isEqualToString:@"(null)"]
+                                                || [anyID isEqualToString:@"<null>"]
+                                                || [anyID isEqualToString:@"<nil>"]
+                                                || [anyID isEqualToString:@""]
+                                                )) return YES;
+    return NO;
+}
+#endif /* PrefixHeader_pch */

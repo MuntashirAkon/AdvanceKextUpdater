@@ -8,46 +8,48 @@
 
 #import <Foundation/Foundation.h>
 #import <stdlib.h>
+#import "../AdvanceKextUpdater/utils.h"
+#import "../AdvanceKextUpdater/KextHandler.h"
+#import "../AdvanceKextUpdater/KextInstaller.h"
+#import "KextAction.h"
 
-void _fprintf(FILE *stream, NSString *format, ...) {
-    va_list arguments;
-    va_start(arguments, format);
-        NSString *string = [[NSString alloc] initWithFormat:format arguments:arguments];
-    va_end(arguments);
-    fprintf(stream, "%s", [string UTF8String]);
+#define ACTION_STDIN 1 // Read arguments from STDIN
+#define ACTION_ARGV  2 // Read arguments from argv[]
+#define ACTION_FILE  3 // Read arguments from file
+
+#define ACTION_DEFAULT ACTION_STDIN // Default action
+
+int _return(int ret_value){
+    // Delete lock file
+    [NSFileManager.defaultManager removeItemAtPath:KextHandler.lockFile error:nil];
+    // Unload the launch agent
+    tty([NSString stringWithFormat:@"launchctl unload %@", KextInstaller.launchDaemonPlistFile], nil);
+    return ret_value;
 }
 
-void _printf(NSString *format, ...) {
-    va_list arguments;
-    va_start(arguments, format);
-        NSString *string = [NSString.alloc initWithFormat:format arguments:arguments];
-    va_end(arguments);
-    printf("%s", [string UTF8String]);
+void _status(NSString *msg){
+    FILE *fp = fopen(KextHandler.lockFile.UTF8String, "w");
+    _fprintf(fp, msg);
+    fclose(fp);
 }
 
-int tty(const char *cmd, NSArray *output_arr) {
-    FILE *fp;
-    char o[1035];
-    // Open the command for reading.
-    fp = popen("/bin/sh -c /bin/ls /etc/", "r");
-    // Return -1 on failure
-    if (fp == NULL) return -1;
-    // Read the output if requested
-    if ([output_arr isKindOfClass:NSArray.class]) {
-        NSMutableArray<NSString *> *output = NSMutableArray.array;
-        while (fgets(o, sizeof(o), fp) != NULL) {
-            [output addObject:[NSString stringWithUTF8String:o]];
+///
+/// Display final message to the user
+/// @param status_code The status code (0 = true, 1 = false)
+/// @param msg The message containing the details of the status
+///
+void _message(int status_code, NSString * _Nullable msg){
+    if(msg == nil){
+        if(status_code == EXIT_SUCCESS) {
+            msg = @"The kext was installed successfully!";
+        } else {
+            msg = @"Sorry, the kext couldn't be installed!";
         }
-        output_arr = output.copy;
-        //NSLog(@"%@", output);
-    } else {
-        while (fgets(o, sizeof(o), fp) != NULL) {};
     }
-    // close
-    return pclose(fp)/256;
+    FILE *fp = fopen(KextHandler.messageFile.UTF8String, "w");
+    _fprintf(fp, [NSString stringWithFormat:@"%d\n%@", status_code, msg]);
+    fclose(fp);
 }
-
-#define INPUT_FILE @"args.in" // Don't change this
 
 // Arguments TODO: Merge them with KIHelperArgumentController
 #define ARG_INSTALL @"install"
@@ -56,54 +58,72 @@ int tty(const char *cmd, NSArray *output_arr) {
 #define ARG_CACHE   @"rebuildcache"
 #define ARG_PERM    @"repairpermissions"
 
-// Constants: DO NOT CHANGE!!! FIXME: Merge with KextHandler
-#define stdinPath @"/tmp/AdvanceKextUpdater/in"
-
 int main(int argc, const char *argv[]) {
     @autoreleasepool {
-#ifndef DEBUG
+#if 1
         uid_t uid = getuid();
         if(uid != 0){
             fprintf(stderr, "Helper tool must be run as root!\n");
-            return 1;
+            return _return(1);
         }
 #endif
-#if 1 // Get from stdin
-        NSString *arg = [[NSString.alloc initWithData:NSFileHandle.fileHandleWithStandardInput.availableData encoding:NSUTF8StringEncoding] substringToIndex:1];
-        NSArray *args = [arg componentsSeparatedByString:@" "];
-#else // Get from file
+
+// Get the arguments in the "args" array
+#if ACTION_DEFAULT == ACTION_STDIN // Get from stdin
+        NSString *arg = [[NSString.alloc initWithData:NSFileHandle.fileHandleWithStandardInput.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSArray<NSString *> *args = [arg componentsSeparatedByString:@" "];
+#elif ACTION_DEAULT == ACTION_FILE // Get from file
         // Analyse arguments
         NSError *error;
-        NSString *arg = [NSString stringWithContentsOfFile:stdinPath encoding:NSUTF8StringEncoding error:&error];
+        NSString *arg = [[NSString stringWithContentsOfFile:KextHandler.stdinPath encoding:NSUTF8StringEncoding error:&error] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if(error) {
             fprintf(stderr, "Error reading arguments!\n");
-            return 1;
+            return _return(1);
         }
-        NSArray *args = [arg componentsSeparatedByString:@" "];
+        NSArray<NSString *> *args = [arg componentsSeparatedByString:@" "];
+#elif ACTION_DEAULT == ACTION_ARGV // Get from argv
+        NSMutableArray<NSString *> *args = NSMutableArray.array;
+        for(int i = 1; i<argc; ++i)
+            [args addObject:[NSString stringWithUTF8String:argv[i]];
 #endif
         if(args.count < 1) {
             fprintf(stderr, "Error reading arguments!\n");
-            return 1;
+            return _return(1);
         }
         // Handle agruments
         NSString *verb = [args objectAtIndex:0];
+#ifdef DEBUG
+             _fprintf(stderr, @"Service ran with verb '%@'\n", verb);
+#endif
         if([verb isEqualToString:ARG_INSTALL]){
-            // TODO: Install the kext
+            if(args.count == 2){
+                [[KextInstall.alloc initWithKext:[args objectAtIndex:1]] doAction];
+            } else {
+                _fprintf(stderr, @"Too few arguments supplied!\n", verb);
+                return _return(1);
+            }
         } else if ([verb isEqualToString:ARG_UPDATE]){
-            // TODO: Update the kext
+            if(args.count == 2){
+                [[KextUpdate.alloc initWithKext:[args objectAtIndex:1]] doAction];
+            } else {
+                _fprintf(stderr, @"Too few arguments supplied!\n", verb);
+                return _return(1);
+            }
         } else if ([verb isEqualToString:ARG_REMOVE]){
-            // TODO: Remove the kext
+            if(args.count == 2){
+                [[KextRemove.alloc initWithKext:[args objectAtIndex:1]] doAction];
+            } else {
+                _fprintf(stderr, @"Too few arguments supplied!\n", verb);
+                return _return(1);
+            }
         } else if ([verb isEqualToString:ARG_CACHE]){
-            // TODO: Rebuild kernel cache
+            /// @todo Rebuild kernel cache
         } else if ([verb isEqualToString:ARG_PERM]){
-            // TODO: Repair permissions
+            /// @todo Repair permissions
         } else {
-            fprintf(stderr, "Unknown verb!\n");
-            return 1;
+            _fprintf(stderr, @"Unknown verb (%@)!\n", verb);
+            return _return(1);
         }
-//        NSArray *output = NSArray.array;
-//        NSLog(@"%d", tty("/bin/ls /etc", output));
-//        NSLog(@"%@", output);
     }
-    return 0;
+    return _return(0);
 }

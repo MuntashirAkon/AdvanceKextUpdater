@@ -43,6 +43,7 @@
     // Check if Xcode components are installed
     // There are complication with `xcode-select --install`
     // I may use it instead in future version
+    // FIXME: Only works from 10.9? Use git universal binary?
     NSTask *task = [[NSTask alloc] init];
     NSFileHandle *nullFileHandle = [NSFileHandle fileHandleWithNullDevice];
     [task setStandardOutput:nullFileHandle];
@@ -61,10 +62,8 @@
     self.overview = [self listInstalledKext];
     self.allKexts = [self listAllKext:YES];
 
-    NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventManager];
-    [appleEventManager setEventHandler:self
-                           andSelector:@selector(handleGetURLEvent:withReplyEvent:)
-                         forEventClass:kInternetEventClass andEventID:kAEGetURL];
+    NSAppleEventManager *appleEventManager = NSAppleEventManager.sharedAppleEventManager;
+    [appleEventManager setEventHandler:self andSelector:@selector(handleGetURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
 }
 
 - (void)handleGetURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
@@ -242,7 +241,7 @@
 }
 
 -(IBAction)fetchSuggestions:(NSButton *)sender {
-    // TODO
+    /// @todo
 }
 
 -(IBAction)installKext:(NSButton *)sender {
@@ -250,15 +249,15 @@
     [NSApp beginSheet:_taskViewer modalForWindow:_kextViewer modalDelegate:self didEndSelector:nil contextInfo:nil];
     NSMutableString *taskString = [NSMutableString stringWithUTF8String:"#### The following kext(s) will be installed:\n"];
     [taskString appendFormat:@"- %@\n", [self.kextProperties objectForKey:@"kextName"]];
-    for(NSString *kextName in [self.kextProperties objectForKey:@"required"]){
-        [taskString appendFormat:@"- %@\n", kextName];
+    for(NSDictionary *kext in [self.kextProperties objectForKey:@"required"]){
+        [taskString appendFormat:@"- %@\n", [kext objectForKey:@"kextName"]];
     }
     NSDictionary *conflicts = [self.kextProperties objectForKey:@"conflict"];
     if(conflicts.count > 0){
-        [taskString appendString:@"#### The following kext(s) will be removed:\n"];
+        [taskString appendString:@"\n#### The following kext(s) will be removed:\n"];
         // TODO Check if installed
-        for(NSString *kextName in conflicts){
-            [taskString appendFormat:@"- %@\n", kextName];
+        for(NSDictionary *kext in conflicts){
+            [taskString appendFormat:@"- %@\n", [kext objectForKey:@"kextName"]];
         }
     }
     [[self taskInfoView].mainFrame loadHTMLString:[MarkdownToHTML.alloc initWithMarkdown:taskString].render baseURL:nil];
@@ -269,15 +268,15 @@
     [NSApp beginSheet:_taskViewer modalForWindow:_kextViewer modalDelegate:self didEndSelector:nil contextInfo:nil];
     NSMutableString *taskString = [NSMutableString stringWithUTF8String:"#### The following kext(s) will be updated or installed:\n"];
     [taskString appendFormat:@"- %@\n", [self.kextProperties objectForKey:@"kextName"]];
-    for(NSString *kextName in [self.kextProperties objectForKey:@"required"]){
-        [taskString appendFormat:@"- %@\n", kextName];
+    for(NSDictionary *kext in [self.kextProperties objectForKey:@"required"]){
+        [taskString appendFormat:@"- %@\n", [kext objectForKey:@"kextName"]];
     }
     NSDictionary *conflicts = [self.kextProperties objectForKey:@"conflict"];
     if(conflicts.count > 0){
-        [taskString appendString:@"#### The following kext(s) will be removed:\n"];
+        [taskString appendString:@"\n#### The following kext(s) will be removed:\n"];
         // TODO Check if installed
-        for(NSString *kextName in conflicts){
-            [taskString appendFormat:@"- %@\n", kextName];
+        for(NSDictionary *kext in conflicts){
+            [taskString appendFormat:@"- %@\n", [kext objectForKey:@"kextName"]];
         }
     }
     [[self taskInfoView].mainFrame loadHTMLString:[MarkdownToHTML.alloc initWithMarkdown:taskString].render baseURL:nil];
@@ -293,21 +292,44 @@
 }
 
 -(IBAction)runTask:(NSButton *)sender {
+    // Do not proceed if another task running
+    if([NSFileManager.defaultManager fileExistsAtPath:KextHandler.lockFile]){
+        NSRunCriticalAlertPanel(@"Invalid request!", @"A process is already running, wait until it is finished.", @"OK", nil, nil);
+        [self closeTaskViwer:sender];
+        return;
+    }
     [self closeTaskViwer:sender];
     // Install kext
     self.loadingTexts = @{
-        @"titleText": @"",
-        @"subtitleText": @"",
-        @"singleText": [NSString stringWithFormat:@"Installing %@...", [self.kextProperties objectForKey:@"kextName"]]
+        @"titleText": [NSString stringWithFormat:@"Installing %@...", [self.kextProperties objectForKey:@"kextName"]],
+        @"subtitleText": @"Checking...",
+        @"singleText": @""
     };
-    [[self loadingSpinner] startAnimation:self];
-    [[self loadingPanel] makeKeyAndOrderFront:self];
+    [self.loadingSpinner startAnimation:self];
+    [self.loadingPanel makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self runTaskBackground];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[self loadingSpinner] stopAnimation:self];
-            [[self loadingPanel] close];
+            [self.loadingSpinner stopAnimation:self];
+            [self.loadingPanel close];
+            // Run complete, now get result
+            NSString *messageStr = [NSString stringWithContentsOfFile:KextHandler.messageFile encoding:NSUTF8StringEncoding error:nil];
+            NSArray *messageArr = [messageStr componentsSeparatedByString:@"\n"];
+            int status = [[messageArr objectAtIndex:0] intValue];
+            NSString *message = [messageArr objectAtIndex:1];
+            // If successful, add the kexts to the installedKexts list
+            if(status == EXIT_SUCCESS){
+                [self->installedKexts addObject:[self.kextProperties objectForKey:@"kextName"]];
+                for(NSDictionary *kext in [self.kextProperties objectForKey:@"required"]){
+                    [self->installedKexts addObject:[kext objectForKey:@"kextName"]];
+                }
+                [self listInstalledKext];
+                [self fetchKextInfo:[self.kextProperties objectForKey:@"kextName"]];
+                NSRunAlertPanel(@"Success!", @"%@", @"OK", nil, nil, message);
+            } else {
+                NSRunCriticalAlertPanel(@"Failed!", @"%@", @"OK", nil, nil, message);
+            }
         });
     });
 }
@@ -320,7 +342,7 @@
 
 // Helper functions
 - (NSDictionary *) listInstalledKext {
-    installedKexts = self->kextHandler.listInstalledKext;
+    installedKexts = [NSMutableArray arrayWithArray:self->kextHandler.listInstalledKext];
     int sn = 0;
     NSMutableArray *kexts = [NSMutableArray array];
     for(NSString *kext in installedKexts) {
@@ -332,7 +354,7 @@
     return @{@"IKTable": kexts};
 }
 
-- (NSDictionary *) listAllKext: (BOOL) deviceOnly { // TODO
+- (NSDictionary *) listAllKext: (BOOL) deviceOnly { /// @todo
     allTheKexts = self->kextHandler.listKext;
     remoteKexts = self->kextHandler.listRemoteKext;
     int sn = 0;
@@ -560,80 +582,59 @@
     };
 }
 
-// FIXME should return the messages
 // Separate file?
 - (void) runTaskBackground {
     NSString *kextName = [self.kextProperties objectForKey:@"kextName"];
-    //KextInstaller *ki = [KextInstaller.alloc initWithKextName:kextName];
-    KextInstaller *ki;
-    NSString *kextPath = [KextHandler.kextTmpPath stringByAppendingPathComponent:kextName];
     switch (taskType) {
         case KextInstall:
-            ki = [KextInstaller.alloc initWithKextName:kextName];
             [KIHelperAgrumentController install:kextName];
-            [ki copyAllTo:kextPath];
             break;
         case KextUpdate:
-            ki = [KextInstaller.alloc initWithKextName:kextName];
             [KIHelperAgrumentController update:kextName];
-            [ki copyAllTo:kextPath];
             break;
         case KextRemove:
             [KIHelperAgrumentController remove:kextName];
-            // TODO: Add additional script in future
             break;
         default:
             return;
     }
     // Create the lockfile
-    [NSFileManager.defaultManager createFileAtPath:KextHandler.lockFile contents:[@"aku" dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+    [NSFileManager.defaultManager createFileAtPath:KextHandler.lockFile contents:[@"Checking..." dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
     //
     // Create, Copy and Load the launch agent
     //
-    NSString *launchAgentName = @"io.github.muntashirakon.advancekextupdater.helper.agent";
-    NSString *launchAgent = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-        "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
-        "<plist version=\"1.0\">\n"
-        "    <dict>\n"
-        "        <key>Label</key>\n"
-        "        <string>%@</string>"
-        "        <key>Program</key>\n"
-        "        <string>%@</string>"
-        "        <key>RunAtLoad</key>\n"
-        "        <true/>"
-        "        <key>WorkingDirectory</key>\n"
-        "        <string>%@</string>"
-        "        <key>StandardInPath</key>\n"
-        "        <string>%@</string>"
-        "        <key>StandardOutPath</key>\n"
-        "        <string>%@</string>"
-        "        <key>StandardErrorPath</key>\n"
-        "        <string>%@</string>"
-        "    </dict>\n"
-        "</plist>\n", launchAgentName, [NSBundle.mainBundle pathForResource:@"AdvanceKextUpdaterHelper" ofType:nil],
-KextHandler.tmpPath, KextHandler.stdinPath, KextHandler.stdoutPath, KextHandler.stderrPath];
-//    NSDictionary *launchAgent = @{
-//      @"Label": launchAgentName,
-//      @"Program": [NSBundle.mainBundle URLForResource:@"AdvanceKextUpdaterHelper" withExtension:nil], // /Applications/AdvanceKextUpdater.app/Contents/Resources/AdvanceKextUpdaterHelper
-//      @"RunAtLoad": @YES,
-//      @"WorkingDirectory": KextHandler.tmpPath,
-//      @"StandardInPath": KextHandler.stdinPath,
-//      @"StandardOutPath": KextHandler.stdoutPath,
-//      @"StandardErrorPath": KextHandler.stderrPath
-//    };
-    NSString *agentPlist = [[KextHandler.tmpPath stringByAppendingPathComponent:launchAgentName] stringByAppendingPathExtension:@"plist"];
-    // Save Info.plist @ tmpPath
-    [NSFileManager.defaultManager createFileAtPath:agentPlist contents:[launchAgent dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
-//    if (@available(macOS 10.13, *)) {
-//        [launchAgent writeToURL:[NSURL URLWithString:agentPlist] error:nil];
-//    } else {
-//        [launchAgent writeToFile:agentPlist atomically:YES];
-//    }
-    // Copy & load
     @try{
-        NSString *launchDaemonsRootDir = @"/Library/LaunchDaemons/";
-        NSString *launchDaemonFile = [[launchDaemonsRootDir stringByAppendingPathComponent:launchAgentName] stringByAppendingPathExtension:@"plist"];
-        [AScript adminExec:[NSString stringWithFormat:@"cp %@ %@ && launchctl load %@", agentPlist, launchDaemonsRootDir, launchDaemonFile]];
+        if (![NSFileManager.defaultManager fileExistsAtPath:KextInstaller.launchDaemonPlistFile]) {
+            NSString *launchAgent = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+            "<plist version=\"1.0\">\n"
+            "    <dict>\n"
+            "        <key>Label</key>\n"
+            "        <string>%@</string>"
+            "        <key>Program</key>\n"
+            "        <string>%@</string>"
+            "        <key>RunAtLoad</key>\n"
+            "        <true/>"
+            "        <key>WorkingDirectory</key>\n"
+            "        <string>%@</string>"
+            "        <key>StandardInPath</key>\n"
+            "        <string>%@</string>"
+            "        <key>StandardOutPath</key>\n"
+            "        <string>%@</string>"
+            "        <key>StandardErrorPath</key>\n"
+            "        <string>%@</string>"
+            "    </dict>\n"
+            "</plist>\n", launchDaemonName, [NSBundle.mainBundle pathForResource:@"AdvanceKextUpdaterHelper" ofType:nil], KextHandler.tmpPath, KextHandler.stdinPath, KextHandler.stdoutPath, KextHandler.stderrPath];
+            NSString *agentPlist = [[KextHandler.tmpPath stringByAppendingPathComponent:launchDaemonName] stringByAppendingPathExtension:@"plist"];
+            // Save Info.plist @ tmpPath
+            [NSFileManager.defaultManager createFileAtPath:agentPlist contents:[launchAgent dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+            // Copy & load
+            NSString *launchDaemonsRootDir = @"/Library/LaunchDaemons/";
+            [AScript adminExec:[NSString stringWithFormat:@"cp %@ %@ && launchctl load %@", agentPlist, launchDaemonsRootDir, KextInstaller.launchDaemonPlistFile]];
+        } else {
+            // Launch daemon already exist, simply load it
+            [AScript adminExec:[NSString stringWithFormat:@"launchctl load %@", KextInstaller.launchDaemonPlistFile]];
+        }
     } @catch (NSError *e){
         // FIXME: delete STDIN file?
 #ifdef DEBUG
@@ -643,11 +644,20 @@ KextHandler.tmpPath, KextHandler.stdinPath, KextHandler.stdoutPath, KextHandler.
     }
     // Check for the background tasks until they are complete
     while([NSFileManager.defaultManager fileExistsAtPath:KextHandler.lockFile]) {
-        // TODO: Check for changes, update message if necessary
-        // and/or show messages
+        [self performSelectorOnMainThread:@selector(updateTaskInfo) withObject:self waitUntilDone:YES];
+        sleep(1);
     }
-    // Run complete, now get result
-    // TODO Alert user based on this
+}
+
+- (void) updateTaskInfo {
+    @try {
+        NSString *status = [NSString stringWithContentsOfFile:KextHandler.lockFile encoding:NSUTF8StringEncoding error:nil];
+        self.loadingTexts = @{
+            @"titleText": [NSString stringWithFormat:@"Installing %@...", [self.kextProperties objectForKey:@"kextName"]],
+            @"subtitleText": status,
+            @"singleText": @""
+        };
+    } @catch (NSError *e) {}
 }
 
 // Check if a kext is installed (with extension)

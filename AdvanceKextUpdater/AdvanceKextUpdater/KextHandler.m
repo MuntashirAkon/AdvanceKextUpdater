@@ -6,11 +6,11 @@
 //  Copyright © 2018 Muntashir Al-Islam. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "KextHandler.h"
 #import "JSONParser.h"
 #import "ConfigMacOSVersionControl.h"
 #import "Task.h"
+#import "utils.h"
 
 @implementation KextHandler
 - (instancetype) init {
@@ -39,11 +39,11 @@
 }
 
 + (NSString *) appPath {
-    return [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:APP_NAME];
+    return isRootUser() ? [NSString stringWithFormat:@"/Users/%@/Library/Application Support/AdvanceKextUpdater", getMainUser()] : [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:APP_NAME];
 }
 
 + (NSString *) appCachePath {
-    return [[self appPath] stringByAppendingPathComponent:@"Cache"];
+    return isRootUser() ? [NSString stringWithFormat:@"/Users/%@/Library/Caches/AdvanceKextUpdater", getMainUser()] : [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:APP_NAME];
 }
 
 /**
@@ -76,6 +76,10 @@
 // lock file exists when tasks is running
 + (NSString *) lockFile {
     return [self.tmpPath stringByAppendingPathComponent:@"lockfile"];
+}
+
++ (NSString *) messageFile {
+    return [self.tmpPath stringByAppendingPathComponent:@"message"];
 }
 
 + (NSString *) stdinPath {
@@ -151,6 +155,7 @@
  * List installed kext based on kext db, search them at SLE and LE (macOS 10.11 or later)
  *
  * @return An array of kexts (with extension)
+ * @todo Use `kextfind -no-paths` to get the list
  */
 - (NSArray<NSString *> *) listInstalledKext {
     if(kexts == nil) return nil;
