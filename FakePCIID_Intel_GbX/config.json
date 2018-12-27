@@ -37,7 +37,9 @@
       "homepage": null
     }
   ],
-  "require": null,
+  "require": {
+    "FakePCIID": "1.3.12"
+  },
   "conflict": null,
   "replaced_by": null,
   "suggest": [
