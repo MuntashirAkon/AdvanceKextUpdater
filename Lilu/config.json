@@ -3,7 +3,7 @@
   "kext": "Lilu.kext",
   "description": "An open source kernel extension bringing a platform for arbitrary kext, library, and program patching throughout the system for macOS.",
   "homepage": "https://github.com/acidanthera/Lilu",
-  "version": "1.2.7",
+  "version": "1.2.9",
   "versions": null,
   "target": "LE",
   "since": "10.4",
@@ -11,19 +11,19 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https://github.com/acidanthera/Lilu/releases/download/1.2.7/1.2.7.DEBUG.zip",
+      "url": "https://github.com/acidanthera/Lilu/releases/download/1.2.9/1.2.9.DEBUG.zip",
       "script": null,
       "loc": "Lilu.kext"
     },
     "rel": {
-      "url": "https://github.com/acidanthera/Lilu/releases/download/1.2.7/1.2.7.RELEASE.zip",
+      "url": "https://github.com/acidanthera/Lilu/releases/download/1.2.9/1.2.9.RELEASE.zip",
       "script": null,
       "loc": "Lilu.kext"
     }
   },
-  "changes": "#### v1.2.7\r\n- Added support for detecting optimus switch-off\r\n- Added Sanitize target with ubsan support (thx to NetBSD)\r\n- Added disk log dump in DEBUG builds via `liludump=N` boot-arg (requires plugin rebuild)\r\n- Fixed multiple Mach-O parsing issues\r\n- Fixed support of PCI devices without compatible property\r\n- Fixed PCI `class-code` masking not detecting HDEF devices",
-  "guide": "#### Features\n- Generic kext patcher\n- Generic process patcher (64-bit with basic 32-bit functionality)\n- Generic framework/library patcher (64-bit with basic 32-bit functionality)\n- Provides a unified plugin API\n\n#### Configuration\n- Add `-liludbg` to enable debug printing (available in DEBUG binaries).\n- Add `-liludbgall` to enable debug printing in Lilu and all loaded plugins (available in DEBUG binaries).\n- Add `-liluoff` to disable Lilu.\n- Add `-liluuseroff` to disable Lilu user patcher (for e.g. dyld_shared_cache manipulations).\n- Add `-liluslow` to enable legacy user patcher.\n- Add `-lilulowmem` to disable kernel unpack (disables Lilu in recovery mode).\n- Add `-lilubeta` to enable Lilu on unsupported os versions (10.13 and below are enabled by default).\n- Add `-lilubetaall` to enable Lilu and all loaded plugins on unsupported os versions (use _very_ carefully).\n- Add `-liluforce` to enable Lilu regardless of the mode, OS, installer, or recovery.\n- Add `liludelay=1000` to enable 1 second delay after each print for troubleshooting.\n- Add `lilucpu=N` to let Lilu and plugins assume Nth CPUInfo::CpuGeneration.\n\n#### Peculiarities\nMost of the plugins cease to function in safe (`-x`) mode.  \nBy default Lilu itself does not function in single-user (`-s`) mode, unless `-liluforce` is present.\n\n#### Discussion\n[InsanelyMac topic](http://www.insanelymac.com/forum/topic/321371-lilu-—-kext-and-process-patcher/) in English  \n[AppleLife topic](https://applelife.ru/threads/lilu-patcher-kekstov-i-processov.1964133/) in Russian",
-  "time": "2018-08-13 10:52:00",
+  "changes": "#### v1.2.9\r\n- Added `kern_atomic.hpp` header to support atomic types with old Clang\r\n- Added ThreadLocal APIs\r\n- Added `KernelPatcher::eraseCoverageInstPrefix` API\r\n- Fixed race condition during bootstrap (thx @Download-Fritz)\r\n- Fixed potential race condition during user patching",
+  "guide": "@see https://raw.githubusercontent.com/acidanthera/Lilu/master/README.md",
+  "time": "2018-12-21 10:50:05",
   "license": "BSD 3-Clause \"New\" or \"Revised\" License",
   "authors": [
     {
