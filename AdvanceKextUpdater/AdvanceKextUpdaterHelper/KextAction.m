@@ -111,14 +111,13 @@
     NSArray<ConfigConflictKexts *> *kexts = config.conflict;
     for(ConfigConflictKexts *kext in kexts) {
         // If version is matched, remove it
-        NSString *version;
         @try{
-            version = [KextAction findInstalledVersion:kext.kextName];
+            NSString *version = [KextAction findInstalledVersion:kext.kextName];
+            NSComparisonResult result = kext.uptoLatest ? NSOrderedDescending : NSOrderedSame;
+            if([kext.version isEqual:@"*"] || [version.shortenedVersionNumberString compare:kext.version options:NSNumericSearch] == result){
+                if(![KextAction removeKext:kext.kextName]) return NO;
+            }
         } @catch (NSException *e) { continue; } // Not installed
-        NSComparisonResult result = kext.uptoLatest ? NSOrderedDescending : NSOrderedSame;
-        if([kext.version isEqual:@"*"] || [version.shortenedVersionNumberString compare:kext.version options:NSNumericSearch] == result){
-            if(![KextAction removeKext:kext.kextName]) return NO;
-        }
     }
     return YES;
 }
@@ -130,7 +129,6 @@
 #ifdef DEBUG
             _printf(@"%@ (%@): ", kext.kextName, version);
 #endif
-            /// @todo Update the kext recursively and return false if failed
             NSComparisonResult result = kext.uptoLatest ? NSOrderedDescending : NSOrderedSame;
             if(![kext.version isEqual:@"*"] && [version.shortenedVersionNumberString compare:kext.version options:NSNumericSearch] != result){
 #ifdef DEBUG
@@ -232,6 +230,11 @@
         [KextAction message:@"The kext couldn't be installed because it is unsupported for your platform." withStatusCode:EXIT_FAILURE];
         return NO;
     }
+    // 1.1 Check for internet connection
+    if(!hasInternetConnection()) {
+        [KextAction message:@"The kext couldn't be installed because no internet connection is detected." withStatusCode:EXIT_FAILURE];
+        return NO;
+    }
     // 2. Remove conflicts
     [KextAction status:@"Removing conflict(s)..."];
     if(![self removeConflicts]) {
@@ -296,6 +299,11 @@
     [KextAction status:@"Checking..."];
     if(super.config.matchesAllCriteria == KCCNoneMatched) {
         [KextAction message:@"The kext couldn't be installed because it is unsupported for your platform." withStatusCode:EXIT_FAILURE];
+        return NO;
+    }
+    // 1.1 Check for internet connection
+    if(!hasInternetConnection()) {
+        [KextAction message:@"The kext couldn't be installed because no internet connection is detected." withStatusCode:EXIT_FAILURE];
         return NO;
     }
     // 2. Remove conflicts
