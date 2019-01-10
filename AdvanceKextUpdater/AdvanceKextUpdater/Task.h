@@ -2,6 +2,7 @@
 //  Task.h
 //
 //  Created by PHPdev32 on 10/13/12.
+//  Modified by Muntashir Al-Islam
 //  Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt
 //
 #import <Foundation/Foundation.h>
@@ -40,6 +41,7 @@
 
 +(bool)conditionalGet:(NSURL *)url toFile:(NSString *)file;
 +(bool)conditionalGet:(NSURL *)url toFile:(NSString *)file supress:(BOOL) suppressErr;
++(id)getJSON:(NSURL *)url;
 +(bool)get:(NSURL *)url toFile:(NSString *)file;
 +(bool)get:(NSURL *)url toFile:(NSString *)file supress:(BOOL) suppressErr;
 +(NSDictionary *)getMACs;

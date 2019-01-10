@@ -10,6 +10,7 @@
 #import "KextConfig.h"
 #import "KextHandler.h"
 #import <Webkit/Webkit.h> // for WebView
+#import <DiskArbitration/DiskArbitration.h> // Disk
 #import "MarkdownToHTML.h"
 #import "Task.h"
 #import "ConfigMacOSVersionControl.h"
@@ -17,8 +18,8 @@
 #import "utils.h"
 #import "ConfigAuthor.h"
 #import "PCI.h"
-#import "KextInstaller.h"
 #import "KIHelperAgrumentController.h"
+#import "Windows/PreferencesWindowController.h"
 
 @interface AppDelegate ()
 // Outlets
@@ -32,7 +33,9 @@
 @property IBOutlet NSProgressIndicator *loadingSpinner;
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    PreferencesWindowController *_preferences;
+}
 
 @synthesize overview;
 @synthesize allKexts;
@@ -56,12 +59,9 @@
         NSRunCriticalAlertPanel(@"No Xcode Command Line Tools!", @"Xcode command line tools are required! Unlike the  Xcode itself the command line tools don't take much space.", nil, nil, nil);
         [self applicationWillTerminate:aNotification]; // Terminate
     }
-    // Init KextHandler
-    self->kextHandler = KextHandler.alloc.init;
-    // Initialize table
-    self.overview = [self listInstalledKext];
-    self.allKexts = [self listAllKext:YES];
-
+    // Init tables
+    [self updateTables];
+    
     NSAppleEventManager *appleEventManager = NSAppleEventManager.sharedAppleEventManager;
     [appleEventManager setEventHandler:self andSelector:@selector(handleGetURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
 }
@@ -94,9 +94,20 @@
             if([verb isEqual:@"guide"]) {
                 [self fetchGuide:nil];
             } else if ([verb isEqual:@"install"]) {
-                // TODO: install/update the kext (with a prompt)
+                // Install or update the kext
+                if([[self.kextProperties objectForKey:@"install_btn"] objectForKey:@"enabled"]){
+                    sleep(1);
+                    [self installKext:nil];
+                } else if([[self.kextProperties objectForKey:@"update_btn"] objectForKey:@"enabled"]){
+                    sleep(1);
+                    [self updateKext:nil];
+                }
             } else if ([verb isEqual:@"remove"]) {
-                // TODO: remove a kext (with a prompt)
+                // Remove the kext
+                if([[self.kextProperties objectForKey:@"remove_btn"] objectForKey:@"enabled"]){
+                    sleep(1);
+                    [self removeKext:nil];
+                }
             }
         } else {
             NSRunCriticalAlertPanel(@"Kext not found!", @"The kext (%@) you are trying to open is not found!", nil, nil, nil, kextName);
@@ -123,6 +134,8 @@
     [fm createDirectoryAtPath:KextHandler.kextCachePath withIntermediateDirectories:YES attributes:nil error:nil];
     [fm createDirectoryAtPath:KextHandler.guideCachePath withIntermediateDirectories:YES attributes:nil error:nil];
     [fm createDirectoryAtPath:KextHandler.kextTmpPath withIntermediateDirectories:YES attributes:nil error:nil];
+    [fm createDirectoryAtPath:KextHandler.kextBackupPath withIntermediateDirectories:YES attributes:nil error:nil];
+
     // Check for kext update
     self.loadingTexts = @{
         @"titleText": @"",
@@ -132,22 +145,27 @@
     [[self loadingSpinner] startAnimation:self];
     [[self loadingPanel] makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        @try {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 #ifndef DEBUG // Don't disturb me on DEBUG builds
+        @try {
             if(hasInternetConnection()){
                 [KextHandler checkForDBUpdate];
                 [pciDevice checkForDBUpdate];
             }
-#endif
         } @catch(NSException *e) {}
+#else
+        _printf(@"INITIALIZED\n");
+#endif
         // Main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[self loadingSpinner] stopAnimation:self];
-            [[self loadingPanel] close];
-            if(![fm fileExistsAtPath:[KextHandler kextDBPath]]) {
+            [self.loadingSpinner stopAnimation:self];
+            [self.loadingPanel close];
+            if(![fm fileExistsAtPath:KextHandler.kextDBPath]) {
                 NSRunCriticalAlertPanel(@"Updating Kext database failed!", @"Failed to update kext database, please check your internet connection and try again.", nil, nil, nil);
                 [self applicationWillTerminate:aNotification]; // Terminate
+            } else {
+                // Init tables again
+                [self updateTables];
             }
         });
     });
@@ -161,14 +179,51 @@
     // Insert code here to tear down your application
 }
 
+#pragma AppDelegate - Preferences
+-(IBAction)preferences:(id)sender{
+    if(_preferences == nil){
+        _preferences = [PreferencesWindowController new];
+    }
+    [_preferences.window makeKeyAndOrderFront:self];
+}
+
+/// @todo
+/// - Permforms tasks on the background with a spinner on the main thread
+/// - Download and install the binary
+-(IBAction)checkForAppUpdates:(id)sender{
+    // Get the tag name
+    id json = [URLTask getJSON:[NSURL URLWithString:@"https://api.github.com/repos/MuntashirAkon/AdvanceKextUpdater/releases"]];
+    if(json != nil) {
+        json = [json objectAtIndex:0];
+        if(json != nil) {
+            NSString *version = [json objectForKey:@"tag_name"];
+//            NSString *changelog = [json objectForKey:@"body"];
+            NSString *binary  = [[[json objectForKey:@"assets"] objectAtIndex:0] objectForKey:@"browser_download_url"];
+            NSString *currentVersion = [[NSBundle.mainBundle infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+            if([currentVersion.shortenedVersionNumberString compare:version] == NSOrderedAscending) {
+                if(NSRunAlertPanel(@"Update available!", @"Current version is %@, and you are running %@.", @"Update", @"Cancel", nil, currentVersion, version) == 0){
+                    /// @todo Download the binary
+                    [URLTask get:[NSURL URLWithString:binary] toFile:[KextHandler.tmpPath stringByAppendingString:@"/AdvanceKextUpdater.zip"]];
+                    
+                }
+            } else {
+                NSRunAlertPanel(@"No new update available!", @"You're running the latest version.", @"OK", nil, nil);
+            }
+        }
+    }
+}
+
+#pragma AppDelegate - FetchInstalledKextInfo
 -(IBAction)fetchInstalledKextInfo:(NSTableView *)sender {
     [self fetchKextInfo:sender whichDB:NO];
 }
 
+#pragma AppDelegate - FetchAllKextInfo
 -(IBAction)fetchAllKextInfo:(NSTableView *)sender {
     [self fetchKextInfo:sender whichDB:YES];
 }
 
+#pragma AppDelegate - FetchGuide
 -(IBAction)fetchGuide:(NSButton *)sender {
     if(guide != nil || ![guide isEqual:@""]){
         [[self guideViewer] close];
@@ -181,7 +236,7 @@
         [[self loadingSpinner] startAnimation:self];
         [[self loadingPanel] makeKeyAndOrderFront:self];
         [NSApp activateIgnoringOtherApps:YES];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSDictionary *guideInfo;
             @try {
                 guideInfo = [self fetchGuideBackground];
@@ -192,7 +247,7 @@
                 NSURL *url = [guideInfo objectForKey:@"url"] == [NSNull null] ? nil : [guideInfo objectForKey:@"url"];
                 [[self loadingSpinner] stopAnimation:self];
                 [[self loadingPanel] close];
-                [[[self guideView] mainFrame] loadHTMLString:[guideInfo objectForKey:@"guide"] baseURL:url];
+                [[[self guideView] mainFrame] loadHTMLString:[[guideInfo objectForKey:@"guide"] stringByReplacingOccurrencesOfString:@"<a " withString:@"<a target='_blank' "] baseURL:url];
                 [[self kextViewer] addChildWindow:[self guideViewer] ordered:NSWindowAbove];
                 [NSApp activateIgnoringOtherApps:YES];
             });
@@ -200,7 +255,27 @@
     }
 }
 
--(IBAction)repairPermissions:(NSButton *)sender {
+-(IBAction)checkForUpdates:(id)sender {
+    self.loadingTexts = @{
+        @"titleText": @"",
+        @"subtitleText": @"",
+        @"singleText": @"Checking for updates..."
+    };
+    [[self loadingSpinner] startAnimation:self];
+    [[self loadingPanel] makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:YES];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //[self repairPermissionsBackground];
+        /// @todo
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[self loadingSpinner] stopAnimation:self];
+            [[self loadingPanel] close];
+        });
+    });
+}
+
+#pragma AppDelegate - RepairPermissions
+-(IBAction)repairPermissions:(id)sender {
     self.loadingTexts = @{
       @"titleText": @"",
       @"subtitleText": @"",
@@ -209,7 +284,7 @@
     [[self loadingSpinner] startAnimation:self];
     [[self loadingPanel] makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self repairPermissionsBackground];
         dispatch_async(dispatch_get_main_queue(), ^{
             [[self loadingSpinner] stopAnimation:self];
@@ -218,7 +293,8 @@
     });
 }
 
--(IBAction)rebuildCache:(NSButton *)sender {
+#pragma AppDelegate - RebuildCache
+-(IBAction)rebuildCache:(id)sender {
     self.loadingTexts = @{
         @"titleText": @"",
         @"subtitleText": @"",
@@ -227,7 +303,7 @@
     [[self loadingSpinner] startAnimation:self];
     [[self loadingPanel] makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self rebuildCacheBackground];
         dispatch_async(dispatch_get_main_queue(), ^{
             [[self loadingSpinner] stopAnimation:self];
@@ -255,7 +331,7 @@
     NSDictionary *conflicts = [self.kextProperties objectForKey:@"conflict"];
     if(conflicts.count > 0){
         [taskString appendString:@"\n#### The following kext(s) will be removed:\n"];
-        // TODO Check if installed
+        /// @todo Check if installed
         for(NSDictionary *kext in conflicts){
             [taskString appendFormat:@"- %@\n", [kext objectForKey:@"kextName"]];
         }
@@ -274,7 +350,7 @@
     NSDictionary *conflicts = [self.kextProperties objectForKey:@"conflict"];
     if(conflicts.count > 0){
         [taskString appendString:@"\n#### The following kext(s) will be removed:\n"];
-        // TODO Check if installed
+        /// @todo Check if installed
         for(NSDictionary *kext in conflicts){
             [taskString appendFormat:@"- %@\n", [kext objectForKey:@"kextName"]];
         }
@@ -286,7 +362,7 @@
     taskType = KextRemove;
     [NSApp beginSheet:_taskViewer modalForWindow:_kextViewer modalDelegate:self didEndSelector:nil contextInfo:nil];
     NSMutableString *taskString = [NSMutableString stringWithUTF8String:"#### The following kext(s) will be removed:\n"];
-    // TODO Check if installed
+    /// @todo Check if installed
     [taskString appendFormat:@"- %@\n", [self.kextProperties objectForKey:@"kextName"]];
     [[self taskInfoView].mainFrame loadHTMLString:[MarkdownToHTML.alloc initWithMarkdown:taskString].render baseURL:nil];
 }
@@ -308,7 +384,7 @@
     [self.loadingSpinner startAnimation:self];
     [self.loadingPanel makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self runTaskBackground];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.loadingSpinner stopAnimation:self];
@@ -324,6 +400,7 @@
                 for(NSDictionary *kext in [self.kextProperties objectForKey:@"required"]){
                     [self->installedKexts addObject:[kext objectForKey:@"kextName"]];
                 }
+                /// @todo updating UI isn't working for the main window
                 [self listInstalledKext];
                 [self fetchKextInfo:[self.kextProperties objectForKey:@"kextName"]];
                 NSRunAlertPanel(@"Success!", @"%@", @"OK", nil, nil, message);
@@ -368,6 +445,8 @@
     return @{@"AKTable": kexts};
 }
 
+// Background tasks
+
 - (void) repairPermissionsBackground {
     @try {
         NSString *command = [NSString stringWithFormat:@"/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", kSLE, kSLE, kSLE, kSLE, kSLE];
@@ -402,6 +481,7 @@
     [self fetchKextInfo:kextName];
 }
 
+/// @todo do it in the background as find() takes a lot of time
 -(void)fetchKextInfo: (NSString *)kext {
     @try {
         // Remove all the child-windows
@@ -477,7 +557,6 @@
         // List replaced kexts
         NSMutableArray<NSDictionary *> *replacedByKexts = [NSMutableArray array];
         for(ConfigReplacedByKexts *kext in kextConfig.replacedBy){
-            // TODO: Show based on version
             [replacedByKexts addObject:@{
                 @"kextName": kext.kextName,
                 @"kextVersion": kext.uptoLatest ? [NSString stringWithFormat:@"%@ & later", kext.version] : kext.version
@@ -494,8 +573,13 @@
         BOOL installed = [self isInstalled:kextConfig.kextName];
         BOOL updateAvailable = NO;
         if(installed){
-            NSString *version = [self findInstalledVersion:kextConfig.kextName];
-            updateAvailable = [kextConfig.versions newerThanVersion:version];
+            @try{
+                NSString *version = [self findInstalledVersion:kextConfig.kextName];
+                updateAvailable = [kextConfig.versions newerThanVersion:version];
+            } @catch (NSException *e) {
+                [self listInstalledKext];
+                [self fetchKextInfo:[self.kextProperties objectForKey:@"kextName"]];
+            }
         }
         // Set properties
         homepage = kextConfig.homepage;
@@ -604,7 +688,7 @@
     // Create, Copy and Load the launch agent
     //
     @try{
-        if (![NSFileManager.defaultManager fileExistsAtPath:KextInstaller.launchDaemonPlistFile]) {
+        if (![NSFileManager.defaultManager fileExistsAtPath:KextHandler.launchDaemonPlistFile]) {
             NSString *launchAgent = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
             "<plist version=\"1.0\">\n"
@@ -630,10 +714,10 @@
             [NSFileManager.defaultManager createFileAtPath:agentPlist contents:[launchAgent dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
             // Copy & load
             NSString *launchDaemonsRootDir = @"/Library/LaunchDaemons/";
-            [AScript adminExec:[NSString stringWithFormat:@"cp %@ %@ && launchctl load %@", agentPlist, launchDaemonsRootDir, KextInstaller.launchDaemonPlistFile]];
+            [AScript adminExec:[NSString stringWithFormat:@"cp %@ %@ && launchctl load %@", agentPlist, launchDaemonsRootDir, KextHandler.launchDaemonPlistFile]];
         } else {
             // Launch daemon already exist, simply load it
-            [AScript adminExec:[NSString stringWithFormat:@"launchctl load %@", KextInstaller.launchDaemonPlistFile]];
+            [AScript adminExec:[NSString stringWithFormat:@"launchctl load %@", KextHandler.launchDaemonPlistFile]];
         }
     } @catch (NSError *e){
         // FIXME: delete STDIN file?
@@ -660,6 +744,14 @@
     } @catch (NSError *e) {}
 }
 
+- (void) updateTables {
+    // Init KextHandler
+    self->kextHandler = [KextHandler.alloc init];
+    // Initialize table
+    self.overview = [self listInstalledKext];
+    self.allKexts = [self listAllKext:YES];
+}
+
 // Check if a kext is installed (with extension)
 - (BOOL) isInstalled: (NSString *) kextName {
     if([installedKexts indexOfObject:kextName] != NSNotFound) {
@@ -668,24 +760,70 @@
     return NO;
 }
 
-// TODO See if kext exists using kextstat
 - (NSString *) findInstalledVersion: (NSString *) kextName {
-    NSString *plist = [NSString stringWithFormat:@"%@/%@/Contents/Info.plist", kSLE, kextName];
-    // First check at SLE
-    if(![NSFileManager.defaultManager fileExistsAtPath:plist]) {
-        if ([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){
-            // Search at LE
-            plist = [NSString stringWithFormat:@"%@/%@/Contents/Info.plist", kLE, kextName];
-            if(![NSFileManager.defaultManager fileExistsAtPath:plist])
-                @throw [NSException exceptionWithName:@"KextNotFoundException" reason:@"The requested kext not found. So, can't get a version for a kext that's not installed!" userInfo:nil];
-        } else {
-            @throw [NSException exceptionWithName:@"KextNotFoundException" reason:@"The requested kext not found. So, can't get a version for a kext that's not installed!" userInfo:nil];
-        }
+    NSString *kext = find(kextName);
+    if(kextName == nil) {
+        @throw [NSException exceptionWithName:@"KextNotFoundException" reason:@"The requested kext not found. So, can't get a version for a kext that's not installed!" userInfo:nil];
     }
+    NSString *plist = [NSString stringWithFormat:@"%@/Contents/Info.plist", kext];
     NSString *version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleShortVersionString"];
     if(version == nil){
         version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleVersion"];
     }
     return version;
+}
+
+-(NSArray *)getListOfCloverInstallationLocation {
+    NSArray *BSDNames = NSArray.array;
+    tty(@"cd /dev && ls disk*s*", &BSDNames);
+    NSMutableArray *result = NSMutableArray.array;
+    for(NSString *BSDName in BSDNames) {
+        int                 err = 0;
+        DADiskRef           disk = NULL;
+        DASessionRef        session;
+        CFDictionaryRef     diskInfo = NULL;
+        session = DASessionCreate(NULL);
+        if (session == NULL) { err = EINVAL; }
+        if (err == 0) {
+            disk = DADiskCreateFromBSDName(NULL, session, BSDName.UTF8String);
+            if (session == NULL) { err = EINVAL; }
+        }
+        if (err == 0) {
+            diskInfo = DADiskCopyDescription(disk);
+            if (diskInfo == NULL) { err = EINVAL; }
+        }
+        if (err == 0) {
+            CFTypeRef volume_kind  = CFDictionaryGetValue(diskInfo, kDADiskDescriptionVolumeKindKey);
+            CFTypeRef volume_label = CFDictionaryGetValue(diskInfo, kDADiskDescriptionVolumeNameKey);
+            if (volume_kind != NULL) { // Since Clover only supports ntfs and msdos
+                if (CFEqual(volume_kind, CFSTR("hfs")) || CFEqual(volume_kind, CFSTR("msdos"))) {
+                    [result addObject:@{
+                        @"BSDName": BSDName,
+                        @"Label": (__bridge NSString *)volume_label
+                    }];
+                }
+                //if(volume_kind != NULL){ CFRelease(volume_kind); }
+                //if(volume_label != NULL){ CFRelease(volume_label); }
+            }
+//            CFURLRef fspath = CFDictionaryGetValue(diskInfo,kDADiskDescriptionVolumePathKey);
+//
+//            char buf[MAXPATHLEN];
+//            if (CFURLGetFileSystemRepresentation(fspath, false, (UInt8 *)buf, sizeof(buf))) {
+//                printf("Disk %s mounted at %s\n",
+//                       DADiskGetBSDName(disk),
+//                       buf);
+//
+//                /* Print the complete dictionary for debugging. */
+//                CFShow(diskInfo);
+//            } else {
+//                /* Something is *really* wrong. */
+//            }
+        }
+        if (diskInfo != NULL) { CFRelease(diskInfo); }
+        if (disk != NULL) { CFRelease(disk); }
+        if (session != NULL) { CFRelease(session); }
+    }
+    NSLog(@"%@", result);
+    return result.copy;
 }
 @end

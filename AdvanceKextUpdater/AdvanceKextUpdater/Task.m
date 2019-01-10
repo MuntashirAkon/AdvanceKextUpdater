@@ -14,6 +14,7 @@
 #import <ifaddrs.h>
 #import <net/if_dl.h>
 #import <net/if_types.h>
+#import "JSONParser.h"
 
 static char kCallbackKey;
 static char kListenerKey;
@@ -203,7 +204,15 @@ static char kLockKey;
     }
     return changed;
 }
-    
+
++(id)getJSON:(NSURL *)url {
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    if(data == nil) return nil;
+    NSString *jsonString = [NSString.alloc initWithUTF8String:[data bytes]];
+    if (jsonString == nil) return nil;
+    return [JSONParser parse:jsonString];
+}
+
 +(bool)get:(NSURL *)url toFile:(NSString *)file {
     return [self conditionalGet:url toFile:file supress:NO];
 }
