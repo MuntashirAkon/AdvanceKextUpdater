@@ -2,6 +2,8 @@
 
 This branch doesn't contain any kext file, but only kext configurations.
 
+**Configuration Version: 0.9.0**
+
 ## Adding a kext configuration
 
 In order to add a kext configuration to this database, you have to edit `catalog.json` file first.
@@ -131,20 +133,29 @@ authors[].email
     - `replaced_by.kexts`: (Object) List of alternative kext(s). (Similar to the above example)
 - `suggest`: (Array|null) Suggest kext(s)
     - `suggest[].name`: (String) Name of the kext (without extension) or supported files WITH extension. See **NOTES**
-                        for a list of supported file extensions.
+                        bellow for a list of supported file extensions.
     - `suggest[].text`: (String|null) Information on why this is suggested (Markdown supported)
 
 #### Notes on the schema
 - `bin.dev.script` and `bin.dev.loc` cannot be null at the same time. Same is applicable for `bin.rel.script` and
 `bin.rel.loc`
-- 
 - `conflict.kexts` can contain any kext name without the extension. It also supports wildcards
 - All IDs are in hexadecimal string without the `0x` prefix and ***must be in the uppercase***
-- Supported file extensions are: `.app`, `.sh`, `.pkg`, `.mkpg`, `.dmg`, `.dylib`
+- Supported file extensions are: `.app`, `.sh`, `.pkg`, `.mkpg`, `.dmg`, `.dylib`, `.efi`
 
 #### Custom script
-A custom script can be used to extract the kext from the given URL. The only argument that is supplied to the script is
-the URL of the kext. The necessity of getting output from the script depends on it's return code. There can be a slight
+A custom script can be used to extract and/or install the kext from the given URL.
+
+```
+USAGE: binary_file binary_url install_paths...
+```
+
+##### Supplied arguments
+- `binary_url`: It is the `bin.dev.url` or `bin.rel.url`, the URL of the kext file
+- `install_paths`: Where to install the kext, there can be many install paths (currently upto 12)
+
+##### Exit code with output
+The necessity of getting output from the script depends on it's exit (=return) code. There can be a slight
 chance that you are installing more than one kext. If this is the case, you'll have to print all the kext locations
 separated by a new line.
 
@@ -158,7 +169,17 @@ separated by a new line.
 
 #### Post installation script
 Sometimes it is necessary to run post-installation script to move thing in their places or just to make sure everything
-is fine. The optional output should contain a friendly message.
+is fine.
+
+```
+USAGE: binary_file install_paths...
+```
+
+##### Supplied arguments
+- `install_paths`: Where to install the kext, there can be many install paths (currently upto 12)
+
+##### Exit code with output
+The optional output should contain a friendly message.
 
 | Code | Output           | Meaning
 | ---- | ---------------- | -------
@@ -170,4 +191,4 @@ If some additional task have been taken using custom script during the installat
 post-installation script if you're returning code `2`.
 
 #### Notes on scripts
-Currently, scripts will be run using admin privilege. In future, I'll add an option to enable or disable this.
+Currently, all the scripts will be run using admin privilege.
