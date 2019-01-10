@@ -8,9 +8,23 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PreferencesWindowController">
             <connections>
-                <outlet property="cloverPartition" destination="20k-K7-RRw" id="JsH-Ys-u72"/>
-                <outlet property="replace" destination="Be0-UY-l3m" id="1he-Qe-0Cp"/>
-                <outlet property="update" destination="tCt-03-aa2" id="hCV-HI-fBd"/>
+                <outlet property="_CloverOS10_10" destination="c4M-ay-hUw" id="zBG-aJ-X18"/>
+                <outlet property="_CloverOS10_11" destination="yIz-yT-jS2" id="5M0-gx-B9J"/>
+                <outlet property="_CloverOS10_12" destination="O33-SZ-bvM" id="ORM-vR-roh"/>
+                <outlet property="_CloverOS10_13" destination="RtS-zC-3LJ" id="J7N-8E-s3C"/>
+                <outlet property="_CloverOS10_14" destination="dby-H4-QfU" id="Ifa-A5-V7J"/>
+                <outlet property="_CloverOS10_6" destination="9Yl-ic-D7K" id="ohP-V3-jJl"/>
+                <outlet property="_CloverOS10_7" destination="iJ2-q4-Eh3" id="7IJ-a4-WN7"/>
+                <outlet property="_CloverOS10_8" destination="db3-rm-YXe" id="6zu-er-tFJ"/>
+                <outlet property="_CloverOS10_9" destination="tnr-vG-QdW" id="zan-ua-DrE"/>
+                <outlet property="_CloverOSOthers" destination="8FZ-oP-1wF" id="IeE-SZ-K51"/>
+                <outlet property="_CloverPartition" destination="20k-K7-RRw" id="c5d-vQ-vnH"/>
+                <outlet property="_CloverSupport" destination="eld-R0-GEm" id="hZW-vh-a2b"/>
+                <outlet property="_KextAnywhere" destination="xJm-x2-sD3" id="GUj-03-RZ1"/>
+                <outlet property="_KextBackup" destination="aBn-Fe-cMP" id="GIZ-EX-0d5"/>
+                <outlet property="_KextCheck" destination="tCt-03-aa2" id="hKz-nd-ZDk"/>
+                <outlet property="_KextReplace" destination="Be0-UY-l3m" id="Bvc-mJ-YbM"/>
+                <outlet property="_KextUpdate" destination="q1Q-7y-lsH" id="osa-Ot-THI"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="zBZ-go-Fd8"/>
             </connections>
         </customObject>
@@ -31,6 +45,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="clearCaches:" target="1uS-eL-thZ" id="iOz-UT-f8e"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BD8-iz-Noh">
                         <rect key="frame" x="312" y="13" width="154" height="32"/>
@@ -39,6 +56,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="resetPreferences:" target="-2" id="00w-hm-WRh"/>
+                        </connections>
                     </button>
                     <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bcg-NA-e5b">
                         <rect key="frame" x="13" y="51" width="454" height="215"/>
@@ -46,7 +66,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Kexts" identifier="" id="gfn-dZ-ZSB">
-                                <view key="view" ambiguous="YES" id="wZw-40-Avn">
+                                <view key="view" id="wZw-40-Avn">
                                     <rect key="frame" x="10" y="33" width="434" height="169"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -59,43 +79,20 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKs-uB-kef">
-                                            <rect key="frame" x="15" y="120" width="183" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Exclude kexts from updating: " id="rWz-93-j5v">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DWm-bg-Zjz">
-                                            <rect key="frame" x="198" y="110" width="125" height="32"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="push" title="Select kexts..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rjQ-ud-bV4">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Be0-UY-l3m">
                                             <rect key="frame" x="15" y="96" width="377" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="* Replace old kext with the new one(s) if it's been replaced" bezelStyle="regularSquare" imagePosition="left" inset="2" id="dwu-0n-Rfu">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Replace" id="7p9-Z0-TNi"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xJm-x2-sD3">
-                                            <rect key="frame" x="15" y="76" width="356" height="18"/>
+                                            <rect key="frame" x="15" y="76" width="390" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="* Update/remove kexts from every installation locations" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zvP-H4-Hqe">
+                                            <buttonCell key="cell" type="check" title="* Update/remove kexts in every locations (not just LE or SLE)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zvP-H4-Hqe">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Anywhere" id="Cec-Iz-ono"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tCt-03-aa2">
@@ -111,9 +108,6 @@
                                                         <menuItem title="Item 3" id="imB-ek-YnH"/>
                                                     </items>
                                                 </menu>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="selectedIndex" keyPath="selection.Update" id="3em-yX-tNH"/>
-                                                </connections>
                                             </popUpButtonCell>
                                         </popUpButton>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aBn-Fe-cMP">
@@ -122,22 +116,38 @@
                                             <buttonCell key="cell" type="check" title="Backup old kexts" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Qmh-s6-eX1">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Backup" id="Rq0-Df-TR1"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h0q-iX-B6G">
                                             <rect key="frame" x="33" y="42" width="92" height="14"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Backup location:" id="eDL-Ga-PTM">
+                                            <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" title="Backup location:" id="eDL-Ga-PTM">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rwn-Ny-tYn">
+                                            <rect key="frame" x="125" y="39" width="266" height="19"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="roundRect" title="~/Library/Caches/AdvanceKextUpdater/Backups" bezelStyle="roundedRect" image="buttonCell:4zV-P0-yru:image" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4zV-P0-yru">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system" size="11"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="openBackupLocation:" target="1uS-eL-thZ" id="kPf-cR-nSo"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q1Q-7y-lsH">
+                                            <rect key="frame" x="15" y="116" width="144" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="* Auto-update kexts" bezelStyle="regularSquare" imagePosition="left" inset="2" id="FoK-X7-Cqo">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nO3-QU-jYZ">
-                                            <rect key="frame" x="15" y="17" width="444" height="17"/>
+                                            <rect key="frame" x="15" y="15" width="444" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="* Enabling this may have dangerous consequences" id="HmI-lE-3Qy">
                                                 <font key="font" metaFont="system"/>
@@ -145,22 +155,19 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rwn-Ny-tYn">
-                                            <rect key="frame" x="125" y="40" width="292" height="19"/>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DWm-bg-Zjz">
+                                            <rect key="frame" x="159" y="107" width="134" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="roundRect" title="~/Library/Caches/AdvanceKextUpdater/Backups" bezelStyle="roundedRect" image="buttonCell:4zV-P0-yru:image" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4zV-P0-yru">
+                                            <buttonCell key="cell" type="push" title="Exclude kexts..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rjQ-ud-bV4">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="cellTitle"/>
+                                                <font key="font" metaFont="system"/>
                                             </buttonCell>
-                                            <connections>
-                                                <action selector="openBackupLocation:" target="1uS-eL-thZ" id="kPf-cR-nSo"/>
-                                            </connections>
                                         </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Clover" identifier="" id="BoE-WK-H09">
-                                <view key="view" id="dAA-Df-W8q">
+                                <view key="view" ambiguous="YES" id="dAA-Df-W8q">
                                     <rect key="frame" x="10" y="33" width="434" height="169"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -170,9 +177,6 @@
                                             <buttonCell key="cell" type="check" title="Support Clover" bezelStyle="regularSquare" imagePosition="left" inset="2" id="llw-Vi-Hy6">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Support" id="6Tl-Qu-GZW"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uI1-FC-6l6">
@@ -196,111 +200,81 @@
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yIz-yT-jS2">
                                             <rect key="frame" x="280" y="78" width="51" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="10.11" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="MZF-Us-qle">
+                                            <buttonCell key="cell" type="check" title="10.11" bezelStyle="regularSquare" imagePosition="left" inset="2" id="MZF-Us-qle">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Directories.6" id="hGg-Og-dPk"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Yl-ic-D7K">
                                             <rect key="frame" x="15" y="78" width="48" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="10.6" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cCu-4Q-QPn">
+                                            <buttonCell key="cell" type="check" title="10.6" bezelStyle="regularSquare" imagePosition="left" inset="2" id="cCu-4Q-QPn">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Directories.1" id="qYj-hc-5dK"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c4M-ay-hUw">
                                             <rect key="frame" x="222" y="78" width="54" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="10.10" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="MR9-UQ-ns6">
+                                            <buttonCell key="cell" type="check" title="10.10" bezelStyle="regularSquare" imagePosition="left" inset="2" id="MR9-UQ-ns6">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Directories.5" id="xA9-84-4vj"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8FZ-oP-1wF">
-                                            <rect key="frame" x="130" y="58" width="64" height="18"/>
+                                            <rect key="frame" x="130" y="58" width="57" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Others" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="fz7-WN-DSS">
+                                            <buttonCell key="cell" type="check" title="Other" bezelStyle="regularSquare" imagePosition="left" inset="2" id="fz7-WN-DSS">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Directories.0" id="ZaY-aM-cav"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RtS-zC-3LJ">
                                             <rect key="frame" x="15" y="58" width="53" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="10.13" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gk0-uo-X1E">
+                                            <buttonCell key="cell" type="check" title="10.13" bezelStyle="regularSquare" imagePosition="left" inset="2" id="gk0-uo-X1E">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Directories.8" id="gcj-5b-Mmx"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iJ2-q4-Eh3">
                                             <rect key="frame" x="67" y="78" width="47" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="10.7" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="qMl-ss-kh7">
+                                            <buttonCell key="cell" type="check" title="10.7" bezelStyle="regularSquare" imagePosition="left" inset="2" id="qMl-ss-kh7">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Directories.2" id="cHD-eM-3Oa"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tnr-vG-QdW">
                                             <rect key="frame" x="170" y="78" width="48" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="10.9" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CdW-pM-Bkb">
+                                            <buttonCell key="cell" type="check" title="10.9" bezelStyle="regularSquare" imagePosition="left" inset="2" id="CdW-pM-Bkb">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Directories.4" id="Zng-6n-2CT"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O33-SZ-bvM">
                                             <rect key="frame" x="335" y="78" width="53" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="10.12" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="glr-60-KfB">
+                                            <buttonCell key="cell" type="check" title="10.12" bezelStyle="regularSquare" imagePosition="left" inset="2" id="glr-60-KfB">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Directories.7" id="Wum-Jr-Jya"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="db3-rm-YXe">
                                             <rect key="frame" x="118" y="78" width="48" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="10.8" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="XeD-qp-rBr">
+                                            <buttonCell key="cell" type="check" title="10.8" bezelStyle="regularSquare" imagePosition="left" inset="2" id="XeD-qp-rBr">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Directories.3" id="lS5-Wt-t3w"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dby-H4-QfU">
                                             <rect key="frame" x="72" y="58" width="54" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="10.14" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zje-SP-JBy">
+                                            <buttonCell key="cell" type="check" title="10.14" bezelStyle="regularSquare" imagePosition="left" inset="2" id="zje-SP-JBy">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="value" keyPath="selection.Clover.Directories.9" id="kYs-Fl-S43"/>
-                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="20k-K7-RRw">
@@ -316,9 +290,6 @@
                                                         <menuItem title="Item 3" id="XD1-IN-WVl"/>
                                                     </items>
                                                 </menu>
-                                                <connections>
-                                                    <binding destination="rEh-c4-bxA" name="selectedIndex" keyPath="selection.Clover.Partition" id="0yd-KB-al4"/>
-                                                </connections>
                                             </popUpButtonCell>
                                         </popUpButton>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEe-3e-n1k">
@@ -351,22 +322,28 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="clearBackups:" target="1uS-eL-thZ" id="4Ay-Sb-BQM"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="IQu-6D-tQi"/>
-                <outlet property="update" destination="tCt-03-aa2" id="WYt-Ld-0EV"/>
             </connections>
-            <point key="canvasLocation" x="60" y="138"/>
+            <point key="canvasLocation" x="135" y="133"/>
         </window>
         <customObject id="1uS-eL-thZ" customClass="Preferences"/>
         <customObject id="r7t-0U-yPA" customClass="AppDelegate"/>
-        <objectController id="rEh-c4-bxA" userLabel="settings">
+        <collectionViewItem id="qQW-kq-4w8">
             <connections>
-                <binding destination="-2" name="contentObject" keyPath="settings" id="K7Q-Q5-5YG"/>
+                <outlet property="view" destination="sYc-Ui-7MK" id="jkJ-Kf-WNL"/>
             </connections>
-        </objectController>
+        </collectionViewItem>
+        <view id="sYc-Ui-7MK">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+        </view>
     </objects>
     <resources>
         <image name="buttonCell:4zV-P0-yru:image" width="1" height="1">

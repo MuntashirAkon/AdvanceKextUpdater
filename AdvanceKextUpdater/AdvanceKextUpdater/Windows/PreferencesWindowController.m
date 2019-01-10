@@ -8,6 +8,7 @@
 
 #import "PreferencesWindowController.h"
 #import "../utils.h"
+#import "../AppDelegate.h"
 #import <DiskArbitration/DiskArbitration.h> // Disk
 
 @interface PreferencesWindowController ()
@@ -15,13 +16,30 @@
 @end
 
 @implementation PreferencesWindowController {
-    IBOutlet NSPopUpButton *update;
-    IBOutlet NSPopUpButton *cloverPartition;
-    IBOutlet NSButton *replace;
-    NSMutableDictionary *settings;
+    @private
+    // Kext
+    IBOutlet NSPopUpButton *_KextCheck;
+    IBOutlet NSButton *_KextUpdate;
+    IBOutlet NSButton *_KextReplace;
+    IBOutlet NSButton *_KextAnywhere;
+    IBOutlet NSButton *_KextBackup;
+    // Clover
+    IBOutlet NSButton *_CloverSupport;
+    IBOutlet NSPopUpButton *_CloverPartition;
+    IBOutlet NSButton *_CloverOSOthers;
+    IBOutlet NSButton *_CloverOS10_6;
+    IBOutlet NSButton *_CloverOS10_7;
+    IBOutlet NSButton *_CloverOS10_8;
+    IBOutlet NSButton *_CloverOS10_9;
+    IBOutlet NSButton *_CloverOS10_10;
+    IBOutlet NSButton *_CloverOS10_11;
+    IBOutlet NSButton *_CloverOS10_12;
+    IBOutlet NSButton *_CloverOS10_13;
+    IBOutlet NSButton *_CloverOS10_14;
     NSArray<NSString *> *updateTitles;
     NSMutableArray<NSString *> *cloverPartitionsInfo;
     NSMutableArray<NSString *> *BSDNames;
+    NSUserDefaults *defaults;
 }
 
 - (NSNibName) windowNibName {
@@ -36,23 +54,82 @@
         @"Check on every week",
         @"Check on every month"
     ];
-    settings = NSMutableDictionary.dictionary;
     cloverPartitionsInfo = NSMutableArray.array;
     BSDNames = NSMutableArray.array;
     for(NSDictionary *partition in [self getListOfCloverInstallationLocation]){
         [cloverPartitionsInfo addObject:[NSString stringWithFormat:@"%@ (%@)", [partition objectForKey:@"BSDName"], [partition objectForKey:@"Label"]]];
         [BSDNames addObject:[partition objectForKey:@"BSDName"]];
     }
-    [update removeAllItems];
-    [cloverPartition removeAllItems];
-    [update addItemsWithTitles:updateTitles];
-    [cloverPartition addItemsWithTitles:cloverPartitionsInfo.copy];
-    /// @todo load currently running config
+    [_KextCheck removeAllItems];
+    [_CloverPartition removeAllItems];
+    [_KextCheck addItemsWithTitles:updateTitles];
+    [_CloverPartition addItemsWithTitles:cloverPartitionsInfo.copy];
+    // Set values
+    defaults = NSUserDefaults.standardUserDefaults;
+    [self setPreferences];
 }
 - (void)close {
-    NSLog(@"Check: %@", [update titleOfSelectedItem]);
-    NSLog(@"Clover: %@", [cloverPartition titleOfSelectedItem]);
-    NSLog(@"Replace: %@", [replace title]);
+    // Kext
+    NSArray *excluded = [[defaults dictionaryForKey:@"Kext"] objectForKey:@"Exclude"];
+    NSDictionary *kext = @{
+        @"Check":@(_KextCheck.indexOfSelectedItem),
+        @"Update":@(_KextUpdate.state == NSOnState),
+        @"Replace":@(_KextReplace.state == NSOnState),
+        @"Anywhere":@(_KextAnywhere.state == NSOnState),
+        @"Backup":@(_KextBackup.state == NSOnState),
+        @"Exclude":excluded
+    };
+    [defaults setObject:kext forKey:@"Kext"];
+    // Clover
+    NSMutableArray *cloverDirs = NSMutableArray.array;
+    if(_CloverOSOthers.state == NSOnState){ [cloverDirs addObject:@"Other"]; }
+    if(_CloverOS10_6.state == NSOnState){ [cloverDirs addObject:@"10.6"]; }
+    if(_CloverOS10_7.state == NSOnState){ [cloverDirs addObject:@"10.7"]; }
+    if(_CloverOS10_8.state == NSOnState){ [cloverDirs addObject:@"10.8"]; }
+    if(_CloverOS10_9.state == NSOnState){ [cloverDirs addObject:@"10.9"]; }
+    if(_CloverOS10_10.state == NSOnState){ [cloverDirs addObject:@"10.10"]; }
+    if(_CloverOS10_11.state == NSOnState){ [cloverDirs addObject:@"10.11"]; }
+    if(_CloverOS10_12.state == NSOnState){ [cloverDirs addObject:@"10.12"]; }
+    if(_CloverOS10_13.state == NSOnState){ [cloverDirs addObject:@"10.13"]; }
+    if(_CloverOS10_14.state == NSOnState){ [cloverDirs addObject:@"10.14"]; }
+    NSDictionary *clover = @{
+        @"Support":@(_CloverSupport.state == NSOnState),
+        @"Partition":[BSDNames objectAtIndex:_CloverPartition.indexOfSelectedItem],
+        @"Directories":cloverDirs.copy
+    };
+    [defaults setObject:clover forKey:@"Clover"];
+}
+
+-(void)setPreferences{
+    // Kext
+    NSDictionary *kext = [defaults dictionaryForKey:@"Kext"];
+    NSInteger k_c = [[kext objectForKey:@"Check"] integerValue];
+    if(k_c >= 0 && k_c < updateTitles.count){ [_KextCheck selectItemAtIndex:k_c]; }
+    [_KextUpdate    setState:([[kext objectForKey:@"Update"] integerValue] ? NSOnState : NSOffState)];
+    [_KextReplace   setState:([[kext objectForKey:@"Replace"] integerValue] ? NSOnState : NSOffState)];
+    [_KextAnywhere  setState:([[kext objectForKey:@"Anywhere"] integerValue] ? NSOnState : NSOffState)];
+    [_KextBackup    setState:([[kext objectForKey:@"Backup"] integerValue] ? NSOnState : NSOffState)];
+    // Clover
+    NSDictionary *clover = [defaults dictionaryForKey:@"Clover"];
+    [_CloverSupport setState:([[clover objectForKey:@"Support"] integerValue] ? NSOnState : NSOffState)];
+    NSInteger c_i = [BSDNames indexOfObject:[clover objectForKey:@"Partition"]];
+    if(c_i != NSNotFound){ [_CloverPartition selectItemAtIndex:c_i]; }
+    for(NSString *c_f in [clover objectForKey:@"Directories"]){
+        [self setOnStateUsingDirectoryName:c_f];
+    }
+}
+
+-(void)setOnStateUsingDirectoryName:(NSString *)dirName{
+    if([dirName isEqual:@"Other"]){ _CloverOSOthers.state = NSOnState; }
+    else if([dirName isEqual:@"10.6"]){ _CloverOS10_6.state = NSOnState; }
+    else if([dirName isEqual:@"10.7"]){ _CloverOS10_7.state = NSOnState; }
+    else if([dirName isEqual:@"10.8"]){ _CloverOS10_8.state = NSOnState; }
+    else if([dirName isEqual:@"10.9"]){ _CloverOS10_9.state = NSOnState; }
+    else if([dirName isEqual:@"10.10"]){ _CloverOS10_10.state = NSOnState; }
+    else if([dirName isEqual:@"10.11"]){ _CloverOS10_11.state = NSOnState; }
+    else if([dirName isEqual:@"10.12"]){ _CloverOS10_12.state = NSOnState; }
+    else if([dirName isEqual:@"10.13"]){ _CloverOS10_13.state = NSOnState; }
+    else if([dirName isEqual:@"10.14"]){ _CloverOS10_14.state = NSOnState; }
 }
 
 -(NSArray *)getListOfCloverInstallationLocation {
@@ -105,4 +182,11 @@
     }
     return result.copy;
 }
+
+-(IBAction)resetPreferences:(id)sender{
+    [defaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
+    [defaults registerDefaults:AppDelegate.appDefaults];
+    [self setPreferences];
+}
+
 @end
