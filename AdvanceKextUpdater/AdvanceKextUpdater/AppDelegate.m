@@ -20,6 +20,7 @@
 #import "PCI.h"
 #import "KIHelperAgrumentController.h"
 #import "Windows/PreferencesWindowController.h"
+#import "Windows/AboutWindowController.h"
 
 @interface AppDelegate ()
 // Outlets
@@ -35,6 +36,7 @@
 
 @implementation AppDelegate {
     PreferencesWindowController *_preferences;
+    AboutWindowController *_aboutwindowController;
 }
 
 @synthesize overview;
@@ -187,6 +189,13 @@
         _preferences = [PreferencesWindowController new];
     }
     [_preferences.window makeKeyAndOrderFront:self];
+}
+
+-(IBAction)about:(id)sender{
+    if (_aboutwindowController == nil) {
+        _aboutwindowController = [AboutWindowController new];
+    }
+    [_aboutwindowController.window makeKeyAndOrderFront:self];
 }
 
 /// @todo

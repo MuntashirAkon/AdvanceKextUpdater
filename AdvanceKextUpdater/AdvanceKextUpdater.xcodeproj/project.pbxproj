@@ -48,6 +48,9 @@
 		87BB858021308177007F4D29 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
 		87E3DC9E21D348BD00462D27 /* ConfigTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E3DC9D21D348BD00462D27 /* ConfigTarget.m */; };
 		87E3DC9F21D348BD00462D27 /* ConfigTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E3DC9D21D348BD00462D27 /* ConfigTarget.m */; };
+		87F1AC5E21E795E30091CD04 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F1AC5D21E795E30091CD04 /* About.xib */; };
+		87F1AC6121E7A1D90091CD04 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F1AC6021E7A1D90091CD04 /* AboutWindowController.m */; };
+		87F1AC6321E7AE5D0091CD04 /* KEXT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 87F1AC6221E7AE5C0091CD04 /* KEXT.icns */; };
 		87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485821395BBF0069DFC2 /* JSONParser.m */; };
 		87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485B21399D650069DFC2 /* ConfigSuggestion.m */; };
 		87FAC53421486B6A00DAA453 /* ConfigBinary.m in Sources */ = {isa = PBXBuildFile; fileRef = 87FAC53321486B6A00DAA453 /* ConfigBinary.m */; };
@@ -130,6 +133,10 @@
 		87BB857F21308177007F4D29 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		87E3DC9C21D348A800462D27 /* ConfigTarget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigTarget.h; sourceTree = "<group>"; };
 		87E3DC9D21D348BD00462D27 /* ConfigTarget.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigTarget.m; sourceTree = "<group>"; };
+		87F1AC5D21E795E30091CD04 /* About.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
+		87F1AC5F21E7A1D90091CD04 /* AboutWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutWindowController.h; sourceTree = "<group>"; };
+		87F1AC6021E7A1D90091CD04 /* AboutWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
+		87F1AC6221E7AE5C0091CD04 /* KEXT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = KEXT.icns; sourceTree = "<group>"; };
 		87F2485821395BBF0069DFC2 /* JSONParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONParser.m; sourceTree = "<group>"; };
 		87F2485A21399D5A0069DFC2 /* ConfigSuggestion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigSuggestion.h; sourceTree = "<group>"; };
 		87F2485B21399D650069DFC2 /* ConfigSuggestion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigSuggestion.m; sourceTree = "<group>"; };
@@ -228,6 +235,7 @@
 		8773B712212BFD730096BFCC /* AdvanceKextUpdater */ = {
 			isa = PBXGroup;
 			children = (
+				87F1AC6221E7AE5C0091CD04 /* KEXT.icns */,
 				8786030A21D4927C00DC40CC /* Windows */,
 				879F609B21423B490059D0ED /* Utils */,
 				877CDB74213918CE00176777 /* Resources */,
@@ -236,6 +244,7 @@
 				8773B714212BFD730096BFCC /* AppDelegate.m */,
 				875564C921D6AAAE0040E9F4 /* Preferences.xib */,
 				8773B718212BFD760096BFCC /* MainMenu.xib */,
+				87F1AC5D21E795E30091CD04 /* About.xib */,
 				8773B71B212BFD760096BFCC /* Info.plist */,
 				8773B71C212BFD760096BFCC /* main.m */,
 				8773B71E212BFD760096BFCC /* AdvanceKextUpdater.entitlements */,
@@ -265,6 +274,8 @@
 				875564CC21D6AB190040E9F4 /* PreferencesWindowController.m */,
 				87897BAC21D8AE2600BB0CEE /* Preferences.h */,
 				87897BAD21D8AE2600BB0CEE /* Preferences.m */,
+				87F1AC5F21E7A1D90091CD04 /* AboutWindowController.h */,
+				87F1AC6021E7A1D90091CD04 /* AboutWindowController.m */,
 			);
 			path = Windows;
 			sourceTree = "<group>";
@@ -369,7 +380,9 @@
 				8773B717212BFD760096BFCC /* Assets.xcassets in Resources */,
 				877CDB7321390E8E00176777 /* github-markdown.css in Resources */,
 				8773B71A212BFD760096BFCC /* MainMenu.xib in Resources */,
+				87F1AC5E21E795E30091CD04 /* About.xib in Resources */,
 				875564CA21D6AAAE0040E9F4 /* Preferences.xib in Resources */,
+				87F1AC6321E7AE5D0091CD04 /* KEXT.icns in Resources */,
 				87BB8579212FC0CD007F4D29 /* git in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +431,7 @@
 				876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */,
 				8773B71D212BFD760096BFCC /* main.m in Sources */,
 				87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */,
+				87F1AC6121E7A1D90091CD04 /* AboutWindowController.m in Sources */,
 				87897BAE21D8AE2600BB0CEE /* Preferences.m in Sources */,
 				875564CE21D6AB190040E9F4 /* PreferencesWindowController.m in Sources */,
 				8773B715212BFD730096BFCC /* AppDelegate.m in Sources */,
