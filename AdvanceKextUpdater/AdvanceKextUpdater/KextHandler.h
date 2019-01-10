@@ -12,6 +12,7 @@
 
 #define KEXT_REPO @"https://github.com/MuntashirAkon/AdvanceKextUpdater.git"
 #define KEXT_BRANCH @"kext_db"
+#define launchDaemonName @"io.github.muntashirakon.advancekextupdater.helper.agent"
 
 @interface KextHandler: NSObject {
     NSArray<NSString *> *kextNames;
@@ -23,10 +24,15 @@
 + (BOOL) checkForDBUpdate;
 + (NSString *) appPath;
 + (NSString *) appCachePath;
++ (NSString *) kextBackupPath;
 + (NSString *) kextDBPath;
 + (NSString *) kextCachePath;
 + (NSString *) guideCachePath;
 + (NSString *) pciIDsCachePath;
+/// Temporary directory root
+/// <code>/tmp/AdvanceKextUpdater</code>
+/// @return
+/// Temporary directory root
 + (NSString *) tmpPath;
 + (NSString *) kextTmpPath;
 + (NSString *) lockFile;
@@ -34,6 +40,8 @@
 + (NSString *) stdinPath;
 + (NSString *) stdoutPath;
 + (NSString *) stderrPath;
++ (NSString *) launchDaemonPlistFile;
++ (NSString *) PreferencesFile;
 
 - (NSArray<NSString *> *) listInstalledKext;
 - (NSArray<NSString *> *) listKext;

@@ -46,6 +46,14 @@
     return isRootUser() ? [NSString stringWithFormat:@"/Users/%@/Library/Caches/AdvanceKextUpdater", getMainUser()] : [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:APP_NAME];
 }
 
++ (NSString *) kextBackupPath {
+    return isRootUser() ? [NSString stringWithFormat:@"/Users/%@/Library/Caches/AdvanceKextUpdater/Backups", getMainUser()] : [[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:APP_NAME] stringByAppendingPathComponent:@"Backups"];
+}
+
++ (NSString *) PreferencesFile {
+    return [NSString stringWithFormat:@"/Users/%@/Library/Preferences/io.github.muntashirakon.AdvanceKextUpdater.plist", getMainUser()];
+}
+
 /**
  * @return Kext database path
  */
@@ -92,6 +100,10 @@
 
 + (NSString *) stderrPath {
     return self.stdoutPath;
+}
+
++ (NSString *) launchDaemonPlistFile {
+    return [[@"/Library/LaunchDaemons/" stringByAppendingPathComponent:launchDaemonName] stringByAppendingPathExtension:@"plist"];
 }
 
 /**

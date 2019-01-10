@@ -10,7 +10,6 @@
 #import <stdlib.h>
 #import "../AdvanceKextUpdater/utils.h"
 #import "../AdvanceKextUpdater/KextHandler.h"
-#import "../AdvanceKextUpdater/KextInstaller.h"
 #import "KextAction.h"
 
 #define ACTION_STDIN 1 // Read arguments from STDIN
@@ -19,11 +18,23 @@
 
 #define ACTION_DEFAULT ACTION_STDIN // Default action
 
+/// @function _return
+///
+/// @abstract
+/// Remove lockfile and unload the launch daemon as the program exits
+///
+/// @param ret_value
+/// The value to be returned on exit to the OS
+///
+/// @return
+/// The return value supplied as agrument
+///
 int _return(int ret_value){
     // Delete lock file
     [NSFileManager.defaultManager removeItemAtPath:KextHandler.lockFile error:nil];
     // Unload the launch agent
-    tty([NSString stringWithFormat:@"launchctl unload %@", KextInstaller.launchDaemonPlistFile], nil);
+    tty([NSString stringWithFormat:@"launchctl unload %@", KextHandler.launchDaemonPlistFile], nil);
+    tty([NSString stringWithFormat:@"chown -R %@:wheel '%@'", getMainUser(), KextHandler.tmpPath], nil);
     return ret_value;
 }
 
@@ -33,10 +44,16 @@ void _status(NSString *msg){
     fclose(fp);
 }
 
+/// @function _message
 ///
+/// @abstract
 /// Display final message to the user
-/// @param status_code The status code (0 = true, 1 = false)
-/// @param msg The message containing the details of the status
+///
+/// @param status_code
+/// The status code (0 = true, 1 = false)
+///
+/// @param msg
+/// The message containing the details of the status
 ///
 void _message(int status_code, NSString * _Nullable msg){
     if(msg == nil){
@@ -61,8 +78,7 @@ void _message(int status_code, NSString * _Nullable msg){
 int main(int argc, const char *argv[]) {
     @autoreleasepool {
 #if 1
-        uid_t uid = getuid();
-        if(uid != 0){
+        if(!isRootUser()){
             fprintf(stderr, "Helper tool must be run as root!\n");
             return _return(1);
         }
