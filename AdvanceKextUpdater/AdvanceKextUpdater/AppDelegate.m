@@ -120,6 +120,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Load default preferences
     [NSUserDefaults.standardUserDefaults registerDefaults:[AppDelegate appDefaults]];
+    // Make background transparent
+    [self guideView].drawsBackground = NO;
+    [self taskInfoView].drawsBackground = NO;
     // Set window levels
     [[self guideViewer]  setLevel:NSNormalWindowLevel];
     [[self kextViewer]   setLevel:NSNormalWindowLevel];

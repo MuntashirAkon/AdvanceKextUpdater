@@ -1949,12 +1949,7 @@
                                     </attributedString>
                                     <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <connections>
-                                        <binding destination="N97-Sh-ORT" name="attributedString" keyPath="selection.description" id="mzs-2d-gPg">
-                                            <dictionary key="options">
-                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                                <bool key="NSConditionallySetsEditable" value="NO"/>
-                                            </dictionary>
-                                        </binding>
+                                        <binding destination="N97-Sh-ORT" name="value" keyPath="selection.description" id="8NY-Mp-sqU"/>
                                     </connections>
                                 </textView>
                             </subviews>
