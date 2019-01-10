@@ -1564,7 +1564,7 @@
             </view>
             <point key="canvasLocation" x="83" y="425"/>
         </window>
-        <window title="Kext Viewer" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" frameAutosaveName="" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="Q4v-Ar-X72" customClass="NSPanel">
+        <window title="Kext Viewer" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="documentWindow" frameAutosaveName="" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="Q4v-Ar-X72" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" ignoresCycle="YES"/>
             <rect key="contentRect" x="130" y="63" width="480" height="516"/>

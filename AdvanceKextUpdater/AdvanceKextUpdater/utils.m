@@ -107,6 +107,15 @@ BOOL isDarkMode() {
         return !isNull([[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"]);
     }
     return NO;
+//    if (@available(macOS 10.14, *)) {
+//        NSAppearanceName basicAppearance = [NSApp.mainWindow.effectiveAppearance bestMatchFromAppearancesWithNames:@[
+//                NSAppearanceNameAqua,
+//                NSAppearanceNameDarkAqua
+//        ]];
+//        return [basicAppearance isEqualToString:NSAppearanceNameDarkAqua];
+//    } else {
+//        return NO;
+//    }
 }
 
 /// @see https://stackoverflow.com/a/24811200/4147849

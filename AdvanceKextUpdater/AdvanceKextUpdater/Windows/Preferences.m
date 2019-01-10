@@ -18,7 +18,7 @@
 
 -(IBAction)openBackupLocation:(id)sender{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        tty([NSString stringWithFormat:@"open '%@'", KextHandler.kextBackupPath], nil);
+        [NSWorkspace.sharedWorkspace openFile:KextHandler.kextBackupPath withApplication:nil andDeactivate:YES];
     });
 }
 @end
