@@ -1,24 +1,21 @@
 # Kext Configurations Database
-
 This branch doesn't contain any kext file, but only kext configurations.
 
 **Configuration Version: 0.9.0**
 
 ## Adding a kext configuration
+In order to add a kext configuration to this database, you have to edit ***catalog.json*** file first.
 
-In order to add a kext configuration to this database, you have to edit `catalog.json` file first.
-
-### Editing `catalog.json` file
-
-`catalog.json` file is sorted in alphabetical order. To add a new kext, find a suitable place and add the name of the
-kext (namely `title`) followed by the original kext file name. Suppose, you have a `BlaBla.kext`, you can add it like
+### Editing *catalog.json* file
+***catalog.json*** file is sorted in alphabetical order. To add a new kext, find a suitable place and add the name of the
+kext (namely `title`) followed by the original kext file name. Suppose, you have a **FooBar.kext**, you can add it like
 this:
  
  ```json
  {
     "SomeKextAbove" : "...",
-    "BlaBla": {
-      "kext": "BlaBla.kext",
+    "FooBar": {
+      "id": "com.buzz.FooBar",
       "remote_url": "https://example.com/config.json"
     },
     "SomeKextBelow": "..."
@@ -26,15 +23,16 @@ this:
  ```
  Notice: The `title` is important, since the name of the directory (as explained below) must be the same as the `title`.
  
- NOTE: `remote_url` contains the remote `config.json` file (filename can be anything having `.json` suffix) instead of
-       the one hosted here. All the document locations (except unzipped locations) inside this config is relative to the
-       URL. In this way, `config.json` can be changed directly from a remote repository containing the kext.  
+ **NOTE:** `remote_url` contains the remote ***config.json*** file instead of the one hosted here. All the document
+       locations inside this config is relative to the URL, except unzipped locations (ie. `bin.rel.loc` and `bin.dev.loc`)
+       which are relative to the zipped file. In this way, `config.json` can be changed directly from a remote repository
+       containing the kext.  The zip file locations (ie. `bin.dev.url` and `bin.rel.url`) can be either a relative URL or an
+       absolute URL. Make sure the absolute URL contains `http://` or `https://` prefix.
   
- ### Adding a `config.json` file
- 
-Create a directory same as the `title` mentioned above (in this example, `BlaBla`). Now, create a `config.json` file
-inside it. You can create multiple configuration files,in which case, the other config files must have `config-` prefix
-and must be described in the default `config.json` file.
+ ### Adding a *config.json* file
+Create a directory same as the `title` mentioned above (in this example, `FooBar`). Now, create a ***config.json*** file
+inside it. You can create multiple configuration files, in which case, the other config files must have the `config-` prefix
+and must be described in the default ***config.json*** file.
  
 From now on, we will use . (dot) notation for objects and [] (square brackets) for arrays. So,
 ```json
@@ -54,7 +52,7 @@ authors[].email
 ```
 
 #### `config.json` Schema
-- `name` : (String) Name of the Kext (same as the `title`)
+- `name` : (String) Name of the Kext (same as the `title` of the **config.json**)
 - `kext`: (String) Kext binary file name
 - `description`: (String) A short description of the Kext
 - `homepage`: (String) The main location of the kext or kext source
@@ -62,19 +60,19 @@ authors[].email
 - `versions`: (Array|null) Previous/other version of the kext (use this when only necessary)
     - `versions[].version`: (String) The kext version
     - `versions[].since`: (String) The first supported macOS version
-    - `versions[].location`: (String) Relative location of the `config-*.json` for the version
+    - `versions[].location`: (String) Relative location of the ***config-*.json*** for the version
 - `target`: (String) Where to install the kext (Either `LE` or `SLE`)
 - `since`: (String) The version of macOS from which the kext can be installed
 - `last`: (String|null) The version of macOS to which the kext can be installed (null = latest)
 - `bin`: (Object) Binary file(s)
     - `bin.recommend`: (String|null) Recommended binary (either `dev` or `rel`)
     - `bin.dev`: (Object|null)
-        - `bin.dev.url`: (String) Link to download the debug kext
+        - `bin.dev.url`: (String) Link to download the debug kext (*must be a zipped file*)
         - `bin.dev.script`: (String|null) Location of the custom script relative to this `config.json` file.
                            [See below](./README.MD#custom-script) for more information. 
         - `bin.dev.loc`: (String|null) Relative location of the kext after the file has been extracted
     - `bin.rel`: (Object) 
-        - `bin.rel.url`: (String) Link to download the release kext
+        - `bin.rel.url`: (String) Link to download the release kext (*must be a zipped file*)
         - `bin.rel.script`: (String|null) Location of the custom script relative to this `config.json` file.
                             [See below](./README.MD#custom-script) for more information.
         - `bin.rel.loc`: (String|null) Relative location of the kext after the file has been extracted
@@ -105,10 +103,10 @@ authors[].email
                      (Default: true)
 - `changes`: (String) A list of changes in the latest version (Markdown Supported)
 - `guide`: (String) A general guideline on how to use the kext. This may contain boot arguments and their behavior, etc.
-            or just the content of readme.md. You can use `@see <url>` to refer an url rather than copy-and-pasting the
-            guide itself. (Markdown Supported)
+            or just the content of ***readme.md***. You can use `@see <url>` to refer an url rather than copy-and-pasting
+            the guide itself. (Markdown Supported)
 - `time`: (String) Release date of the kext (format: `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`)
-- `license`: (String|Array|null) Kext license
+- `license`: (String|Array|null) Kext license(s)
 - `tags`: [Optional] (String) Tags are good for searching, should be comma separated
 - `authors`: (Array)
     - `authors[].name`: (String) Name of the author
