@@ -11,9 +11,6 @@
 #import <stdlib.h> // tty() related fns
 #import "utils.h"
 
-/// Print to any file stream
-/// @param stream The file stream, can be any FILE stream or stdin, stdout, stderr
-/// @param format The string to be printed
 void _fprintf(FILE *stream, NSString *format, ...) {
     va_list arguments;
     va_start(arguments, format);
@@ -22,8 +19,6 @@ void _fprintf(FILE *stream, NSString *format, ...) {
     fprintf(stream, "%s", [string UTF8String]);
 }
 
-/// Print to stdout
-/// @param format The string to be printed
 void _printf(NSString *format, ...) {
     va_list arguments;
     va_start(arguments, format);
@@ -32,12 +27,6 @@ void _printf(NSString *format, ...) {
     printf("%s", [string UTF8String]);
 }
 
-///
-/// Run and get the output of a command
-/// @param cmd The command
-/// @param output Output in either NSString or NSArray
-/// @return exit code
-///
 int tty(NSString *cmd, _Nullable id *output) {
     FILE *fp;
     char o[1035];
@@ -51,7 +40,7 @@ int tty(NSString *cmd, _Nullable id *output) {
     } else if ([*output isKindOfClass:NSArray.class]) {
         NSMutableArray<NSString *> *outputArr = NSMutableArray.array;
         while (fgets(o, sizeof(o), fp) != NULL) {
-            [outputArr addObject:[NSString stringWithUTF8String:o]];
+            [outputArr addObject:[[NSString stringWithUTF8String:o] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
         }
         *output = outputArr.copy;
     } else if ([*output isKindOfClass:NSString.class]) {
@@ -63,13 +52,10 @@ int tty(NSString *cmd, _Nullable id *output) {
     } else {
         while (fgets(o, sizeof(o), fp) != NULL) {};
     }
-    // close
+    // close and return the exit code
     return pclose(fp)/256;
 }
 
-/// Check whether the user has active internet connection
-/// @return YES if user has an active internet connection, NO otherwise
-/// @see https://stackoverflow.com/a/18750343/4147849
 BOOL hasInternetConnection() {
     BOOL returnValue = NO;
     struct sockaddr zeroAddress;
@@ -94,17 +80,37 @@ BOOL isRootUser() {
     return uid == 0 ? YES : NO;
 }
 
-NSString *getMainUser(){
+NSString *getMainUser() {
     NSString *output = NSString.string;
     tty(@"/usr/bin/logname", &output);
     return output;
 }
 
+BOOL unzip(NSString * zipFile, NSString * targetFolder) {
+    int status = tty([NSString stringWithFormat:@"unzip '%@' -d '%@'", zipFile, targetFolder], nil);
+    if(status == EXIT_SUCCESS) return YES;
+    return NO;
+}
+
+NSString * _Nullable find(NSString * kextName){
+    if(![kextName hasSuffix:@".kext"]){
+        kextName = [kextName stringByAppendingPathExtension:@"kext"];
+    }
+    NSString *location = NSString.string;
+    int status = tty([NSString stringWithFormat:@"kextfind | grep '%@$'", kextName], &location);
+    if(status == EXIT_SUCCESS) return location;
+    return nil;
+}
+
+BOOL isDarkMode() {
+    if (@available(*, macOS 10.14)) {
+        return !isNull([[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"]);
+    }
+    return NO;
+}
+
 /// @see https://stackoverflow.com/a/24811200/4147849
 @implementation NSString (VersionNumbers)
-/// Shorten the version number, ie. remove unnecessary 0's
-/// as they create problem when comparing with other version
-/// @return Shortened version
 - (NSString *) shortenedVersionNumberString {
     static NSString *const unnecessaryVersionSuffix = @".0";
     NSString *shortenedVersionNumber = self;
@@ -116,9 +122,6 @@ NSString *getMainUser(){
 @end
 
 @implementation NSArray (MatchFromStringToRegex)
-/// Matches the given string using the array of RegEx string
-/// @param string The string to be matched
-/// @return YES if matches, NO otherwise
 - (BOOL) usingArrayMemberAsRegexMatchString: (NSString *) string {
     NSArray *tmpArray = self;
     for(NSString *str in tmpArray){
