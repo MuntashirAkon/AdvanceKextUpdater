@@ -253,6 +253,7 @@
                                 if(!unzip(downloadPath, KextHandler.tmpPath)){
                                     @throw [NSException exceptionWithName:@"Error updating!" reason:@"Error extracting the update file. Please try again later." userInfo:nil];
                                 }
+                                tty([NSString stringWithFormat:@"rm -Rf '%@'", downloadPath], nil);
                                 if(tty([NSString stringWithFormat:@"rm -Rf '%@' && mv '%@' '%@'", NSBundle.mainBundle.bundlePath, appPath, NSBundle.mainBundle.bundlePath], nil) != EXIT_SUCCESS){
                                     @throw [NSException exceptionWithName:@"Error updating!" reason:@"Error moving the update file. Please try again later." userInfo:nil];
                                 }
