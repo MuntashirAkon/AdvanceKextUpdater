@@ -17,6 +17,11 @@
 
 @implementation PreferencesWindowController {
     @private
+    IBOutlet NSPanel *_excludeKextPanel;
+    // Panel outlets
+    IBOutlet NSPopUpButton *_installedKextBtn;
+    IBOutlet NSTableView *_excludeKextTable;
+    IBOutlet NSArrayController *excludedKextsController;
     // Kext
     IBOutlet NSPopUpButton *_KextCheck;
     IBOutlet NSButton *_KextUpdate;
@@ -36,10 +41,14 @@
     IBOutlet NSButton *_CloverOS10_12;
     IBOutlet NSButton *_CloverOS10_13;
     IBOutlet NSButton *_CloverOS10_14;
+    // Others
     NSArray<NSString *> *updateTitles;
     NSMutableArray<NSString *> *cloverPartitionsInfo;
     NSMutableArray<NSString *> *BSDNames;
     NSUserDefaults *defaults;
+    NSArray<NSString *> *installedKexts;
+    NSMutableArray<NSString *> *excludedKexts;
+    NSArray<NSString *> *excludedKextsFinal;
 }
 
 - (NSNibName) windowNibName {
@@ -67,17 +76,27 @@
     // Set values
     defaults = NSUserDefaults.standardUserDefaults;
     [self setPreferences];
+    // Panel info
+    [_excludeKextTable setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+    installedKexts = [KextHandler.new listInstalledKext];
+    [_installedKextBtn removeAllItems];
+    [_installedKextBtn addItemsWithTitles:installedKexts];
+    excludedKexts = [NSMutableArray arrayWithArray:[[defaults dictionaryForKey:@"Kext"] objectForKey:@"Exclude"]];
+    excludedKextsFinal = excludedKexts.copy;
+    for(NSString *kext in excludedKexts){
+        [excludedKextsController addObject:@{@"kext": kext}];
+    }
+    [_excludeKextTable reloadData];
 }
 - (void)close {
     // Kext
-    NSArray *excluded = [[defaults dictionaryForKey:@"Kext"] objectForKey:@"Exclude"];
     NSDictionary *kext = @{
         @"Check":@(_KextCheck.indexOfSelectedItem),
         @"Update":@(_KextUpdate.state == NSOnState),
         @"Replace":@(_KextReplace.state == NSOnState),
         @"Anywhere":@(_KextAnywhere.state == NSOnState),
         @"Backup":@(_KextBackup.state == NSOnState),
-        @"Exclude":excluded
+        @"Exclude":excludedKextsFinal
     };
     [defaults setObject:kext forKey:@"Kext"];
     // Clover
@@ -187,6 +206,35 @@
     [defaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
     [defaults registerDefaults:AppDelegate.appDefaults];
     [self setPreferences];
+}
+
+-(IBAction)showExcludeKextPanel:(id)sender{
+    [self.window addChildWindow:_excludeKextPanel ordered:NSWindowAbove];
+}
+
+-(IBAction)addToExclusionList:(id)sender{
+    NSString *kext = [_installedKextBtn titleOfSelectedItem];
+    // Add this if not already
+    NSInteger k_i = [excludedKexts indexOfObject:kext];
+    if(k_i == NSNotFound){
+        [excludedKextsController addObject:@{@"kext": kext}];
+        [excludedKexts addObject:kext];
+    }
+}
+
+-(IBAction)removeFromExclusionList:(id)sender{
+    NSString *kext = [_installedKextBtn titleOfSelectedItem];
+    // Add this if not already
+    NSInteger k_i = [excludedKexts indexOfObject:kext];
+    if(k_i != NSNotFound){
+        [excludedKextsController removeObjectAtArrangedObjectIndex:k_i];
+        [excludedKexts removeObjectAtIndex:k_i];
+    }
+}
+
+-(IBAction)saveExcludedKextsAndClosePanel:(id)sender{
+    excludedKextsFinal = excludedKexts.copy;
+    [_excludeKextPanel close];
 }
 
 @end

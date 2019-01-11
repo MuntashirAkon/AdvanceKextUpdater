@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,6 +26,10 @@
                 <outlet property="_KextCheck" destination="tCt-03-aa2" id="hKz-nd-ZDk"/>
                 <outlet property="_KextReplace" destination="Be0-UY-l3m" id="Bvc-mJ-YbM"/>
                 <outlet property="_KextUpdate" destination="q1Q-7y-lsH" id="osa-Ot-THI"/>
+                <outlet property="_excludeKextPanel" destination="dbq-6O-k2P" id="7ui-X4-Bcr"/>
+                <outlet property="_excludeKextTable" destination="vYf-wK-8n1" id="WCL-GS-Vxm"/>
+                <outlet property="_installedKextBtn" destination="5SG-y2-Chy" id="kDS-OB-rVr"/>
+                <outlet property="excludedKextsController" destination="zHr-AI-ujh" id="rHr-Pn-VwT"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="zBZ-go-Fd8"/>
             </connections>
         </customObject>
@@ -161,7 +166,12 @@
                                             <buttonCell key="cell" type="push" title="Exclude kexts..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rjQ-ud-bV4">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent">e</string>
+                                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="showExcludeKextPanel:" target="-2" id="Q5e-45-yKG"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </view>
@@ -326,17 +336,121 @@
         </window>
         <customObject id="1uS-eL-thZ" customClass="Preferences"/>
         <customObject id="r7t-0U-yPA" customClass="AppDelegate"/>
-        <collectionViewItem id="qQW-kq-4w8">
-            <connections>
-                <outlet property="view" destination="sYc-Ui-7MK" id="jkJ-Kf-WNL"/>
-            </connections>
-        </collectionViewItem>
-        <view id="sYc-Ui-7MK">
-            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-            <autoresizingMask key="autoresizingMask"/>
-        </view>
+        <window title="Exclude kexts" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="dbq-6O-k2P" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
+            <rect key="contentRect" x="130" y="63" width="255" height="282"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="768"/>
+            <view key="contentView" id="gHp-Db-5Sw">
+                <rect key="frame" x="0.0" y="0.0" width="255" height="282"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="daR-gU-rJ8">
+                        <rect key="frame" x="20" y="81" width="215" height="181"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="TsX-gU-Eym">
+                            <rect key="frame" x="1" y="1" width="213" height="179"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" id="vYf-wK-8n1">
+                                    <rect key="frame" x="0.0" y="0.0" width="213" height="179"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <size key="intercellSpacing" width="3" height="2"/>
+                                    <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn editable="NO" width="210" minWidth="10" maxWidth="3.4028234663852886e+38" id="CTz-nE-NVf">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="left" title="Kext Name" id="4e7-WF-9Ax">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="zHr-AI-ujh" name="value" keyPath="arrangedObjects.kext" id="pNV-UE-eiJ">
+                                                    <dictionary key="options">
+                                                        <bool key="NSConditionallySetsEditable" value="NO"/>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </tableColumn>
+                                    </tableColumns>
+                                </tableView>
+                            </subviews>
+                            <nil key="backgroundColor"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="xBM-XK-d9d">
+                            <rect key="frame" x="1" y="118" width="213" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="bTb-XN-lr9">
+                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                    <button verticalHuggingPriority="750" id="NFW-QT-VfC">
+                        <rect key="frame" x="190" y="60" width="23" height="23"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="U6w-gx-1iD">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="addToExclusionList:" target="-2" id="wWt-9X-ZuL"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="clf-2x-pnt">
+                        <rect key="frame" x="212" y="60" width="23" height="23"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IQ4-V8-d75">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="removeFromExclusionList:" target="-2" id="fs3-he-iHi"/>
+                        </connections>
+                    </button>
+                    <popUpButton verticalHuggingPriority="750" id="5SG-y2-Chy">
+                        <rect key="frame" x="20" y="60" width="171" height="23"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <popUpButtonCell key="cell" type="smallSquare" title="Item 1" bezelStyle="smallSquare" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="yA7-lA-PAa" id="NCn-H9-bkJ">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="RlX-zD-exD">
+                                <items>
+                                    <menuItem title="Item 1" state="on" id="yA7-lA-PAa"/>
+                                    <menuItem title="Item 2" id="mOb-9L-08i"/>
+                                    <menuItem title="Item 3" id="Qo0-z1-fBy"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
+                    <button verticalHuggingPriority="750" id="J3B-WF-L9t">
+                        <rect key="frame" x="171" y="13" width="70" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" inset="2" id="Mwh-tL-0Hs">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent">s</string>
+                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="saveExcludedKextsAndClosePanel:" target="-2" id="iKs-7i-wrP"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="128.5" y="199"/>
+        </window>
+        <arrayController id="zHr-AI-ujh" userLabel="Excluded Kexts"/>
     </objects>
     <resources>
+        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSRemoveTemplate" width="11" height="11"/>
         <image name="buttonCell:4zV-P0-yru:image" width="1" height="1">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGVVZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEgcI
