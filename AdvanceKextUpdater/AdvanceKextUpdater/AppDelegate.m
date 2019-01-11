@@ -205,26 +205,87 @@
 /// - Permforms tasks on the background with a spinner on the main thread
 /// - Download and install the binary
 -(IBAction)checkForAppUpdates:(id)sender{
-    // Get the tag name
-    id json = [URLTask getJSON:[NSURL URLWithString:@"https://api.github.com/repos/MuntashirAkon/AdvanceKextUpdater/releases"]];
-    if(json != nil) {
-        json = [json objectAtIndex:0];
-        if(json != nil) {
+    self.loadingTexts = @{
+        @"titleText": @"",
+        @"subtitleText": @"",
+        @"singleText": @"Checking for update..."
+    };
+    [self.loadingSpinner startAnimation:self];
+    [self.loadingPanel makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:YES];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
+        @try{
+            if(!hasInternetConnection()){ @throw [NSException exceptionWithName:@"No internet connection" reason:@"No active network connection is detected." userInfo:nil]; }
+            // Fetch JSON
+            id json = [URLTask getJSON:[NSURL URLWithString:@"https://api.github.com/repos/MuntashirAkon/AdvanceKextUpdater/releases"]];
+            if(json == nil){ @throw [NSException exceptionWithName:@"Error while checking for update" reason:@"The server returned things that shouldn't be returned!" userInfo:nil]; }
+            // The first item is the latest
+            json = [json objectAtIndex:0];
+            if(json == nil){ @throw [NSException exceptionWithName:@"Error while checking for update" reason:@"The server returned things that shouldn't be returned!" userInfo:nil]; }
+            // Get version, changelog and binary
             NSString *version = [json objectForKey:@"tag_name"];
-//            NSString *changelog = [json objectForKey:@"body"];
+            //            NSString *changelog = [json objectForKey:@"body"];
             NSString *binary  = [[[json objectForKey:@"assets"] objectAtIndex:0] objectForKey:@"browser_download_url"];
             NSString *currentVersion = [[NSBundle.mainBundle infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-            if([currentVersion.shortenedVersionNumberString compare:version] == NSOrderedAscending) {
-                if(NSRunAlertPanel(@"Update available!", @"Current version is %@, and you are running %@.", @"Update", @"Cancel", nil, currentVersion, version) == 0){
-                    /// @todo Download the binary
-                    [URLTask get:[NSURL URLWithString:binary] toFile:[KextHandler.tmpPath stringByAppendingString:@"/AdvanceKextUpdater.zip"]];
-                    
+            // Main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.loadingSpinner stopAnimation:self];
+                [self.loadingPanel close];
+                if([currentVersion.shortenedVersionNumberString compare:version] == NSOrderedAscending) {
+                    if(NSRunAlertPanel(@"Update available!", @"Current version is %@, and you are running %@.", @"Update", @"Cancel", nil, version, currentVersion) == NSAlertDefaultReturn){
+                        self.loadingTexts = @{
+                            @"titleText": @"",
+                            @"subtitleText": @"",
+                            @"singleText": @"Updating..."
+                        };
+                        [self.loadingSpinner startAnimation:self];
+                        [self.loadingPanel makeKeyAndOrderFront:self];
+                        [NSApp activateIgnoringOtherApps:YES];
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
+                            @try{
+                                NSString *downloadPath = [[KextHandler.tmpPath stringByAppendingPathComponent:@"AdvanceKextUpdater"] stringByAppendingPathExtension:@"zip"];
+                                NSString *appPath = [[KextHandler.tmpPath stringByAppendingPathComponent:@"AdvanceKextUpdater"] stringByAppendingPathExtension:@"app"];
+                                //exit(0);
+                                tty([NSString stringWithFormat:@"rm -Rf '%@'", appPath], nil);
+                                if(![URLTask get:[NSURL URLWithString:binary] toFile:downloadPath supress:YES]){
+                                    @throw [NSException exceptionWithName:@"Error updating!" reason:@"Error downloading update. Please try again later or check your internet connection." userInfo:nil];
+                                }
+                                if(!unzip(downloadPath, KextHandler.tmpPath)){
+                                    @throw [NSException exceptionWithName:@"Error updating!" reason:@"Error extracting the update file. Please try again later." userInfo:nil];
+                                }
+                                if(tty([NSString stringWithFormat:@"rm -Rf '%@' && mv '%@' '%@'", NSBundle.mainBundle.bundlePath, appPath, NSBundle.mainBundle.bundlePath], nil) != EXIT_SUCCESS){
+                                    @throw [NSException exceptionWithName:@"Error updating!" reason:@"Error moving the update file. Please try again later." userInfo:nil];
+                                }
+                                // Main thread
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [self.loadingSpinner stopAnimation:self];
+                                    [self.loadingPanel close];
+                                    if(NSRunCriticalAlertPanel(@"Update complete!", @"", @"Relaunch", nil, nil) == NSAlertDefaultReturn){
+                                        system([NSString stringWithFormat:@"sleep 2 && open -n '%@'", NSBundle.mainBundle.bundlePath].UTF8String);
+                                        exit(0);
+                                    }
+                                });
+                            } @catch (NSException *e){
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [self.loadingSpinner stopAnimation:self];
+                                    [self.loadingPanel close];
+                                    NSRunCriticalAlertPanel(e.name, @"%@", @"OK", nil, nil, e.reason);
+                                });
+                            }
+                        });
+                    }
+                } else {
+                    NSRunAlertPanel(@"No new update available!", @"You're running the latest version.", @"OK", nil, nil);
                 }
-            } else {
-                NSRunAlertPanel(@"No new update available!", @"You're running the latest version.", @"OK", nil, nil);
-            }
+            });
+        } @catch (NSException *e){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.loadingSpinner stopAnimation:self];
+                [self.loadingPanel close];
+                NSRunCriticalAlertPanel(e.name, @"%@", @"OK", nil, nil, e.reason);
+            });
         }
-    }
+    });
 }
 
 #pragma AppDelegate - FetchInstalledKextInfo
