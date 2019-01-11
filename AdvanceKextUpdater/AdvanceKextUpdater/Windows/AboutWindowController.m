@@ -35,7 +35,6 @@
     appVersion.stringValue = [NSString stringWithFormat:@"Version %@ Build %@", [infoDictionary objectForKey:@"CFBundleShortVersionString"], [infoDictionary objectForKey:@"CFBundleVersion"]];
 #endif
     copyrightText.stringValue = [infoDictionary objectForKey:@"NSHumanReadableCopyright"];
-    NSLog(@"%@", infoDictionary);
 }
 
 -(IBAction)openRepoLink:(id)sender{
