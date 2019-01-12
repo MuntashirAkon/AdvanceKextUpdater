@@ -81,12 +81,6 @@
     installedKexts = [KextHandler.new listInstalledKext];
     [_installedKextBtn removeAllItems];
     [_installedKextBtn addItemsWithTitles:installedKexts];
-    excludedKexts = [NSMutableArray arrayWithArray:[[defaults dictionaryForKey:@"Kext"] objectForKey:@"Exclude"]];
-    excludedKextsFinal = excludedKexts.copy;
-    for(NSString *kext in excludedKexts){
-        [excludedKextsController addObject:@{@"kext": kext}];
-    }
-    [_excludeKextTable reloadData];
 }
 - (void)close {
     // Kext
@@ -117,6 +111,8 @@
         @"Directories":cloverDirs.copy
     };
     [defaults setObject:clover forKey:@"Clover"];
+    /// @todo Warn user if an start-up mount script is required
+    /// when the parition is not mounted by default
 }
 
 -(void)setPreferences{
@@ -128,6 +124,13 @@
     [_KextReplace   setState:([[kext objectForKey:@"Replace"] integerValue] ? NSOnState : NSOffState)];
     [_KextAnywhere  setState:([[kext objectForKey:@"Anywhere"] integerValue] ? NSOnState : NSOffState)];
     [_KextBackup    setState:([[kext objectForKey:@"Backup"] integerValue] ? NSOnState : NSOffState)];
+    excludedKexts = [NSMutableArray arrayWithArray:[kext objectForKey:@"Exclude"]];
+    excludedKextsFinal = excludedKexts.copy;
+    [excludedKextsController setContent:nil];
+    for(NSString *kext in excludedKexts){
+        [excludedKextsController addObject:@{@"kext": kext}];
+    }
+    [_excludeKextTable reloadData];
     // Clover
     NSDictionary *clover = [defaults dictionaryForKey:@"Clover"];
     [_CloverSupport setState:([[clover objectForKey:@"Support"] integerValue] ? NSOnState : NSOffState)];
@@ -206,6 +209,7 @@
     [defaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
     [defaults registerDefaults:AppDelegate.appDefaults];
     [self setPreferences];
+    excludedKextsFinal = @[];
 }
 
 -(IBAction)showExcludeKextPanel:(id)sender{
