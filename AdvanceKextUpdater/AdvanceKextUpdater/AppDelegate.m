@@ -21,6 +21,8 @@
 #import "KIHelperAgrumentController.h"
 #import "Windows/PreferencesWindowController.h"
 #import "Windows/AboutWindowController.h"
+#import "../Shared/ZSSUserDefaults/ZSSUserDefaults.h"
+#import "../Shared/PreferencesHandler.h"
 
 @interface AppDelegate ()
 // Outlets
@@ -119,7 +121,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Load default preferences
-    [NSUserDefaults.standardUserDefaults registerDefaults:[AppDelegate appDefaults]];
+    [ZSSUserDefaults.standardUserDefaults registerDefaults:PreferencesHandler.appDefaults];
     // Make background transparent
     [self guideView].drawsBackground = NO;
     [self taskInfoView].drawsBackground = NO;
@@ -903,24 +905,4 @@
     return result.copy;
 }
 
-+(NSDictionary *)appDefaults{
-    return @{
-        @"Kext": @{
-            @"Check":@0, // Do not check
-            @"Update":@NO,
-            @"Replace":@NO,
-            @"Anywhere":@YES, // Otherwise just LE or SLE
-            @"Backup":@YES,
-            @"Exclude":@[]
-        },
-        @"Clover": @{
-            @"Support":@NO,
-            @"Partition":@"",
-            @"Directories":@[
-                @"Other", @"10.6", @"10.7", @"10.8", @"10.9", @"10.10",
-                @"10.11", @"10.12", @"10.13", @"10.14"
-            ]
-        }
-    };
-}
 @end

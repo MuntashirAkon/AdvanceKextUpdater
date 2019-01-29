@@ -47,8 +47,5 @@ typedef enum {
 -(IBAction)removeKext:(NSButton *)sender;
 -(IBAction)closeTaskViwer:(NSButton *)sender;
 -(IBAction)runTask:(NSButton *)sender;
-
-/// Default preferences
-+(NSDictionary *)appDefaults;
 @end
 

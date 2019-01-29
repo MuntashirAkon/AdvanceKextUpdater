@@ -51,7 +51,7 @@
 }
 
 + (NSString *) PreferencesFile {
-    return [NSString stringWithFormat:@"/Users/%@/Library/Preferences/io.github.muntashirakon.AdvanceKextUpdater.plist", getMainUser()];
+    return [self.appPath stringByAppendingPathComponent:@"io.github.muntashirakon.AdvanceKextUpdater.plist"];
 }
 
 /**

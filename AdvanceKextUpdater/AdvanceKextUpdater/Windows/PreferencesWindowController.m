@@ -10,6 +10,8 @@
 #import "../utils.h"
 #import "../AppDelegate.h"
 #import <DiskArbitration/DiskArbitration.h> // Disk
+#import "../../Shared/ZSSUserDefaults/ZSSUserDefaults.h"
+#import "../../Shared/PreferencesHandler.h"
 
 @interface PreferencesWindowController ()
 
@@ -45,7 +47,7 @@
     NSArray<NSString *> *updateTitles;
     NSMutableArray<NSString *> *cloverPartitionsInfo;
     NSMutableArray<NSString *> *BSDNames;
-    NSUserDefaults *defaults;
+    ZSSUserDefaults *defaults;
     NSArray<NSString *> *installedKexts;
     NSMutableArray<NSString *> *excludedKexts;
     NSArray<NSString *> *excludedKextsFinal;
@@ -74,7 +76,7 @@
     [_KextCheck addItemsWithTitles:updateTitles];
     [_CloverPartition addItemsWithTitles:cloverPartitionsInfo.copy];
     // Set values
-    defaults = NSUserDefaults.standardUserDefaults;
+    defaults = ZSSUserDefaults.standardUserDefaults;
     [self setPreferences];
     // Panel info
     [_excludeKextTable setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
@@ -113,11 +115,12 @@
     [defaults setObject:clover forKey:@"Clover"];
     /// @todo Warn user if an start-up mount script is required
     /// when the parition is not mounted by default
+    [defaults synchronizeChanges];
 }
 
 -(void)setPreferences{
     // Kext
-    NSDictionary *kext = [defaults dictionaryForKey:@"Kext"];
+    NSDictionary *kext = [defaults objectForKey:@"Kext"];
     NSInteger k_c = [[kext objectForKey:@"Check"] integerValue];
     if(k_c >= 0 && k_c < updateTitles.count){ [_KextCheck selectItemAtIndex:k_c]; }
     [_KextUpdate    setState:([[kext objectForKey:@"Update"] integerValue] ? NSOnState : NSOffState)];
@@ -132,7 +135,7 @@
     }
     [_excludeKextTable reloadData];
     // Clover
-    NSDictionary *clover = [defaults dictionaryForKey:@"Clover"];
+    NSDictionary *clover = [defaults objectForKey:@"Clover"];
     [_CloverSupport setState:([[clover objectForKey:@"Support"] integerValue] ? NSOnState : NSOffState)];
     NSInteger c_i = [BSDNames indexOfObject:[clover objectForKey:@"Partition"]];
     if(c_i != NSNotFound){ [_CloverPartition selectItemAtIndex:c_i]; }
@@ -206,8 +209,9 @@
 }
 
 -(IBAction)resetPreferences:(id)sender{
-    [defaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
-    [defaults registerDefaults:AppDelegate.appDefaults];
+    //[defaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
+    [defaults reset];
+    [defaults registerDefaults:PreferencesHandler.appDefaults];
     [self setPreferences];
     excludedKextsFinal = @[];
 }

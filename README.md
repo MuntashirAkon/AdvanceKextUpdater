@@ -76,3 +76,4 @@ I don't accept any donations.
 ## Third-party Libraries
 - [MMMarkdown](https://github.com/mdiep/MMMarkdown) - For parsing markdown texts
 - (modified) [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) - For styling parsed markdown texts
+- (modified) [ZSSUserDefaults](https://github.com/nnhubbard/ZSSUserDefaults) - NSUserDefaults replacement for multiple user defaults

@@ -14,6 +14,8 @@
 		875032ED2135049C00F5278D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875032EC2135049C00F5278D /* WebKit.framework */; };
 		875564CA21D6AAAE0040E9F4 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 875564C921D6AAAE0040E9F4 /* Preferences.xib */; };
 		875564CE21D6AB190040E9F4 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875564CC21D6AB190040E9F4 /* PreferencesWindowController.m */; };
+		876056B021EB273300FC78AD /* PreferencesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 876056AF21EB273300FC78AD /* PreferencesHandler.m */; };
+		876056B221EB28DC00FC78AD /* PreferencesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 876056AF21EB273300FC78AD /* PreferencesHandler.m */; };
 		876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD993212DFC2D00D10B9D /* ConfigAuthor.m */; };
 		876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD996212E11A800D10B9D /* ConfigVersionControl.m */; };
 		876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD999212EB94700D10B9D /* ConfigMacOSVersionControl.m */; };
@@ -43,6 +45,8 @@
 		879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F6093214112E10059D0ED /* ConfigRequirments.m */; };
 		879F609A2141FE390059D0ED /* PCI.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F60982141FE380059D0ED /* PCI.m */; };
 		879F609D21423C070059D0ED /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F609C21423C070059D0ED /* utils.m */; };
+		87A6384421FFF9F900EEE1AA /* ZSSUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6384321FFF9F900EEE1AA /* ZSSUserDefaults.m */; };
+		87A6384521FFF9F900EEE1AA /* ZSSUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6384321FFF9F900EEE1AA /* ZSSUserDefaults.m */; };
 		87BB8577212FB567007F4D29 /* KextConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB8576212FB567007F4D29 /* KextConfig.m */; };
 		87BB8579212FC0CD007F4D29 /* git in Resources */ = {isa = PBXBuildFile; fileRef = 87BB8578212FC0CD007F4D29 /* git */; };
 		87BB858021308177007F4D29 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
@@ -92,6 +96,8 @@
 		875564C921D6AAAE0040E9F4 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		875564CB21D6AB190040E9F4 /* PreferencesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
 		875564CC21D6AB190040E9F4 /* PreferencesWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesWindowController.m; sourceTree = "<group>"; };
+		876056AE21EB273300FC78AD /* PreferencesHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PreferencesHandler.h; path = Shared/PreferencesHandler.h; sourceTree = SOURCE_ROOT; };
+		876056AF21EB273300FC78AD /* PreferencesHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PreferencesHandler.m; path = Shared/PreferencesHandler.m; sourceTree = SOURCE_ROOT; };
 		876BD992212DFC1700D10B9D /* ConfigAuthor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigAuthor.h; sourceTree = "<group>"; };
 		876BD993212DFC2D00D10B9D /* ConfigAuthor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigAuthor.m; sourceTree = "<group>"; };
 		876BD995212E066F00D10B9D /* ConfigVersionControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigVersionControl.h; sourceTree = "<group>"; };
@@ -124,6 +130,8 @@
 		879F60992141FE390059D0ED /* PCI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCI.h; sourceTree = "<group>"; };
 		879F609C21423C070059D0ED /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
 		879F609E2142A4CE0059D0ED /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		87A6384221FFF9F900EEE1AA /* ZSSUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSSUserDefaults.h; path = ZSSUserDefaults/ZSSUserDefaults.h; sourceTree = "<group>"; };
+		87A6384321FFF9F900EEE1AA /* ZSSUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSSUserDefaults.m; path = ZSSUserDefaults/ZSSUserDefaults.m; sourceTree = "<group>"; };
 		87BB8575212FB55E007F4D29 /* KextConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextConfig.h; sourceTree = "<group>"; };
 		87BB8576212FB567007F4D29 /* KextConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextConfig.m; sourceTree = "<group>"; };
 		87BB8578212FC0CD007F4D29 /* git */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = git; sourceTree = "<group>"; };
@@ -187,6 +195,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		876056B121EB275000FC78AD /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				87A6384221FFF9F900EEE1AA /* ZSSUserDefaults.h */,
+				87A6384321FFF9F900EEE1AA /* ZSSUserDefaults.m */,
+				876056AE21EB273300FC78AD /* PreferencesHandler.h */,
+				876056AF21EB273300FC78AD /* PreferencesHandler.m */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		876BD991212DFBD600D10B9D /* Config Related */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,6 +234,7 @@
 		8773B707212BFD730096BFCC = {
 			isa = PBXGroup;
 			children = (
+				876056B121EB275000FC78AD /* Shared */,
 				879F6095214144900059D0ED /* README.md */,
 				8773B712212BFD730096BFCC /* AdvanceKextUpdater */,
 				872395E02171E55700B6FE27 /* AdvanceKextUpdaterHelper */,
@@ -396,12 +416,14 @@
 			files = (
 				87753DD321D1B0060072FCAC /* PCI.m in Sources */,
 				87753DDF21D2238E0072FCAC /* KextAction.m in Sources */,
+				876056B221EB28DC00FC78AD /* PreferencesHandler.m in Sources */,
 				87753DD221D1AFFF0072FCAC /* Task.m in Sources */,
 				87753DD921D1B0390072FCAC /* ConfigKextVersionControl.m in Sources */,
 				87753DD721D1B02F0072FCAC /* ConfigMacOSVersionControl.m in Sources */,
 				87753DD521D1B0250072FCAC /* ConfigAuthor.m in Sources */,
 				87E3DC9F21D348BD00462D27 /* ConfigTarget.m in Sources */,
 				87753DDC21D1B05A0072FCAC /* ConfigBinary.m in Sources */,
+				87A6384521FFF9F900EEE1AA /* ZSSUserDefaults.m in Sources */,
 				87753DD821D1B0340072FCAC /* KextConfig.m in Sources */,
 				872395E22171E55700B6FE27 /* main.m in Sources */,
 				87753DD421D1B00D0072FCAC /* utils.m in Sources */,
@@ -421,11 +443,13 @@
 				87BB858021308177007F4D29 /* Task.m in Sources */,
 				872395D62171DD9000B6FE27 /* KIHelperAgrumentController.m in Sources */,
 				876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */,
+				87A6384421FFF9F900EEE1AA /* ZSSUserDefaults.m in Sources */,
 				879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */,
 				87FAC53421486B6A00DAA453 /* ConfigBinary.m in Sources */,
 				87BB8577212FB567007F4D29 /* KextConfig.m in Sources */,
 				87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */,
 				876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */,
+				876056B021EB273300FC78AD /* PreferencesHandler.m in Sources */,
 				873DFC492174966000B33DB5 /* MarkdownToHTML.m in Sources */,
 				87E3DC9E21D348BD00462D27 /* ConfigTarget.m in Sources */,
 				876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */,
@@ -520,7 +544,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -580,7 +604,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -606,7 +630,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = /Applications;
-				CURRENT_MARKETING_VERSION = 0.9.1;
+				CURRENT_MARKETING_VERSION = 0.9.2;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 6X692P9AQ8;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -633,7 +657,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = /Applications;
-				CURRENT_MARKETING_VERSION = 0.9.1;
+				CURRENT_MARKETING_VERSION = 0.9.2;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 6X692P9AQ8;
 				FRAMEWORK_SEARCH_PATHS = (
