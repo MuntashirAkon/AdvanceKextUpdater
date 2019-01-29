@@ -1949,6 +1949,7 @@
                                     </attributedString>
                                     <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <connections>
+                                        <binding destination="N97-Sh-ORT" name="editable" keyPath="selection.description" id="on9-NU-Ns1"/>
                                         <binding destination="N97-Sh-ORT" name="value" keyPath="selection.description" id="8NY-Mp-sqU"/>
                                     </connections>
                                 </textView>
