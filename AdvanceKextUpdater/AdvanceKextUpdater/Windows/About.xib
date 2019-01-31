@@ -44,10 +44,10 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="E9o-sT-b5g">
-                        <rect key="frame" x="166" y="60" width="346" height="34"/>
+                        <rect key="frame" x="166" y="60" width="346" height="28"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" selectable="YES" title="Copyright © 2018-2019 Muntashir Al-Islam. All rights reserved. " id="rNa-WQ-8xs">
-                            <font key="font" metaFont="system"/>
+                        <textFieldCell key="cell" selectable="YES" title="Copyright © 2018-2019 Muntashir Al-Islam. All rights reserved. The app icon is copyrighted by Apple Inc." id="rNa-WQ-8xs">
+                            <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>

@@ -262,9 +262,7 @@
 				876BD991212DFBD600D10B9D /* Config Related */,
 				8773B713212BFD730096BFCC /* AppDelegate.h */,
 				8773B714212BFD730096BFCC /* AppDelegate.m */,
-				875564C921D6AAAE0040E9F4 /* Preferences.xib */,
 				8773B718212BFD760096BFCC /* MainMenu.xib */,
-				87F1AC5D21E795E30091CD04 /* About.xib */,
 				8773B71B212BFD760096BFCC /* Info.plist */,
 				8773B71C212BFD760096BFCC /* main.m */,
 				8773B71E212BFD760096BFCC /* AdvanceKextUpdater.entitlements */,
@@ -294,8 +292,10 @@
 				875564CC21D6AB190040E9F4 /* PreferencesWindowController.m */,
 				87897BAC21D8AE2600BB0CEE /* Preferences.h */,
 				87897BAD21D8AE2600BB0CEE /* Preferences.m */,
+				875564C921D6AAAE0040E9F4 /* Preferences.xib */,
 				87F1AC5F21E7A1D90091CD04 /* AboutWindowController.h */,
 				87F1AC6021E7A1D90091CD04 /* AboutWindowController.m */,
+				87F1AC5D21E795E30091CD04 /* About.xib */,
 			);
 			path = Windows;
 			sourceTree = "<group>";

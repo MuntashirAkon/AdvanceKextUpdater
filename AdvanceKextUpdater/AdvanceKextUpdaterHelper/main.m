@@ -10,6 +10,7 @@
 #import <stdlib.h>
 #import "../AdvanceKextUpdater/utils.h"
 #import "../AdvanceKextUpdater/KextHandler.h"
+#import "../Shared/PreferencesHandler.h"
 #import "KextAction.h"
 
 #define ACTION_STDIN 1 // Read arguments from STDIN
@@ -34,7 +35,7 @@ int _return(int ret_value){
     [NSFileManager.defaultManager removeItemAtPath:KextHandler.lockFile error:nil];
     // Unload the launch agent
     tty([NSString stringWithFormat:@"launchctl unload %@", KextHandler.launchDaemonPlistFile], nil);
-    tty([NSString stringWithFormat:@"chown -R %@:wheel '%@'", getMainUser(), KextHandler.tmpPath], nil);
+    if(tty([NSString stringWithFormat:@"chown -R %@:wheel '%@'", getMainUser(), KextHandler.tmpPath], nil) != EXIT_SUCCESS) _fprintf(stderr, @"Cannot chown");
     return ret_value;
 }
 
@@ -77,6 +78,8 @@ void _message(int status_code, NSString * _Nullable msg){
 
 int main(int argc, const char *argv[]) {
     @autoreleasepool {
+        PreferencesHandler *preference = [PreferencesHandler new];
+        _printf(@"%@", preference.clover.directories);
 #if 1
         if(!isRootUser()){
             fprintf(stderr, "Helper tool must be run as root!\n");
