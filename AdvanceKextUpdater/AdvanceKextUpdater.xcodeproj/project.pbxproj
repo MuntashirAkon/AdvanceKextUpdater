@@ -16,6 +16,10 @@
 		875564CE21D6AB190040E9F4 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875564CC21D6AB190040E9F4 /* PreferencesWindowController.m */; };
 		876056B021EB273300FC78AD /* PreferencesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 876056AF21EB273300FC78AD /* PreferencesHandler.m */; };
 		876056B221EB28DC00FC78AD /* PreferencesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 876056AF21EB273300FC78AD /* PreferencesHandler.m */; };
+		8765F1792202C0560018B3F7 /* KextViewerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8765F1772202C0560018B3F7 /* KextViewerWindowController.m */; };
+		8765F17A2202C0560018B3F7 /* KextViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8765F1782202C0560018B3F7 /* KextViewer.xib */; };
+		8765F17E220330EB0018B3F7 /* Spinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 8765F17C220330EB0018B3F7 /* Spinner.m */; };
+		8765F17F220330EB0018B3F7 /* Spinner.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8765F17D220330EB0018B3F7 /* Spinner.xib */; };
 		876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD993212DFC2D00D10B9D /* ConfigAuthor.m */; };
 		876BD997212E11A800D10B9D /* ConfigVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD996212E11A800D10B9D /* ConfigVersionControl.m */; };
 		876BD99A212EB94700D10B9D /* ConfigMacOSVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BD999212EB94700D10B9D /* ConfigMacOSVersionControl.m */; };
@@ -98,6 +102,12 @@
 		875564CC21D6AB190040E9F4 /* PreferencesWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesWindowController.m; sourceTree = "<group>"; };
 		876056AE21EB273300FC78AD /* PreferencesHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PreferencesHandler.h; path = Shared/PreferencesHandler.h; sourceTree = SOURCE_ROOT; };
 		876056AF21EB273300FC78AD /* PreferencesHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PreferencesHandler.m; path = Shared/PreferencesHandler.m; sourceTree = SOURCE_ROOT; };
+		8765F1762202C0560018B3F7 /* KextViewerWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextViewerWindowController.h; sourceTree = "<group>"; };
+		8765F1772202C0560018B3F7 /* KextViewerWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextViewerWindowController.m; sourceTree = "<group>"; };
+		8765F1782202C0560018B3F7 /* KextViewer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KextViewer.xib; sourceTree = "<group>"; };
+		8765F17B220330EB0018B3F7 /* Spinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spinner.h; sourceTree = "<group>"; };
+		8765F17C220330EB0018B3F7 /* Spinner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Spinner.m; sourceTree = "<group>"; };
+		8765F17D220330EB0018B3F7 /* Spinner.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Spinner.xib; sourceTree = "<group>"; };
 		876BD992212DFC1700D10B9D /* ConfigAuthor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigAuthor.h; sourceTree = "<group>"; };
 		876BD993212DFC2D00D10B9D /* ConfigAuthor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigAuthor.m; sourceTree = "<group>"; };
 		876BD995212E066F00D10B9D /* ConfigVersionControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigVersionControl.h; sourceTree = "<group>"; };
@@ -296,6 +306,12 @@
 				87F1AC5F21E7A1D90091CD04 /* AboutWindowController.h */,
 				87F1AC6021E7A1D90091CD04 /* AboutWindowController.m */,
 				87F1AC5D21E795E30091CD04 /* About.xib */,
+				8765F1762202C0560018B3F7 /* KextViewerWindowController.h */,
+				8765F1772202C0560018B3F7 /* KextViewerWindowController.m */,
+				8765F1782202C0560018B3F7 /* KextViewer.xib */,
+				8765F17B220330EB0018B3F7 /* Spinner.h */,
+				8765F17C220330EB0018B3F7 /* Spinner.m */,
+				8765F17D220330EB0018B3F7 /* Spinner.xib */,
 			);
 			path = Windows;
 			sourceTree = "<group>";
@@ -402,6 +418,8 @@
 				8773B71A212BFD760096BFCC /* MainMenu.xib in Resources */,
 				87F1AC5E21E795E30091CD04 /* About.xib in Resources */,
 				875564CA21D6AAAE0040E9F4 /* Preferences.xib in Resources */,
+				8765F17A2202C0560018B3F7 /* KextViewer.xib in Resources */,
+				8765F17F220330EB0018B3F7 /* Spinner.xib in Resources */,
 				87F1AC6321E7AE5D0091CD04 /* KEXT.icns in Resources */,
 				87BB8579212FC0CD007F4D29 /* git in Resources */,
 			);
@@ -443,7 +461,9 @@
 				87BB858021308177007F4D29 /* Task.m in Sources */,
 				872395D62171DD9000B6FE27 /* KIHelperAgrumentController.m in Sources */,
 				876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */,
+				8765F17E220330EB0018B3F7 /* Spinner.m in Sources */,
 				87A6384421FFF9F900EEE1AA /* ZSSUserDefaults.m in Sources */,
+				8765F1792202C0560018B3F7 /* KextViewerWindowController.m in Sources */,
 				879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */,
 				87FAC53421486B6A00DAA453 /* ConfigBinary.m in Sources */,
 				87BB8577212FB567007F4D29 /* KextConfig.m in Sources */,
