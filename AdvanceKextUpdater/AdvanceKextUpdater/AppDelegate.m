@@ -21,20 +21,21 @@
 #import "../Shared/PreferencesHandler.h"
 
 @interface AppDelegate ()
-// Outlets
 @property IBOutlet NSWindow *window;
-@property IBOutlet NSPanel *taskViewer;
-@property IBOutlet WebView *taskInfoView;
+// Windows
 @property PreferencesWindowController *preferences;
 @property AboutWindowController *aboutwindowController;
 @property KextViewerWindowController *kextViewer;
 @property Spinner *spinner;
+// Tables
+@property IBOutlet NSTableView *overviewTable;
+@property IBOutlet NSTableView *allKextsTable;
+// Table data
+@property IBOutlet NSArrayController *overview;
+@property IBOutlet NSArrayController *allKexts;
 @end
 
 @implementation AppDelegate
-
-@synthesize overview;
-@synthesize allKexts;
 
 // Handle kext:// url scheme
 -(void)applicationWillFinishLaunching:(NSNotification *)aNotification {
@@ -113,8 +114,6 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Load default preferences
     [ZSSUserDefaults.standardUserDefaults registerDefaults:PreferencesHandler.appDefaults];
-    // Make background transparent
-    [self taskInfoView].drawsBackground = NO;
     // Set window levels
     [NSApp activateIgnoringOtherApps:YES];
     // Create paths in application support directory if not exists
@@ -309,31 +308,31 @@
 }
 
 // Helper functions
-- (NSDictionary *) listInstalledKext {
+- (NSArray *) listInstalledKext {
     installedKexts = [NSMutableArray arrayWithArray:self->kextHandler.listInstalledKext];
     int sn = 0;
     NSMutableArray *kexts = [NSMutableArray array];
     for(NSString *kext in installedKexts) {
         [kexts addObject:@{
-           @"number": @(++sn),
-           @"kext"  : kext
+           @"no": @(++sn),
+           @"kext": kext
         }];
     }
-    return @{@"IKTable": kexts};
+    return kexts;
 }
 
-- (NSDictionary *) listAllKext: (BOOL) deviceOnly { /// @todo
+- (NSArray *) listAllKext: (BOOL) deviceOnly { /// @todo
     allTheKexts = self->kextHandler.listKext;
     remoteKexts = self->kextHandler.listRemoteKext;
     int sn = 0;
     NSMutableArray *kexts = [NSMutableArray array];
     for(NSString *kext in allTheKexts) {
         [kexts addObject:@{
-            @"number": @(++sn),
-            @"kext"  : kext
+            @"no": @(++sn),
+            @"kext": kext
         }];
     }
-    return @{@"AKTable": kexts};
+    return kexts;
 }
 
 // Background tasks
@@ -409,10 +408,17 @@
 
 - (void) updateTables {
     // Init KextHandler
-    self->kextHandler = [KextHandler.alloc init];
-    // Initialize table
-    self.overview = [self listInstalledKext];
-    self.allKexts = [self listAllKext:YES];
+    self->kextHandler = [KextHandler new];
+    // Add objects
+    [_overview setContent:nil];
+    [_allKexts setContent:nil];
+    [_overview addObjects:[self listInstalledKext]];
+    [_allKexts addObjects:[self listAllKext:YES]];
+    // Reload table
+    [_overviewTable reloadData];
+    [_overviewTable deselectAll:self];
+    [_allKextsTable reloadData];
+    [_allKextsTable deselectAll:self];
 }
 
 // Check if a kext is installed (with extension)

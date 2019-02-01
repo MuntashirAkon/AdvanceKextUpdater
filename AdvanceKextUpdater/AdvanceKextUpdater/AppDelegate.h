@@ -19,7 +19,5 @@
     NSArray<NSString *> *allTheKexts;
     NSDictionary<NSString *, NSURL *> *remoteKexts;
 }
-@property NSDictionary *overview;
-@property NSDictionary *allKexts;
 @end
 

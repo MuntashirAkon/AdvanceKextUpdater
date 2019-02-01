@@ -15,6 +15,10 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="allKexts" destination="dW1-va-EIM" id="PXD-L4-MXM"/>
+                <outlet property="allKextsTable" destination="yqz-HS-vl9" id="rDn-xw-kZj"/>
+                <outlet property="overview" destination="Qgn-N5-8Fx" id="741-QH-hCk"/>
+                <outlet property="overviewTable" destination="WvR-3o-Erg" id="PpH-sB-PgJ"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -468,7 +472,7 @@
                                     <rect key="frame" x="10" y="33" width="434" height="298"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Apg-ip-Tez">
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Apg-ip-Tez" userLabel="Installed Kexts Label">
                                             <rect key="frame" x="15" y="276" width="103" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Installed Kexts:" id="IHx-9p-3ok">
@@ -508,14 +512,18 @@
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                                 </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="xCa-pu-BTD">
+                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" allowsUndo="NO" title="Text Cell" id="xCa-pu-BTD">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <connections>
-                                                                    <binding destination="Bje-ns-7sV" name="value" keyPath="selection.IKTable.number" id="b7P-Y6-d5W"/>
+                                                                    <binding destination="Qgn-N5-8Fx" name="value" keyPath="arrangedObjects.no" id="Oke-6F-gly">
+                                                                        <dictionary key="options">
+                                                                            <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                                        </dictionary>
+                                                                    </binding>
                                                                 </connections>
                                                             </tableColumn>
                                                             <tableColumn editable="NO" width="350" minWidth="40" maxWidth="1000" id="giG-o0-tlY">
@@ -524,20 +532,23 @@
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                                 </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="qFL-jO-Mdn">
+                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" title="Text Cell" id="qFL-jO-Mdn">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <connections>
-                                                                    <binding destination="Bje-ns-7sV" name="value" keyPath="selection.IKTable.kext" id="HVc-bo-3Yh"/>
+                                                                    <binding destination="Qgn-N5-8Fx" name="value" keyPath="arrangedObjects.kext" id="E4t-7n-FSA">
+                                                                        <dictionary key="options">
+                                                                            <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                                        </dictionary>
+                                                                    </binding>
                                                                 </connections>
                                                             </tableColumn>
                                                         </tableColumns>
                                                         <connections>
                                                             <action trigger="doubleAction" selector="fetchInstalledKextInfo:" target="Voe-Tx-rLC" id="CRz-Eg-mlx"/>
-                                                            <binding destination="Bje-ns-7sV" name="content" keyPath="selection.IKTable" id="fGd-jx-Q5h"/>
                                                         </connections>
                                                     </tableView>
                                                 </subviews>
@@ -577,7 +588,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="TBk-v0-lWe">
                                                 <rect key="frame" x="1" y="0.0" width="398" height="251"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="rm3-g1-iSB" id="yqz-HS-vl9">
                                                         <rect key="frame" x="0.0" y="0.0" width="398" height="228"/>
@@ -592,14 +603,18 @@
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                                 </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="g4O-yO-qoJ">
+                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" allowsUndo="NO" title="Text Cell" id="g4O-yO-qoJ">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <connections>
-                                                                    <binding destination="N4P-t3-0ei" name="value" keyPath="selection.AKTable.number" id="fxN-42-FvJ"/>
+                                                                    <binding destination="dW1-va-EIM" name="value" keyPath="arrangedObjects.no" id="jrR-2d-DoK">
+                                                                        <dictionary key="options">
+                                                                            <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                                        </dictionary>
+                                                                    </binding>
                                                                 </connections>
                                                             </tableColumn>
                                                             <tableColumn editable="NO" width="352" minWidth="40" maxWidth="1000" id="GED-cB-9aS">
@@ -608,20 +623,23 @@
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                                 </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="8SH-cJ-noZ">
+                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" allowsUndo="NO" title="Text Cell" id="8SH-cJ-noZ">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <connections>
-                                                                    <binding destination="N4P-t3-0ei" name="value" keyPath="selection.AKTable.kext" id="EPm-nu-5zC"/>
+                                                                    <binding destination="dW1-va-EIM" name="value" keyPath="arrangedObjects.kext" id="CVY-3w-9Tc">
+                                                                        <dictionary key="options">
+                                                                            <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                                        </dictionary>
+                                                                    </binding>
                                                                 </connections>
                                                             </tableColumn>
                                                         </tableColumns>
                                                         <connections>
                                                             <action trigger="doubleAction" selector="fetchAllKextInfo:" target="Voe-Tx-rLC" id="flJ-mp-l9w"/>
-                                                            <binding destination="N4P-t3-0ei" name="content" keyPath="selection.AKTable" id="vWG-GG-3QZ"/>
                                                         </connections>
                                                     </tableView>
                                                 </subviews>
@@ -640,7 +658,7 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
                                         </scrollView>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="CRO-9G-FoO">
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="CRO-9G-FoO" userLabel="Available Kexts Label">
                                             <rect key="frame" x="15" y="278" width="98" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Available Kexts:" id="Wlm-mf-BfE">
@@ -1548,15 +1566,7 @@
             </view>
             <point key="canvasLocation" x="83" y="425"/>
         </window>
-        <objectController id="Bje-ns-7sV" userLabel="Overview">
-            <connections>
-                <binding destination="Voe-Tx-rLC" name="contentObject" keyPath="overview" id="78z-M3-l3a"/>
-            </connections>
-        </objectController>
-        <objectController id="N4P-t3-0ei" userLabel="AllKexts">
-            <connections>
-                <binding destination="Voe-Tx-rLC" name="contentObject" keyPath="allKexts" id="ibg-hf-sc4"/>
-            </connections>
-        </objectController>
+        <arrayController selectsInsertedObjects="NO" id="Qgn-N5-8Fx" userLabel="Overview"/>
+        <arrayController selectsInsertedObjects="NO" id="dW1-va-EIM" userLabel="AllKexts"/>
     </objects>
 </document>
