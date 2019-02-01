@@ -54,6 +54,7 @@
 		87BB8577212FB567007F4D29 /* KextConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB8576212FB567007F4D29 /* KextConfig.m */; };
 		87BB8579212FC0CD007F4D29 /* git in Resources */ = {isa = PBXBuildFile; fileRef = 87BB8578212FC0CD007F4D29 /* git */; };
 		87BB858021308177007F4D29 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
+		87C60B12220444560099A929 /* AKUDiskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C60B11220444560099A929 /* AKUDiskManager.m */; };
 		87E3DC9E21D348BD00462D27 /* ConfigTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E3DC9D21D348BD00462D27 /* ConfigTarget.m */; };
 		87E3DC9F21D348BD00462D27 /* ConfigTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E3DC9D21D348BD00462D27 /* ConfigTarget.m */; };
 		87F1AC5E21E795E30091CD04 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F1AC5D21E795E30091CD04 /* About.xib */; };
@@ -149,6 +150,8 @@
 		87BB857D21302CD9007F4D29 /* JSONParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONParser.h; sourceTree = "<group>"; };
 		87BB857E21308177007F4D29 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		87BB857F21308177007F4D29 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
+		87C60B10220444560099A929 /* AKUDiskManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AKUDiskManager.h; sourceTree = "<group>"; };
+		87C60B11220444560099A929 /* AKUDiskManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AKUDiskManager.m; sourceTree = "<group>"; };
 		87E3DC9C21D348A800462D27 /* ConfigTarget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigTarget.h; sourceTree = "<group>"; };
 		87E3DC9D21D348BD00462D27 /* ConfigTarget.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigTarget.m; sourceTree = "<group>"; };
 		87F1AC5D21E795E30091CD04 /* About.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
@@ -330,6 +333,8 @@
 				87FAC5372148FD4100DAA453 /* CacheController.h */,
 				873DFC472174965400B33DB5 /* MarkdownToHTML.h */,
 				873DFC482174966000B33DB5 /* MarkdownToHTML.m */,
+				87C60B10220444560099A929 /* AKUDiskManager.h */,
+				87C60B11220444560099A929 /* AKUDiskManager.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -465,6 +470,7 @@
 				87A6384421FFF9F900EEE1AA /* ZSSUserDefaults.m in Sources */,
 				8765F1792202C0560018B3F7 /* KextViewerWindowController.m in Sources */,
 				879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */,
+				87C60B12220444560099A929 /* AKUDiskManager.m in Sources */,
 				87FAC53421486B6A00DAA453 /* ConfigBinary.m in Sources */,
 				87BB8577212FB567007F4D29 /* KextConfig.m in Sources */,
 				87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */,
