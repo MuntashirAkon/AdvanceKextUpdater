@@ -1,0 +1,66 @@
+{
+  "name": "VirtualSMC",
+  "kext": "VirtualSMC.kext",
+  "description": "Advanced Apple SMC emulator in the kernel.",
+  "homepage": "https://github.com/acidanthera/VirtualSMC",
+  "version": "1.0.2",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https:\/\/github.com\/acidanthera\/VirtualSMC\/releases\/download\/1.0.2\/1.0.2.DEBUG.zip",
+      "script": null,
+      "loc": "VirtualSMC.kext"
+    },
+    "rel": {
+      "url": "https:\/\/github.com\/acidanthera\/VirtualSMC\/releases\/download\/1.0.2\/1.0.2.RELEASE.zip",
+      "script": null,
+      "loc": "VirtualSMC.kext"
+    }
+  },
+  "changes": "#### v1.0.2\r\n- Fixed TC0C\/TC1C selection in SMCProcessor to match mac models\r\n- Added per-plugin debug switches (`-scpudbg`, `-sbatdbg`, `-ssiodbg`, `-alsddbg`)",
+  "guide": "@see https://raw.githubusercontent.com/acidanthera/VirtualSMC/master/README.md",
+  "time": "2018-12-20 23:11:13",
+  "license": "BSD 3-Clause \"New\" or \"Revised\" License",
+  "authors": [
+    {
+      "name": "vit9696",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "Andrey1970AppleLife",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "Andrew Titmuss",
+      "email": "iandrewt@icloud.com",
+      "homepage": "https://github.com/iandrewt"
+    },
+    {
+      "name": "nikitenich",
+      "email": "ilya@nikitenich.tk",
+      "homepage": "nikitenich.tk"
+    },
+    {
+      "name": "vandroiy2013",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "Tony Arnold",
+      "email": "tony@thecocoabots.com",
+      "homepage": "http://tonyarnold.com"
+    }
+  ],
+  "require":  {
+    "Lilu": "1.2.0^"
+  },
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}
