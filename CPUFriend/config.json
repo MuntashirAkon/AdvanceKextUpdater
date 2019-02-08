@@ -11,12 +11,12 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https:\/\/github.com\/acidanthera\/CPUFriend\/releases\/download\/1.1.6\/1.1.6.DEBUG.zip"
+      "url": "https:\/\/github.com\/acidanthera\/CPUFriend\/releases\/download\/1.1.6\/1.1.6.DEBUG.zip",
       "script": null,
       "loc": "CPUFriend.kext"
     },
     "rel": {
-      "url": "https:\/\/github.com\/acidanthera\/CPUFriend\/releases\/download\/1.1.6\/1.1.6.RELEASE.zip"
+      "url": "https:\/\/github.com\/acidanthera\/CPUFriend\/releases\/download\/1.1.6\/1.1.6.RELEASE.zip",
       "script": null,
       "loc": "CPUFriend.kext"
     },
