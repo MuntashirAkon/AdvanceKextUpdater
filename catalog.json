@@ -113,7 +113,7 @@
   "RealtekRTL8100": {
     "kext": "RealtekRTL8100.kext"
   },
-  "RealtekRTL8111": {
-    "kext": "RealtekRTL8111.kext"
+  "VirtualSMC": {
+    "kext": "VirtualSMC.kext"
   }
 }
