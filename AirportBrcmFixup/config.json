@@ -3,7 +3,7 @@
   "kext": "AirportBrcmFixup.kext",
   "description": "An open source kernel extension providing a set of patches required for non-native Airport Broadcom Wi-Fi cards.",
   "homepage": "https://github.com/acidanthera/AirportBrcmFixup",
-  "version": "1.1.7",
+  "version": "1.1.9",
   "versions": null,
   "target": "LE",
   "since": "10.8",
@@ -11,19 +11,19 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https://github.com/acidanthera/AirportBrcmFixup/releases/download/1.1.7/1.1.7.DEBUG.zip",
+      "url": "https:\/\/github.com\/acidanthera\/AirportBrcmFixup\/releases\/download\/1.1.9\/1.1.9.DEBUG.zip",
       "script": null,
       "loc": "AirportBrcmFixup.kext"
     },
     "rel": {
-      "url": "https://github.com/acidanthera/AirportBrcmFixup/releases/download/1.1.7/1.1.7.RELEASE.zip",
+      "url": "https:\/\/github.com\/acidanthera\/AirportBrcmFixup\/releases\/download\/1.1.9\/1.1.9.RELEASE.zip",
       "script": null,
       "loc": "AirportBrcmFixup.kext"
     }
   },
-  "changes": "#### v1.1.7\r\n- Use separate variables and methods wlc_set_countrycode_rev & siPmuFvcoPllreg for every driver\r\n- Introduce a new boot-arg brcmfx-driver=[0|1|2], 0 - AirPort.BrcmNIC-MFG, 1 - AirPort.Brcm4360, 2 - AirPort.BrcmNIC\r\n- Remove redundancy boot-args wl_msg_level and wl_msg_level2 (they are supported by Apple)\r\n- pci14e4,43b1 & pci14e4,43b2 matched also to AirPort_BrcmNIC",
+  "changes": "#### v1.1.9\r\n- Fix issue with IOProbeScore for Airport_BrcmNIC",
   "guide": "@see https://raw.githubusercontent.com/acidanthera/AirportBrcmFixup/master/README.md",
-  "time": "2018-12-21 11:02:35",
+  "time": "2019-01-02 16:46:12",
   "license": "BSD 3-Clause \"New\" or \"Revised\" License",
   "authors": [
     {
