@@ -60,7 +60,12 @@
   "require":  {
     "Lilu": "1.2.0^"
   },
-  "conflict": null,
+  "conflict":  {
+    "kexts": {
+      "FakeSMC": "*"
+    },
+    "action": "delete"
+  },
   "replaced_by": null,
   "suggest": null
 }
