@@ -22,18 +22,4 @@ NS_INLINE BOOL ModalError(NSError *error){
         @throw error;
     return NO;
 }
-
-NS_INLINE BOOL isNull(id anyID) {
-    if ([anyID isKindOfClass:NSNull.class]
-        || anyID == nil
-        || [anyID isEqual:@0])
-        return YES;
-    if([anyID isKindOfClass:NSString.class] && (
-                                                [anyID isEqualToString:@"(null)"]
-                                                || [anyID isEqualToString:@"<null>"]
-                                                || [anyID isEqualToString:@"<nil>"]
-                                                || [anyID isEqualToString:@""]
-                                                )) return YES;
-    return NO;
-}
 #endif /* PrefixHeader_pch */

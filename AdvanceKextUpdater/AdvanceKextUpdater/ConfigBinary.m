@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ConfigBinary.h"
+#import "utils.h"
 
 @implementation BinaryHandler
 @synthesize url;

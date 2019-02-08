@@ -68,6 +68,15 @@ NSString *getMainUser(void);
 /// <code>YES</code> on success and <code>NO</code> on failure
 BOOL unzip(NSString * zipFile, NSString * targetFolder);
 
+/// @function isNull
+/// @abstract
+/// Whether an object is null
+/// @param anyID
+/// Any object
+/// @return
+/// YES on null, NO otherwise
+BOOL isNull(id anyID);
+
 /// @function find
 /// @abstract
 /// Find the location(s) of a kext

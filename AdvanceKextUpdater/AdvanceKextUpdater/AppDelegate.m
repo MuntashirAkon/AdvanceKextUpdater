@@ -13,6 +13,7 @@
 #import <DiskArbitration/DiskArbitration.h> // Disk
 #import "Task.h"
 #import "utils.h"
+#import "AKUDiskManager.h"
 #import "Windows/PreferencesWindowController.h"
 #import "Windows/AboutWindowController.h"
 #import "Windows/KextViewerWindowController.h"
@@ -55,6 +56,8 @@
         NSRunCriticalAlertPanel(@"No Xcode Command Line Tools!", @"Xcode command line tools are required! Unlike the  Xcode itself the command line tools don't take much space.", nil, nil, nil);
         [self applicationWillTerminate:aNotification]; // Terminate
     }
+    // Init KextHandler
+    self->kextHandler = [KextHandler sharedKextHandler];
     // Init tables
     [self updateTables];
 
@@ -158,6 +161,11 @@
             }
         });
     });
+    //[self getListOfCloverInstallationLocation];
+//    AKUDiskManager *clover = [AKUDiskManager new];
+//    [clover setDisk:@"disk0s1"];
+//    [clover mountVolume];
+//    _printf([clover getMountPoint]);
 }
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
@@ -181,6 +189,12 @@
         _aboutwindowController = [AboutWindowController new];
     }
     [_aboutwindowController.window makeKeyAndOrderFront:self];
+}
+
+-(IBAction)openKextStatViewer:(id)sender{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [NSWorkspace.sharedWorkspace openFile:[[NSBundle.mainBundle builtInPlugInsPath] stringByAppendingPathComponent:@"KextStatViewer.app"]];
+    });
 }
 
 -(IBAction)checkForAppUpdates:(id)sender{
@@ -366,15 +380,14 @@
 -(void)fetchKextInfo: (NSTableView *)sender whichDB: (BOOL) allKextsDB {
     // Do nothing in case user supplies an invalid row
     if([sender clickedRow] < 0) return;
-    // Get the kext name
-    NSString *kextName = allKextsDB ? [allTheKexts objectAtIndex:[sender clickedRow]] : [installedKexts objectAtIndex:[sender clickedRow]];
-    [self fetchKextInfo:kextName];
+    // Get the clicked row
+    NSTableColumn *columns = [sender tableColumnWithIdentifier:@"kexts"];
+    NSTextFieldCell *cell = [columns dataCellForRow:[sender clickedRow]];
+    [self fetchKextInfo:cell.stringValue];
 }
 
 -(void)fetchKextInfo: (NSString *)kext {
     @try {
-        // Remove all the child-windows
-//        [self closeTaskViwer:nil];
         // Load kext config
         KextConfig *kextConfig;
         if([remoteKexts objectForKey:kext] != nil) {
@@ -407,8 +420,6 @@
 }
 
 - (void) updateTables {
-    // Init KextHandler
-    self->kextHandler = [KextHandler new];
     // Add objects
     [_overview setContent:nil];
     [_allKexts setContent:nil];
@@ -451,29 +462,18 @@
         if (err == 0) {
             CFTypeRef volume_kind  = CFDictionaryGetValue(diskInfo, kDADiskDescriptionVolumeKindKey);
             CFTypeRef volume_label = CFDictionaryGetValue(diskInfo, kDADiskDescriptionVolumeNameKey);
+            CFURLRef fspath = CFDictionaryGetValue(diskInfo,kDADiskDescriptionVolumePathKey);
+            char buf[MAXPATHLEN];
+            CFURLGetFileSystemRepresentation(fspath, false, (UInt8 *)buf, sizeof(buf));
             if (volume_kind != NULL) { // Since Clover only supports ntfs and msdos
                 if (CFEqual(volume_kind, CFSTR("hfs")) || CFEqual(volume_kind, CFSTR("msdos"))) {
                     [result addObject:@{
                         @"BSDName": BSDName,
-                        @"Label": (__bridge NSString *)volume_label
+                        @"Label": (__bridge NSString *)volume_label,
+                        @"Path": [NSString stringWithUTF8String:buf]
                     }];
                 }
-                //if(volume_kind != NULL){ CFRelease(volume_kind); }
-                //if(volume_label != NULL){ CFRelease(volume_label); }
             }
-//            CFURLRef fspath = CFDictionaryGetValue(diskInfo,kDADiskDescriptionVolumePathKey);
-//
-//            char buf[MAXPATHLEN];
-//            if (CFURLGetFileSystemRepresentation(fspath, false, (UInt8 *)buf, sizeof(buf))) {
-//                printf("Disk %s mounted at %s\n",
-//                       DADiskGetBSDName(disk),
-//                       buf);
-//
-//                /* Print the complete dictionary for debugging. */
-//                CFShow(diskInfo);
-//            } else {
-//                /* Something is *really* wrong. */
-//            }
         }
         if (diskInfo != NULL) { CFRelease(diskInfo); }
         if (disk != NULL) { CFRelease(disk); }

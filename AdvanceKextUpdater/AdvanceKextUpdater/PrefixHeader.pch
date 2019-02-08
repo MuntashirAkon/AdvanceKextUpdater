@@ -36,19 +36,4 @@ NS_INLINE NSOpenPanel* DirectoryChooser() {
     [temp setPrompt:@"Choose a destination folder"];
     return temp;
 }
-
-NS_INLINE BOOL isNull(id anyID) {
-    if ([anyID isKindOfClass:NSNull.class]
-        || anyID == nil
-        || [anyID isEqual:@0])
-        return YES;
-    if([anyID isKindOfClass:NSString.class] && (
-        [anyID isEqualToString:@"(null)"]
-        || [anyID isEqualToString:@"<null>"]
-        || [anyID isEqualToString:@"<nil>"]
-        || [anyID isEqualToString:@""]
-    )) return YES;
-    return NO;
-}
-
 #endif /* PrefixHeader_pch */

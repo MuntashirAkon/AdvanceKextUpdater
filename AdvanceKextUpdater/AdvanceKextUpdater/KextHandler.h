@@ -42,7 +42,10 @@
 + (NSString *) stderrPath;
 + (NSString *) launchDaemonPlistFile;
 + (NSString *) PreferencesFile;
-
+/*!
+ * Singleton
+ */
++ (id)sharedKextHandler;
 - (NSArray<NSString *> *) listInstalledKext;
 - (NSArray<NSString *> *) listKext;
 - (NSDictionary<NSString *, NSURL *> *) listRemoteKext;

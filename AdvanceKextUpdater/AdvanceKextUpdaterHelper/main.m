@@ -114,6 +114,7 @@ int main(int argc, const char *argv[]) {
 #ifdef DEBUG
              _fprintf(stderr, @"Service ran with verb '%@'\n", verb);
 #endif
+        @try {
         if([verb isEqualToString:ARG_INSTALL]){
             if(args.count == 2){
                 [[KextInstall.alloc initWithKext:[args objectAtIndex:1]] doAction];
@@ -141,6 +142,11 @@ int main(int argc, const char *argv[]) {
             /// @todo Repair permissions
         } else {
             _fprintf(stderr, @"Unknown verb (%@)!\n", verb);
+            return _return(1);
+        }
+        } @catch (NSError *e){
+            return _return(1);
+        } @catch (NSException *e){
             return _return(1);
         }
     }

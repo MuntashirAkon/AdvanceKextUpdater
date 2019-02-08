@@ -48,6 +48,13 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
+                            <menuItem title="KextStat Viewer" id="QEg-2c-scV" userLabel="KextStat Viewer">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openKextStatViewer:" target="Voe-Tx-rLC" id="LTn-A1-Asl"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="gtr-Dz-VwL"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
@@ -526,7 +533,7 @@
                                                                     </binding>
                                                                 </connections>
                                                             </tableColumn>
-                                                            <tableColumn editable="NO" width="350" minWidth="40" maxWidth="1000" id="giG-o0-tlY">
+                                                            <tableColumn identifier="kexts" editable="NO" width="350" minWidth="40" maxWidth="1000" id="giG-o0-tlY">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Kexts">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -617,7 +624,7 @@
                                                                     </binding>
                                                                 </connections>
                                                             </tableColumn>
-                                                            <tableColumn editable="NO" width="352" minWidth="40" maxWidth="1000" id="GED-cB-9aS">
+                                                            <tableColumn identifier="kexts" editable="NO" width="352" minWidth="40" maxWidth="1000" id="GED-cB-9aS">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Kext Name">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

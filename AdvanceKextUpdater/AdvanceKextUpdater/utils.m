@@ -92,6 +92,20 @@ BOOL unzip(NSString * zipFile, NSString * targetFolder) {
     return NO;
 }
 
+BOOL isNull(id anyID) {
+    if ([anyID isKindOfClass:NSNull.class]
+        || anyID == nil
+        || [anyID isEqual:@0])
+        return YES;
+    if([anyID isKindOfClass:NSString.class] && (
+        [anyID isEqualToString:@"(null)"]
+        || [anyID isEqualToString:@"<null>"]
+        || [anyID isEqualToString:@"<nil>"]
+        || [anyID isEqualToString:@""]
+        )) return YES;
+    return NO;
+}
+
 NSString * _Nullable find(NSString * kextName){
     if(![kextName hasSuffix:@".kext"]){
         kextName = [kextName stringByAppendingPathExtension:@"kext"];

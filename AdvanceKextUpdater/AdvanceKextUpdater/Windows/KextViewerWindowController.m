@@ -305,7 +305,7 @@
                                      "        <string>%@</string>"
                                      "    </dict>\n"
                                      "</plist>\n", launchDaemonName, [NSBundle.mainBundle pathForResource:@"AdvanceKextUpdaterHelper" ofType:nil], KextHandler.tmpPath, KextHandler.stdinPath, KextHandler.stdoutPath, KextHandler.stderrPath];
-            NSString *agentPlist = [[KextHandler.tmpPath stringByAppendingPathComponent:launchDaemonName] stringByAppendingPathExtension:@"plist"];
+            NSString *agentPlist = [[KextHandler.appCachePath stringByAppendingPathComponent:launchDaemonName] stringByAppendingPathExtension:@"plist"];
             // Save Info.plist @ tmpPath
             [NSFileManager.defaultManager createFileAtPath:agentPlist contents:[launchAgent dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
             // Copy & load

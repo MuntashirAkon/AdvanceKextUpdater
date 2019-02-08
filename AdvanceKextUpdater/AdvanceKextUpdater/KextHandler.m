@@ -12,7 +12,23 @@
 #import "Task.h"
 #import "utils.h"
 
+// What it does:
+// - Loads catalog.json
+// - Loads available kexts
+// - Loads installed kexts
+// - Loads version of the installed kexts
+// - Update installed kexts (along with version) after 10 minutes (?)
+
 @implementation KextHandler
++ (id)sharedKextHandler {
+    static KextHandler *kextHandler = nil;
+    static dispatch_once_t dispatch_token;
+    dispatch_once(&dispatch_token, ^{
+        kextHandler = [KextHandler new];
+    });
+    return kextHandler;
+}
+
 - (instancetype) init {
     NSString *path = [KextHandler kextDBPath];
     // Read catalog.json and list kexts
@@ -91,7 +107,7 @@
 }
 
 + (NSString *) stdinPath {
-    return [self.tmpPath stringByAppendingPathComponent:@"in"];
+    return [self.appPath stringByAppendingPathComponent:@"in"];
 }
 
 + (NSString *) stdoutPath {
