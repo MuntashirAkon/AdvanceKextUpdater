@@ -11,12 +11,12 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-eapd-codec-commander/downloads/RehabMan-CodecCommander-2018-1003.zip",
+      "url": "https://bitbucket.org/RehabMan/os-x-eapd-codec-commander/downloads/RehabMan-CodecCommander-2018-1003.zip",
       "script": null,
       "loc": "Debug/CodecCommander.kext"
     },
     "rel": {
-      "url": "https://api.bitbucket.org/2.0/repositories/RehabMan/os-x-eapd-codec-commander/downloads/RehabMan-CodecCommander-2017-0501.zip",
+      "url": "https://bitbucket.org/RehabMan/os-x-eapd-codec-commander/downloads/RehabMan-CodecCommander-2018-1003.zip",
       "script": null,
       "loc": "Release/CodecCommander.kext"
     }
