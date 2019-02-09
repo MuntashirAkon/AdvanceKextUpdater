@@ -113,6 +113,9 @@
   "RealtekRTL8100": {
     "kext": "RealtekRTL8100.kext"
   },
+  "RTCMemoryFixup": {
+    "kext": "RTCMemoryFixup.kext"
+  },
   "VirtualSMC": {
     "kext": "VirtualSMC.kext"
   }
