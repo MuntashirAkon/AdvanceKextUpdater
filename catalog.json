@@ -8,6 +8,9 @@
   "AppleALC": {
     "id": "as.vit9696.AppleALC"
   },
+  "AppleBacklightFixup": {
+    "id": "com.hieplpvip.AppleBacklightFixup"
+  },
   "ATH9KFixup": {
     "kext": "ATH9KFixup.kext"
   },
