@@ -49,5 +49,7 @@
 - (NSArray<NSString *> *) listInstalledKext;
 - (NSArray<NSString *> *) listKext;
 - (NSDictionary<NSString *, NSURL *> *) listRemoteKext;
+- (BOOL)needUpdating:(NSString *)kextName;
+- (id _Nullable) kextConfig:(NSString *)kextName;
 @end
 #endif /* KextHandler_h */

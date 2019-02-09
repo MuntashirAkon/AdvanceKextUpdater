@@ -39,32 +39,7 @@
 
 @implementation AppDelegate
 
-// Handle kext:// url scheme
--(void)applicationWillFinishLaunching:(NSNotification *)aNotification {
-    // Check if Xcode components are installed
-    // There are complication with `xcode-select --install`
-    // I may use it instead in future version
-    // FIXME: Only works from 10.9? Use git universal binary?
-    NSTask *task = [[NSTask alloc] init];
-    NSFileHandle *nullFileHandle = [NSFileHandle fileHandleWithNullDevice];
-    [task setStandardOutput:nullFileHandle];
-    [task setStandardError:nullFileHandle];
-    task.launchPath = [NSBundle.mainBundle pathForResource:@"git" ofType:nil];
-    task.arguments = @[@"help"];
-    [task launch];
-    [task waitUntilExit];
-    if(task.terminationStatus != 0){
-        NSRunCriticalAlertPanel(@"No Xcode Command Line Tools!", @"Xcode command line tools are required! Unlike the  Xcode itself the command line tools don't take much space.", nil, nil, nil);
-        [self applicationWillTerminate:aNotification]; // Terminate
-    }
-    // Init KextHandler
-    self->kextHandler = [KextHandler sharedKextHandler];
-    // Init tables
-    [self updateTables];
-
-    NSAppleEventManager *appleEventManager = NSAppleEventManager.sharedAppleEventManager;
-    [appleEventManager setEventHandler:self andSelector:@selector(handleGetURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
-}
+-(void)applicationWillFinishLaunching:(NSNotification *)aNotification {}
 
 - (void)handleGetURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
     NSString *path = [[[event paramDescriptorForKeyword:keyDirectObject] stringValue] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -76,92 +51,69 @@
         if(path.length == prefix.length) return;
         path = [path substringFromIndex:prefix.length];
         // Extract kext name
-        NSString *kextName = [path lastPathComponent];
-        path = [path stringByDeletingLastPathComponent];
-        // Extract verb
-        NSString *verb = [path lastPathComponent];
-        // NSLog(@"%@: %@", verb, kextName);
-        // Just open the app if kextName is nil
-        if(kextName == nil) return;
-        // Verfiy if it's in the database
-        if(([allTheKexts indexOfObject:[kextName stringByAppendingPathExtension:@"kext"]] != NSNotFound) || [allTheKexts indexOfObject:kextName] != NSNotFound){
-            // The kext IS in the database
-            // Perform necessary actions
-            [self fetchKextInfo:kextName];
-            // Run tasks based on verbs
-            // NOTE: we do not require this condition: verb == nil || [verb isEqual:@"kext"]
-            // as it is the default behavior
-            if([verb isEqual:@"guide"]) {
-                [_kextViewer fetchGuide:self];
-            } else if ([verb isEqual:@"install"]) {
-                // Install or update the kext
-//                if([[self.kextProperties objectForKey:@"install_btn"] objectForKey:@"enabled"]){
-//                    sleep(1);
-//                    [self installKext:nil];
-//                } else if([[self.kextProperties objectForKey:@"update_btn"] objectForKey:@"enabled"]){
-//                    sleep(1);
-//                    [self updateKext:nil];
-//                }
-            } else if ([verb isEqual:@"remove"]) {
-                // Remove the kext
-//                if([[self.kextProperties objectForKey:@"remove_btn"] objectForKey:@"enabled"]){
-//                    sleep(1);
-//                    [self removeKext:nil];
-//                }
+        _urlKextName = [path lastPathComponent];
+        if(_urlKextName != nil){
+            if([_urlKextName hasPrefix:@".kext"]){
+                _urlKextName = [_urlKextName stringByDeletingPathExtension];
             }
-        } else {
-            NSRunCriticalAlertPanel(@"Kext not found!", @"The kext (%@) you are trying to open is not found!", nil, nil, nil, kextName);
+            path = [path stringByDeletingLastPathComponent];
+            // Extract verb
+            _urlVerb = [path lastPathComponent];
+            [self handleURL];
         }
+#if DEBUG
+        NSLog(@"Decoded URL: %@ - %@", _urlVerb, _urlKextName);
+#endif
     }
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Load default preferences
     [ZSSUserDefaults.standardUserDefaults registerDefaults:PreferencesHandler.appDefaults];
-    // Set window levels
-    [NSApp activateIgnoringOtherApps:YES];
-    // Create paths in application support directory if not exists
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSString *appPath = [KextHandler appPath];
-    if(![fm fileExistsAtPath:appPath]){
-        NSError *err;
-        if(![fm createDirectoryAtPath:appPath withIntermediateDirectories:YES attributes:nil error:&err]){
-            NSRunCriticalAlertPanel(@"Application Support isn't accessible!", @"Creating an important directory at Application Support directory failed!\nDetails: %@", nil, nil, nil, err);
-            [self applicationWillTerminate:aNotification]; // Terminate
-        }
-    }
-    [fm createDirectoryAtPath:KextHandler.kextCachePath withIntermediateDirectories:YES attributes:nil error:nil];
-    [fm createDirectoryAtPath:KextHandler.guideCachePath withIntermediateDirectories:YES attributes:nil error:nil];
-    [fm createDirectoryAtPath:KextHandler.kextTmpPath withIntermediateDirectories:YES attributes:nil error:nil];
-    [fm createDirectoryAtPath:KextHandler.kextBackupPath withIntermediateDirectories:YES attributes:nil error:nil];
-
     // Check for kext update
     _spinner = [Spinner.alloc initWithTitle:@"Updating database..."];
     [_spinner.window makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-#ifndef DEBUG // Don't disturb me on DEBUG builds
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @try {
+            // Check if Xcode components are installed
+            // There are complication with `xcode-select --install`
+            // I may use it instead in future version
+            // FIXME: Only works from 10.9? Use git universal binary?
+            if(tty([NSString stringWithFormat:@"%@ help", [NSBundle.mainBundle pathForResource:@"git" ofType:nil]], nil) != EXIT_SUCCESS){
+                @throw [NSException exceptionWithName:@"No Xcode Command Line Tools!" reason:@"Xcode command line tools are required! Unlike the  Xcode itself the command line tools don't take much space." userInfo:nil];
+            }
+            // Init kextFinder
+            [KextFinder sharedKextFinder];
+            // Init kextHandler
+            self->kextHandler = [KextHandler sharedKextHandler];
+#ifndef DEBUG // Don't disturb me on DEBUG builds
             if(hasInternetConnection()){
                 [KextHandler checkForDBUpdate];
                 [pciDevice checkForDBUpdate];
             }
-        } @catch(NSException *e) {}
 #else
         _printf(@"INITIALIZED\n");
 #endif
-        // Main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self->_spinner close];
-            if(![fm fileExistsAtPath:KextHandler.kextDBPath]) {
-                NSRunCriticalAlertPanel(@"Updating Kext database failed!", @"Failed to update kext database, please check your internet connection and try again.", nil, nil, nil);
-                [self applicationWillTerminate:aNotification]; // Terminate
-            } else {
-                // Init tables again
+            // Main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self->_spinner close];
+                // Init tables
                 [self updateTables];
-            }
-        });
+                // Handle URL
+                if(!isNull(self->_urlKextName)){[self handleURL];}
+            });
+        } @catch(NSException *e) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self->_spinner close];
+                NSRunCriticalAlertPanel(e.name, @"%@", nil, nil, nil, e.reason);
+                [self applicationWillTerminate:aNotification]; // Terminate
+            });
+        }
     });
+    // Handle kext:// url scheme
+    NSAppleEventManager *appleEventManager = NSAppleEventManager.sharedAppleEventManager;
+    [appleEventManager setEventHandler:self andSelector:@selector(handleGetURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
     //[self getListOfCloverInstallationLocation];
 //    AKUDiskManager *clover = [AKUDiskManager new];
 //    [clover setDisk:@"disk0s1"];
@@ -173,14 +125,7 @@
     return true;
 }
 
--(void)applicationWillBecomeActive:(NSNotification *)notification {
-    [KextFinder.sharedKextFinder updateList];
-    [self updateTables];
-}
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
-}
+- (void)applicationWillTerminate:(NSNotification *)aNotification {}
 
 #pragma AppDelegate - Preferences
 -(IBAction)preferences:(id)sender{
@@ -289,10 +234,23 @@
     [_spinner.window makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //[self repairPermissionsBackground];
-        /// @todo
+        NSMutableArray *kextNeedsUpdate = NSMutableArray.array;
+        for(NSString *kext in self->installedKexts){
+            if([self->kextHandler needUpdating:kext]){
+                [kextNeedsUpdate addObject:kext];
+            }
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self->_spinner close];
+            NSLog(@"%@", kextNeedsUpdate);
+            if(kextNeedsUpdate.count > 0){
+                NSInteger res = NSRunAlertPanel(@"Update available!", @"The following kext(s) will be updated:\n%@", @"Proceed", @"Cancel Update", nil, [kextNeedsUpdate componentsJoinedByString:@", "]);
+                if(res == NSAlertDefaultReturn){
+                    // TODO: batch update
+                }
+            } else {
+                NSRunAlertPanel(@"No update found!", @"No new update is available.", @"OK", nil, nil);
+            }
         });
     });
 }
@@ -303,7 +261,16 @@
     [_spinner.window makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self repairPermissionsBackground];
+        @try {
+            NSString *command = [NSString stringWithFormat:@"/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", kSLE, kSLE, kSLE, kSLE, kSLE];
+            if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){
+                // Also repair permissions for LE if macOS versions is gte 10.11
+                command = [NSString stringWithFormat:@"%@;/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", command, kLE, kLE, kLE, kLE, kLE];
+            }
+            [AScript adminExec:command];
+        } @catch (NSError *e) {
+            printf("Error: %s\n", [[[e userInfo] objectForKey:@"details"] UTF8String]);
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self->_spinner close];
         });
@@ -316,7 +283,15 @@
     [_spinner.window makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self rebuildCacheBackground];
+        @try {
+            if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){ // `kextcache -i /` for 10.11 or later
+                [AScript adminExec:@"/usr/sbin/kextcache -i /; "];
+            } else { // `touch /S*/L*/Extensions; kextcache -Boot -U /` for 10.10 or earlier
+                [AScript adminExec:[NSString stringWithFormat:@"/usr/bin/touch %@;/usr/sbin/kextcache -Boot -U /", kSLE]];
+            }
+        } @catch (NSError *e) {
+            printf("Error: %s\n", [[[e userInfo] objectForKey:@"details"] UTF8String]);
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self->_spinner close];
         });
@@ -339,7 +314,6 @@
 
 - (NSArray *) listAllKext: (BOOL) deviceOnly { /// @todo
     allTheKexts = self->kextHandler.listKext;
-    remoteKexts = self->kextHandler.listRemoteKext;
     int sn = 0;
     NSMutableArray *kexts = [NSMutableArray array];
     for(NSString *kext in allTheKexts) {
@@ -351,34 +325,6 @@
     return kexts;
 }
 
-// Background tasks
-
-- (void) repairPermissionsBackground {
-    @try {
-        NSString *command = [NSString stringWithFormat:@"/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", kSLE, kSLE, kSLE, kSLE, kSLE];
-        if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){
-            // Also repair permissions for LE if macOS versions is gte 10.11
-            command = [NSString stringWithFormat:@"%@;/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", command, kLE, kLE, kLE, kLE, kLE];
-        }
-        [AScript adminExec:command];
-    } @catch (NSError *e) {
-        printf("Error: %s\n", [[[e userInfo] objectForKey:@"details"] UTF8String]);
-    }
-}
-
-- (void) rebuildCacheBackground {
-    @try {
-        if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){ // `kextcache -i /` for 10.11 or later
-            [AScript adminExec:@"/usr/sbin/kextcache -i /; "];
-        } else { // `touch /S*/L*/Extensions; kextcache -Boot -U /` for 10.10 or earlier
-            [AScript adminExec:[NSString stringWithFormat:@"/usr/bin/touch %@;/usr/sbin/kextcache -Boot -U /", kSLE]];
-        }
-    } @catch (NSError *e) {
-        printf("Error: %s\n", [[[e userInfo] objectForKey:@"details"] UTF8String]);
-    }
-}
-
-// Maybe in a seperate class?
 -(void)fetchKextInfo: (NSTableView *)sender whichDB: (BOOL) allKextsDB {
     // Do nothing in case user supplies an invalid row
     if([sender clickedRow] < 0) return;
@@ -390,22 +336,6 @@
 
 -(void)fetchKextInfo: (NSString *)kext {
     @try {
-        // Load kext config
-        KextConfig *kextConfig;
-        if([remoteKexts objectForKey:kext] != nil) {
-            kextConfig = [KextConfig.alloc initWithKextName:kext URL:[remoteKexts objectForKey:kext]];
-        } else {
-            kextConfig = [KextConfig.alloc initWithKextName:kext];
-        }
-        // If unable to load any kext
-        if(kextConfig == nil) {
-            NSRunCriticalAlertPanel(@"Missing config.json!", @"A config.json file determines the Kext behaviors and other configurations, which is somehow missing. You can create a new issue on GitHub if you are interested.", @"OK", nil, nil);
-            // FIXME: Memory leaking of kextConfig
-            return;
-        };
-        // Find the best version for the running macOS version
-        NSInteger best_version = kextConfig.versions.findTheBestVersion;
-        if(best_version != -1) kextConfig = [kextConfig.versions.availableVersions objectAtIndex:best_version].config;
         // Remove previous window
         if(_kextViewer != nil){
             [self.window removeChildWindow:_kextViewer.window];
@@ -413,12 +343,9 @@
             _kextViewer = nil;
         }
         // Open a new window
-        _kextViewer = [KextViewerWindowController.alloc initWithKextConfig:kextConfig];
+        _kextViewer = [KextViewerWindowController.alloc initWithKextConfig:[kextHandler kextConfig:kext]];
         [self.window addChildWindow:_kextViewer.window ordered:NSWindowAbove];
-    } @catch (NSError *e) {
-        // Do nothing
-        return;
-    }
+    } @catch (NSException *e) {}
 }
 
 - (void) updateTables {
@@ -432,5 +359,35 @@
     [_overviewTable deselectAll:self];
     [_allKextsTable reloadData];
     [_allKextsTable deselectAll:self];
+}
+
+-(void) handleURL {
+    if([self->allTheKexts indexOfObject:self->_urlKextName] != NSNotFound){
+        // The kext IS in the database
+        // Perform necessary actions
+        [self fetchKextInfo:self->_urlKextName];
+        // Run tasks based on verbs
+        // as it is the default behavior
+        if([self->_urlVerb isEqual:@"guide"]) {
+            [self->_kextViewer fetchGuide:self];
+        } else if ([self->_urlVerb isEqual:@"install"]) {
+            // Install or update the kext
+            if([self->_kextViewer isInstallable]){
+                sleep(1);
+                [self->_kextViewer installKext:self];
+            } else if([self->_kextViewer isUpdatable]){
+                sleep(1);
+                [self->_kextViewer updateKext:self];
+            }
+        } else if ([self->_urlVerb isEqual:@"remove"]) {
+            // Remove the kext
+            if([self->_kextViewer isRemovable]){
+                sleep(1);
+                [self->_kextViewer removeKext:self];
+            }
+        }
+    } else {
+        NSRunCriticalAlertPanel(@"Kext not found!", @"The kext (%@) you are trying to open is not found!", nil, nil, nil, self->_urlKextName);
+    }
 }
 @end

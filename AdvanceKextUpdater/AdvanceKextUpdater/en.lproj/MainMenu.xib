@@ -377,7 +377,8 @@
                                     <action selector="checkForUpdates:" target="Voe-Tx-rLC" id="2Li-m8-Zcy"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Repair Permissions" keyEquivalent="p" id="Fal-I4-PZk">
+                            <menuItem title="Repair Permissions" id="Fal-I4-PZk">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="repairPermissions:" target="Voe-Tx-rLC" id="ESv-G8-GP2"/>
                                 </connections>
@@ -491,7 +492,7 @@
                                         <button verticalHuggingPriority="750" id="y7J-Y5-lyA">
                                             <rect key="frame" x="277" y="269" width="146" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="push" title="Check for updates" bezelStyle="rounded" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aBd-oo-aS8">
+                                            <buttonCell key="cell" type="push" title="Check for updates" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aBd-oo-aS8">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -499,7 +500,7 @@
                                                 <action selector="checkForUpdates:" target="Voe-Tx-rLC" id="eg7-Xz-9V3"/>
                                             </connections>
                                         </button>
-                                        <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="cBj-JU-zHI">
+                                        <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="cBj-JU-zHI" userLabel="Installed Kexts Table">
                                             <rect key="frame" x="17" y="16" width="400" height="252"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <clipView key="contentView" id="pgx-3x-xWk">
@@ -573,15 +574,6 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
                                         </scrollView>
-                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="stT-cu-r1y">
-                                            <rect key="frame" x="122" y="278" width="116" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Updates available!" id="fdJ-aI-Sk4">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -590,7 +582,7 @@
                                     <rect key="frame" x="10" y="33" width="434" height="298"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="RVm-7p-g8M">
+                                        <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="RVm-7p-g8M" userLabel="Available Kexts Table">
                                             <rect key="frame" x="17" y="17" width="400" height="252"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="TBk-v0-lWe">

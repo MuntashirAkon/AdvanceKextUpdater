@@ -9,16 +9,14 @@
 #import <Cocoa/Cocoa.h>
 #import "KextHandler.h"
 
-#define COLOR_GREEN [NSColor colorWithCalibratedRed:0 green:143/255.0f blue:0 alpha:1.0f] // Success
-#define COLOR_RED [NSColor redColor] // Failure
-#define COLOR_ORANGE [NSColor orangeColor] // Warning
-
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     KextHandler *kextHandler;
     NSMutableArray<NSString *> *installedKexts;
     NSArray<NSString *> *allTheKexts;
-    NSDictionary<NSString *, NSURL *> *remoteKexts;
 }
+// URL Handler
+@property NSString * _Nullable urlVerb;
+@property NSString * _Nullable urlKextName;
 -(void)updateTables;
 -(void)fetchKextInfo: (NSString *)kext;
 @end

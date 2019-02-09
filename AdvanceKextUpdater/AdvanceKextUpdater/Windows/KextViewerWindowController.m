@@ -130,20 +130,16 @@
     }
     //
     if(_installed){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            @try{
-                BOOL installable = kcc_status < KCCSomeMatchedAllRestricted ? YES : NO;
-                BOOL updateAvailable = NO;
-                NSString *version = [KextFinder.sharedKextFinder findVersion:self->kextConfig.kextName];
-                updateAvailable = [self->kextConfig.versions newerThanVersion:version];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self->_installedVersion setStringValue:version];
-                    self->_installBtn.enabled = (self->_installed || !installable) ? NO : YES;
-                    self->_updateBtn.enabled = updateAvailable;
-                    self->_removeBtn.enabled = self->_installed;
-                });
-            } @catch (NSException *e) {}
-        });
+        @try{
+            BOOL installable = kcc_status < KCCSomeMatchedAllRestricted ? YES : NO;
+            BOOL updateAvailable = NO;
+            NSString *version = [KextFinder.sharedKextFinder findVersion:self->kextConfig.kextName];
+            updateAvailable = [self->kextConfig.versions newerThanVersion:version];
+            [self->_installedVersion setStringValue:version];
+            self->_installBtn.enabled = (self->_installed || !installable) ? NO : YES;
+            self->_updateBtn.enabled = updateAvailable;
+            self->_removeBtn.enabled = self->_installed;
+        } @catch (NSException *e) {}
     }else{
         self->_installBtn.enabled = YES;
         [self->_installedVersion setStringValue:@"Not installed"];
@@ -241,6 +237,7 @@
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self runTaskBackground];
+        [KextFinder.sharedKextFinder updateList];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self->_spinner close];
             // Run complete, now get result
@@ -262,12 +259,21 @@
                 NSRunCriticalAlertPanel(@"Failed!", @"%@", @"OK", nil, nil, message);
             }
             // Update kext list
-            [KextFinder.sharedKextFinder updateList];
             AppDelegate *appDelegate = [[NSApplication sharedApplication] delegate];
             [appDelegate updateTables];
             [appDelegate fetchKextInfo:self->kextConfig.name];
         });
     });
+}
+
+-(BOOL)isInstallable {
+    return self->_installBtn.enabled;
+}
+-(BOOL)isUpdatable {
+    return self->_updateBtn.enabled;
+}
+-(BOOL)isRemovable {
+    return self->_removeBtn.enabled;
 }
 
 - (void) runTaskBackground {

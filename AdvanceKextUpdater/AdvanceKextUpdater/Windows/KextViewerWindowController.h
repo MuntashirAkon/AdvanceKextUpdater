@@ -26,6 +26,9 @@ typedef enum {
 -(IBAction)updateKext:(id)sender;
 -(IBAction)removeKext:(id)sender;
 -(IBAction)fetchGuide:(id)sender;
+-(BOOL)isInstallable;
+-(BOOL)isUpdatable;
+-(BOOL)isRemovable;
 @end
 
 NS_ASSUME_NONNULL_END

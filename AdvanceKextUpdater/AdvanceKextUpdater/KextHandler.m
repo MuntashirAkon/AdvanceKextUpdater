@@ -12,6 +12,7 @@
 #import "Task.h"
 #import "utils.h"
 #import "KextFinder.h"
+#import "KextConfig.h"
 
 // What it does:
 // - Loads catalog.json
@@ -31,11 +32,12 @@
 }
 
 - (instancetype) init {
+    [self createFilesIfNotExist];
     NSString *path = [KextHandler kextDBPath];
     // Read catalog.json and list kexts
     path = [path stringByAppendingPathComponent:@"catalog"];
     path = [path stringByAppendingPathExtension:@"json"];
-    if([[NSFileManager defaultManager] fileExistsAtPath:path]){
+    if([NSFileManager.defaultManager fileExistsAtPath:path]){
         catalog = [JSONParser parseFromFile:path];
         kextNames = [catalog allKeys];
         NSMutableArray *kextList = [NSMutableArray array];
@@ -49,7 +51,6 @@
             }
         }
         kexts = kextList;
-        // TODO: handle remote_url
         return self;
     }
     return nil;
@@ -202,5 +203,54 @@
 
 - (NSDictionary<NSString *, NSURL *> *) listRemoteKext {
     return remoteKexts.copy;
+}
+
+- (BOOL)needUpdating:(NSString *)kextName {
+    KextFinder *kf = [KextFinder sharedKextFinder];
+    @try{
+        NSString *installedVersion = [kf findVersion:kextName];
+        KextConfig *kextConfig = [self kextConfig:kextName];
+        return [kextConfig.versions newerThanVersion:installedVersion];
+    } @catch (NSException *e) {
+        return NO;
+    }
+}
+
+- (id _Nullable)kextConfig:(NSString *)kextName {
+    // Load kext config
+    KextConfig *kextConfig;
+    if([remoteKexts objectForKey:kextName] != nil) {
+        kextConfig = [KextConfig.alloc initWithKextName:kextName URL:[remoteKexts objectForKey:kextName]];
+    } else {
+        kextConfig = [KextConfig.alloc initWithKextName:kextName];
+    }
+    // If unable to load any kext
+    if(kextConfig == nil) {
+        @throw [NSException exceptionWithName:@"Missing config.json!" reason:@"A config.json file determines the Kext behaviors and other configurations, which is somehow missing. You can create a new issue on GitHub if you are interested." userInfo:nil];
+        return nil;
+    }
+    // Find the best version for the running macOS version
+    NSInteger best_version = kextConfig.versions.findTheBestVersion;
+    if(best_version != -1) kextConfig = [kextConfig.versions.availableVersions objectAtIndex:best_version].config;
+    return kextConfig;
+}
+
+// Privates
+-(void)createFilesIfNotExist{
+    // Create necessary paths
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *appPath = [KextHandler appPath];
+    if(![fm fileExistsAtPath:appPath]){
+        if(![fm createDirectoryAtPath:appPath withIntermediateDirectories:YES attributes:nil error:nil]){
+            @throw [NSException exceptionWithName:@"Application Support isn't accessible!" reason:@"Creating an important directory at Application Support directory failed!" userInfo:nil];
+        }
+    }
+    [fm createDirectoryAtPath:KextHandler.kextCachePath withIntermediateDirectories:YES attributes:nil error:nil];
+    [fm createDirectoryAtPath:KextHandler.guideCachePath withIntermediateDirectories:YES attributes:nil error:nil];
+    [fm createDirectoryAtPath:KextHandler.kextTmpPath withIntermediateDirectories:YES attributes:nil error:nil];
+    [fm createDirectoryAtPath:KextHandler.kextBackupPath withIntermediateDirectories:YES attributes:nil error:nil];
+    if(![fm fileExistsAtPath:KextHandler.kextDBPath]) {
+        @throw [NSException exceptionWithName:@"Updating Kext database failed!" reason:@"Failed to update kext database, please check your internet connection and try again." userInfo:nil];
+    }
 }
 @end
