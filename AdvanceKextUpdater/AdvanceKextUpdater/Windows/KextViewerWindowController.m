@@ -133,7 +133,7 @@
             @try{
                 BOOL installable = kcc_status < KCCSomeMatchedAllRestricted ? YES : NO;
                 BOOL updateAvailable = NO;
-                NSString *version = [self findInstalledVersion:self->kextConfig.kextName];
+                NSString *version = [KextFinder.sharedKextFinder findVersion:self->kextConfig.kextName];
                 updateAvailable = [self->kextConfig.versions newerThanVersion:version];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self->_installedVersion setStringValue:version];
@@ -383,18 +383,4 @@
              @"url": url
              };
 }
-
-- (NSString *) findInstalledVersion: (NSString *) kextName {
-    NSString *kext = find(kextName);
-    if(kextName == nil) {
-        @throw [NSException exceptionWithName:@"KextNotFoundException" reason:@"The requested kext not found. So, can't get a version for a kext that's not installed!" userInfo:nil];
-    }
-    NSString *plist = [NSString stringWithFormat:@"%@/Contents/Info.plist", kext];
-    NSString *version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleShortVersionString"];
-    if(version == nil){
-        version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleVersion"];
-    }
-    return version;
-}
-
 @end
