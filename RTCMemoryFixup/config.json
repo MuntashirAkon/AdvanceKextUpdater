@@ -1,0 +1,44 @@
+{
+  "name": "RTCMemoryFixup",
+  "kext": "RTCMemoryFixup.kext",
+  "description": "open source kernel extension providing a way to emulate some offsets in your CMOS (RTC) memory",
+  "homepage": "https://github.com/acidanthera/RTCMemoryFixup",
+  "version": "1.0.3",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https:\/\/github.com\/acidanthera\/RTCMemoryFixup\/releases\/download\/v1.0.3\/1.0.3.DEBUG.zip",
+      "script": null,
+      "loc": "RTCMemoryFixup.kext"
+    },
+    "rel": {
+      "url": "https:\/\/github.com\/acidanthera\/RTCMemoryFixup\/releases\/download\/v1.0.3\/1.0.3.RELEASE.zip",
+      "script": null,
+      "loc": "RTCMemoryFixup.kext"
+    }
+  },
+  "changes": "#### v1.0.3\r\n- Fixed compiling and loading on older OS\r\n- Fixed loading from \/Library\/Extensions\r\n- rtcfx_exclude property is read as string from RTC provider's properties",
+  "guide": "@see https://raw.githubusercontent.com/acidanthera/RTCMemoryFixup/master/README.md",
+  "time": "2019-01-27 11:06:21",
+  "license": "BSD 3-Clause \"New\" or \"Revised\" License",
+  "authors": [
+    {
+      "name": "vit9696",
+      "email": null,
+      "homepage": null
+    },
+    {
+      "name": "lvs1974",
+      "email": null,
+      "homepage": null
+    }
+  ],
+  "require": null,
+  "conflict": null,
+  "replaced_by": null,
+  "suggest": null
+}
