@@ -6,7 +6,7 @@
     "kext": "AirportBrcmFixup.kext"
   },
   "AppleALC": {
-    "kext": "AppleALC.kext"
+    "id": "as.vit9696.AppleALC"
   },
   "ATH9KFixup": {
     "kext": "ATH9KFixup.kext"
@@ -27,7 +27,7 @@
     "kext": "BT4LEContiunityFixup.kext"
   },
   "CodecCommander": {
-    "kext": "CodecCommander.kext"
+    "id": "org.tw.CodecCommander"
   },
   "CoreDisplayFixup": {
     "kext": "CoreDisplayFixup.kext"
@@ -39,7 +39,7 @@
     "kext": "EnableLidWake.kext"
   },
   "FakePCIID": {
-    "kext": "FakePCIID.kext"
+    "id": "org.rehabman.driver.FakePCIID"
   },
   "FakePCIID_AR9280_as_AR946x": {
     "kext": "FakePCIID_AR9280_as_AR946x.kext"
@@ -63,7 +63,7 @@
     "kext": "FakePCIID_Intel_HD_Graphics.kext"
   },
   "FakePCIID_Intel_HDMI_Audio": {
-    "kext": "FakePCIID_Intel_HDMI_Audio.kext"
+    "id": "org.rehabman.injector.FakePCIID-Intel-HDMI-Audio"
   },
   "FakePCIID_XHCIMux": {
     "kext": "FakePCIID_XHCIMux.kext"
@@ -96,7 +96,7 @@
     "kext": "IntelMausiEthernet.kext"
   },
   "Lilu": {
-    "kext": "Lilu.kext"
+    "id": "as.vit9696.Lilu"
   },
   "LiluFriend": {
     "kext": "LiluFriend.kext"
@@ -105,18 +105,21 @@
     "kext": "NightShiftUnlocker.kext"
   },
   "NoTouchID": {
-    "kext": "NoTouchID.kext"
+    "id": "xyz.racermaster.NoTouchID"
   },
   "NvidiaGraphicsFixup": {
     "kext": "NvidiaGraphicsFixup.kext"
   },
   "RealtekRTL8100": {
-    "kext": "RealtekRTL8100.kext"
+    "id": "com.insanelymac.RealtekRTL8100"
   },
   "RTCMemoryFixup": {
-    "kext": "RTCMemoryFixup.kext"
+    "id": "as.lvs1974.RTCMemoryFixup"
   },
   "VirtualSMC": {
-    "kext": "VirtualSMC.kext"
+    "id": "as.vit9696.VirtualSMC"
+  },
+  "WhateverGreen": {
+    "id": "as.vit9696.WhateverGreen"
   }
 }
