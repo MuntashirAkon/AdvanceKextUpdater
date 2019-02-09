@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(BOOL)isInstalled: (NSString *)kextName;
 -(NSString *)findVersion: (NSString *)kextName;
 -(NSArray<NSString *> *)findLocations: (NSString *)kextName;
-+(void)updateList;
+-(void)updateList;
 @end
 
 NS_ASSUME_NONNULL_END

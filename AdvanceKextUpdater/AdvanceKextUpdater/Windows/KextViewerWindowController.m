@@ -12,6 +12,7 @@
 #import "../MarkdownToHTML.h"
 #import "../Task.h"
 #import "../KextFinder.h"
+#import "../AppDelegate.h"
 #import "Spinner.h"
 
 @interface KextViewerWindowController ()
@@ -260,6 +261,11 @@
             } else {
                 NSRunCriticalAlertPanel(@"Failed!", @"%@", @"OK", nil, nil, message);
             }
+            // Update kext list
+            [KextFinder.sharedKextFinder updateList];
+            AppDelegate *appDelegate = [[NSApplication sharedApplication] delegate];
+            [appDelegate updateTables];
+            [appDelegate fetchKextInfo:self->kextConfig.name];
         });
     });
 }

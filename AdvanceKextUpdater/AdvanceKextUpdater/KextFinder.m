@@ -23,10 +23,7 @@
 }
 
 -(instancetype)init {
-    NSArray *tmpKexts = NSArray.array;
-    // TODO: Add directories based on preferences
-    tty([NSString stringWithFormat:@"kextfind"], &tmpKexts);
-    _installedKexts = tmpKexts;
+    [self updateList];
     return self;
 }
 -(BOOL)isInstalled: (NSString *)kextName {
@@ -68,8 +65,10 @@
     NSArray *matches = [_installedKexts filteredArrayUsingPredicate:filter];
     return matches;
 }
-+(void)updateList{
-    // TODO
-    return;
+-(void)updateList{
+    NSArray *tmpKexts = NSArray.array;
+    // TODO: Add directories based on preferences
+    tty([NSString stringWithFormat:@"kextfind"], &tmpKexts);
+    _installedKexts = tmpKexts;
 }
 @end

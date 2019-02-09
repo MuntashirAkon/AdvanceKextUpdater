@@ -20,6 +20,7 @@
 #import "Windows/Spinner.h"
 #import "../Shared/ZSSUserDefaults/ZSSUserDefaults.h"
 #import "../Shared/PreferencesHandler.h"
+#import "KextFinder.h"
 
 @interface AppDelegate ()
 @property IBOutlet NSWindow *window;
@@ -172,6 +173,11 @@
     return true;
 }
 
+-(void)applicationWillBecomeActive:(NSNotification *)notification {
+    [KextFinder.sharedKextFinder updateList];
+    [self updateTables];
+}
+
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
 }
@@ -315,10 +321,6 @@
             [self->_spinner close];
         });
     });
-}
-
--(IBAction)fetchSuggestions:(NSButton *)sender {
-    /// @todo
 }
 
 // Helper functions

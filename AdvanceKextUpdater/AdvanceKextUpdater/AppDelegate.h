@@ -19,5 +19,7 @@
     NSArray<NSString *> *allTheKexts;
     NSDictionary<NSString *, NSURL *> *remoteKexts;
 }
+-(void)updateTables;
+-(void)fetchKextInfo: (NSString *)kext;
 @end
 
