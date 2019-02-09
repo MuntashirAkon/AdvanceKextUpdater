@@ -1,0 +1,45 @@
+{
+  "name": "AppleBacklightFixup",
+  "kext": "AppleBacklightFixup.kext",
+  "description": "Lilu plugin for enabling support for backlight using RehabMan's patches",
+  "homepage": "https://github.com/RehabMan/AppleBacklightFixup",
+  "version": "1.0.2",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "rel": {
+      "url": "https://bitbucket.org/RehabMan/applebacklightfixup/downloads/RehabMan-BacklightFixup-2018-1013.zip",
+      "script": null,
+      "loc": "Release/AppleBacklightFixup.kext"
+    }
+  },
+  "changes": "higher IOProbeScore than IntelBacklight.kext and ACPIBacklight.kext",
+  "guide": "@see https://raw.githubusercontent.com/RehabMan/AppleBacklightFixup/master/README.md",
+  "time": "2018-10-13 18:25:42",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "RehabMan",
+      "email": "racerrehabman@gmail.com",
+      "homepage": null
+    },
+    {
+      "name": "hieplpvip",
+      "email": "baohiep2013@gmail.com",
+      "homepage": "hieplpvip.github.io"
+    }
+  ],
+  "require": {
+    "Lilu": "1.2.4^"
+  },
+  "conflict": {
+    "kexts": {
+      "AppleBacklightInjector": "*"
+    },
+    "action": "delete"
+  },
+  "replaced_by": null,
+  "suggest": null
+}
