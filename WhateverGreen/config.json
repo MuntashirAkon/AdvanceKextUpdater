@@ -1,0 +1,62 @@
+{
+  "name": "WhateverGreen",
+  "kext": "WhateverGreen.kext",
+  "description": "Various patches necessary for certain ATI/AMD/Intel/Nvidia GPUs.",
+  "homepage": "https://github.com/acidanthera/WhateverGreen",
+  "version": "1.2.6",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https:\/\/github.com\/acidanthera\/WhateverGreen\/releases\/download\/1.2.6\/1.2.6.DEBUG.zip",
+      "script": null,
+      "loc": "WhateverGreen.kext"
+    },
+    "rel": {
+      "url": "https:\/\/github.com\/acidanthera\/WhateverGreen\/releases\/download\/1.2.6\/1.2.6.RELEASE.zip",
+      "script": null,
+      "loc": "WhateverGreen.kext"
+    }
+  },
+  "changes": "#### v1.2.6\r\n- Added `applbkl=0` boot argument to termporarily disable `AppleBacklight` patching code\r\n- Fixed AMD Verde CAIL injection logic\r\n- Fixed breaking backlight on Apple hardware, on laptops with AMD GPUs, and on 10.11 or earlier\r\n- Changed CFL backlight patches to enable by default on CFL drivers only (avoids issues with faux \"KBL\" 8xxx CPUs)",
+  "guide": "@see https://raw.githubusercontent.com/acidanthera/WhateverGreen/master/README.md",
+  "time": "2018-12-24 09:31:02",
+  "license": "BSD 3-Clause \"New\" or \"Revised\" License",
+  "authors": [{
+    "name": "vit9696",
+    "email": null,
+    "homepage": null
+  }, {
+    "name": "vandroiy2013",
+    "email": null,
+    "homepage": null
+  }, {
+    "name": "Andrey1970AppleLife",
+    "email": null,
+    "homepage": null
+  }, {
+    "name": "RehabMan",
+    "email": "racerrehabman@gmail.com",
+    "homepage": null
+  }, {
+    "name": "headkaze",
+    "email": null,
+    "homepage": null
+  }],
+  "require": {
+    "Lilu": "1.2.5^"
+  },
+  "conflict": {
+    "kexts": {
+      "IntelGraphicsFixup": "*",
+      "IntelGraphicsDVMTFixup": "*",
+      "NvidiaGraphicsFixup": "*"
+    },
+    "action": "delete"
+  },
+  "replaced_by": null,
+  "suggest": null
+}
