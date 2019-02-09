@@ -16,7 +16,7 @@
     }
   },
   "changes": "higher IOProbeScore than IntelBacklight.kext and ACPIBacklight.kext",
-  "guide": "@see https://raw.githubusercontent.com/RehabMan/AppleBacklightFixup/master/README.md",
+  "guide": "@see https://www.tonymacx86.com/threads/guide-laptop-backlight-control-using-applebacklightfixup-kext.218222/",
   "time": "2018-10-13 18:25:42",
   "license": "GPLv2",
   "authors": [
@@ -36,7 +36,9 @@
   },
   "conflict": {
     "kexts": {
-      "AppleBacklightInjector": "*"
+      "ACPIBacklight": "*",
+      "AppleBacklightInjector": "*",
+      "IntelBacklight": "*"
     },
     "action": "delete"
   },
