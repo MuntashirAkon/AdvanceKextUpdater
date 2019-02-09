@@ -8,91 +8,11 @@
 //
 
 #import "Task.h"
-#import <objc/runtime.h>
-#import <sys/types.h>
 #import <sys/socket.h>
 #import <ifaddrs.h>
 #import <net/if_dl.h>
 #import <net/if_types.h>
 #import "JSONParser.h"
-
-static char kCallbackKey;
-static char kListenerKey;
-static char kLockKey;
-
-@implementation NSTask (TaskAdditions)
-
--(void)setCallback:(SEL)callback{
-    objc_setAssociatedObject(self, &kCallbackKey, NSStringFromSelector(callback), OBJC_ASSOCIATION_RETAIN);
-}
--(SEL)callback{
-    return NSSelectorFromString(objc_getAssociatedObject(self, &kCallbackKey));
-}
--(void)setListener:(id)listener{
-    objc_setAssociatedObject(self, &kListenerKey, listener, OBJC_ASSOCIATION_RETAIN);
-}
--(id)listener{
-    return objc_getAssociatedObject(self, &kListenerKey);
-}
-
-+(NSString *)launchAndOut:(NSString *)path args:(NSArray *)arguments{
-    NSTask *temp = [NSTask new];
-    [temp setLaunchPath:path];
-    [temp setArguments:arguments];
-    [temp setStandardOutput:[NSPipe pipe]];
-    [temp launchAndWait];
-    return [[NSString alloc] initWithData:[[temp.standardOutput fileHandleForReading] readDataToEndOfFile] encoding:NSASCIIStringEncoding];
-}
-+(NSTask *)create:(NSString *)path args:(NSArray *)arguments callback:(SEL)selector listener:(id)object{
-    NSTask *temp = [NSTask new];
-    objc_setAssociatedObject(temp, &kLockKey, [NSConditionLock new], OBJC_ASSOCIATION_RETAIN);
-    [temp setLaunchPath:path];
-    [temp setArguments:arguments];
-    [temp setListener:object];
-    [temp setCallback:selector];
-    [temp setStandardError:[NSPipe pipe]];
-    [temp setStandardOutput:[NSPipe pipe]];
-    [temp performSelectorInBackground:@selector(read:) withObject:[temp.standardError fileHandleForReading]];
-    [temp performSelectorInBackground:@selector(read:) withObject:[temp.standardOutput fileHandleForReading]];
-    return temp;
-}
-+(NSTask *)createSingle:(NSString *)path args:(NSArray *)arguments callback:(SEL)selector listener:(id)object{
-    NSTask *temp = [NSTask new];
-    objc_setAssociatedObject(temp, &kLockKey, [NSConditionLock new], OBJC_ASSOCIATION_RETAIN);
-    [temp setLaunchPath:path];
-    [temp setArguments:arguments];
-    [temp setListener:object];
-    [temp setCallback:selector];
-    [temp setStandardOutput:[NSPipe pipe]];
-    [temp setStandardError:temp.standardOutput];
-    [temp performSelectorInBackground:@selector(read:) withObject:[temp.standardOutput fileHandleForReading]];
-    return temp;
-}
--(void)launchAndWait{
-    NSConditionLock *cond = objc_getAssociatedObject(self, &kLockKey);
-    [cond waitOn:2];
-    [self launch];
-    [self waitUntilExit];
-    [cond waitOn:0];
-}
--(void)read:(NSFileHandle *)handle{
-    NSData *data;
-    NSConditionLock *cond = objc_getAssociatedObject(self, &kLockKey);
-    [cond increment];
-    if (self.standardOutput == self.standardError) [cond increment];
-    while ((data = [handle availableData])){
-        if (!data.length) break;
-        if (self.listener)
-            #pragma clang diagnostic push
-            #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [self.listener performSelector:self.callback withObject:data];
-            #pragma clang diagnostic pop
-    }
-    [cond decrement];
-    if (self.standardOutput == self.standardError) [cond decrement];
-}
-
-@end
 
 @implementation AScript
 
@@ -265,46 +185,3 @@ static char kLockKey;
 }
 
 @end
-
-@implementation NSConditionLock (NSTaskAdditions)
-
--(void)waitOn:(NSUInteger)condition{
-    [self lockWhenCondition:condition];
-    [self unlockWithCondition:condition];
-}
--(void)setCondition:(NSInteger)condition{
-    [self lock];
-    [self unlockWithCondition:condition];
-}
--(void)increment{
-    [self lock];
-    [self unlockWithCondition:self.condition+1];
-}
--(void)decrement{
-    [self lock];
-    [self unlockWithCondition:self.condition-1];
-}
-
-@end
-
-//@implementation NSAlert (HyperlinkAdditions)
-//
-//+(NSTextView *)hyperlink:(NSString *)hyperlink title:(NSString *)title{
-//    NSDictionary *link = @{NSFontAttributeName:[NSFont systemFontOfSize:NSFont.smallSystemFontSize], NSLinkAttributeName:hyperlink, NSForegroundColorAttributeName:[NSColor blueColor], NSUnderlineStyleAttributeName:@(NSSingleUnderlineStyle)};
-//    CGSize size = [title sizeWithAttributes:link];
-//    NSTextView *temp = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, size.width, size.height)];
-//    [temp.textStorage setAttributedString:[[NSAttributedString alloc] initWithString:title attributes:link]];
-//    [temp setEditable:false];
-//    [temp setDrawsBackground:false];
-//    return temp;
-//}
-//+(NSAlert *)alertWithMessageTextAndView:(NSString *)message defaultButton:(NSString *)defaultButton alternateButton:(NSString *)alternateButton otherButton:(NSString *)otherButton accessoryView:(NSView *)view informativeTextWithFormat:(NSString *)format, ...{
-//    va_list args;
-//    va_start(args, format);
-//    NSAlert *temp = [NSAlert alertWithMessageText:message defaultButton:defaultButton alternateButton:alternateButton otherButton:otherButton informativeTextWithFormat:@"%@", [[NSString alloc] initWithFormat:format arguments:args]];
-//    va_end(args);
-//    [temp setAccessoryView:view];
-//    return temp;
-//}
-//
-//@end
