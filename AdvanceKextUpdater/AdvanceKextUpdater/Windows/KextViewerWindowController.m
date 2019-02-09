@@ -11,6 +11,7 @@
 #import "../KIHelperAgrumentController.h"
 #import "../MarkdownToHTML.h"
 #import "../Task.h"
+#import "../KextFinder.h"
 #import "Spinner.h"
 
 @interface KextViewerWindowController ()
@@ -52,10 +53,10 @@
 @synthesize kextConfig;
 -(instancetype)init{ return nil; } // No default constructor
 
--(instancetype)initWithKextConfig: (KextConfig *) kextConfig andIsInstalled: (BOOL) installed {
+-(instancetype)initWithKextConfig: (KextConfig *) kextConfig {
     self = [super init];
-    _installed = installed;
     self.kextConfig = kextConfig;
+    _installed = [KextFinder.sharedKextFinder isInstalled:kextConfig.kextName];
     _authorList = NSMutableArray.array;
     for(ConfigAuthor *author in kextConfig.authors){
         [_authorList addObject:author.name];

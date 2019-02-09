@@ -411,7 +411,7 @@
             _kextViewer = nil;
         }
         // Open a new window
-        _kextViewer = [KextViewerWindowController.alloc initWithKextConfig:kextConfig andIsInstalled:[self isInstalled:kextConfig.kextName]];
+        _kextViewer = [KextViewerWindowController.alloc initWithKextConfig:kextConfig];
         [self.window addChildWindow:_kextViewer.window ordered:NSWindowAbove];
     } @catch (NSError *e) {
         // Do nothing
@@ -431,56 +431,4 @@
     [_allKextsTable reloadData];
     [_allKextsTable deselectAll:self];
 }
-
-// Check if a kext is installed (with extension)
-- (BOOL) isInstalled: (NSString *) kextName {
-    if([installedKexts indexOfObject:kextName] != NSNotFound) {
-        return YES;
-    }
-    return NO;
-}
-
--(NSArray *)getListOfCloverInstallationLocation {
-    NSArray *BSDNames = NSArray.array;
-    tty(@"cd /dev && ls disk*s*", &BSDNames);
-    NSMutableArray *result = NSMutableArray.array;
-    for(NSString *BSDName in BSDNames) {
-        int                 err = 0;
-        DADiskRef           disk = NULL;
-        DASessionRef        session;
-        CFDictionaryRef     diskInfo = NULL;
-        session = DASessionCreate(NULL);
-        if (session == NULL) { err = EINVAL; }
-        if (err == 0) {
-            disk = DADiskCreateFromBSDName(NULL, session, BSDName.UTF8String);
-            if (session == NULL) { err = EINVAL; }
-        }
-        if (err == 0) {
-            diskInfo = DADiskCopyDescription(disk);
-            if (diskInfo == NULL) { err = EINVAL; }
-        }
-        if (err == 0) {
-            CFTypeRef volume_kind  = CFDictionaryGetValue(diskInfo, kDADiskDescriptionVolumeKindKey);
-            CFTypeRef volume_label = CFDictionaryGetValue(diskInfo, kDADiskDescriptionVolumeNameKey);
-            CFURLRef fspath = CFDictionaryGetValue(diskInfo,kDADiskDescriptionVolumePathKey);
-            char buf[MAXPATHLEN];
-            CFURLGetFileSystemRepresentation(fspath, false, (UInt8 *)buf, sizeof(buf));
-            if (volume_kind != NULL) { // Since Clover only supports ntfs and msdos
-                if (CFEqual(volume_kind, CFSTR("hfs")) || CFEqual(volume_kind, CFSTR("msdos"))) {
-                    [result addObject:@{
-                        @"BSDName": BSDName,
-                        @"Label": (__bridge NSString *)volume_label,
-                        @"Path": [NSString stringWithUTF8String:buf]
-                    }];
-                }
-            }
-        }
-        if (diskInfo != NULL) { CFRelease(diskInfo); }
-        if (disk != NULL) { CFRelease(disk); }
-        if (session != NULL) { CFRelease(session); }
-    }
-    NSLog(@"%@", result);
-    return result.copy;
-}
-
 @end

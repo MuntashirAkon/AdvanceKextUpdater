@@ -14,6 +14,8 @@
 		875032ED2135049C00F5278D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875032EC2135049C00F5278D /* WebKit.framework */; };
 		875564CA21D6AAAE0040E9F4 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 875564C921D6AAAE0040E9F4 /* Preferences.xib */; };
 		875564CE21D6AB190040E9F4 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875564CC21D6AB190040E9F4 /* PreferencesWindowController.m */; };
+		875F5965220E5C3700B120A5 /* KextFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 875F5964220E5C3700B120A5 /* KextFinder.m */; };
+		875F5966220E626B00B120A5 /* KextFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 875F5964220E5C3700B120A5 /* KextFinder.m */; };
 		876056B021EB273300FC78AD /* PreferencesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 876056AF21EB273300FC78AD /* PreferencesHandler.m */; };
 		876056B221EB28DC00FC78AD /* PreferencesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 876056AF21EB273300FC78AD /* PreferencesHandler.m */; };
 		8765F1792202C0560018B3F7 /* KextViewerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8765F1772202C0560018B3F7 /* KextViewerWindowController.m */; };
@@ -101,6 +103,8 @@
 		875564C921D6AAAE0040E9F4 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		875564CB21D6AB190040E9F4 /* PreferencesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
 		875564CC21D6AB190040E9F4 /* PreferencesWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesWindowController.m; sourceTree = "<group>"; };
+		875F5963220E5C3600B120A5 /* KextFinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextFinder.h; sourceTree = "<group>"; };
+		875F5964220E5C3700B120A5 /* KextFinder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KextFinder.m; sourceTree = "<group>"; };
 		876056AE21EB273300FC78AD /* PreferencesHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PreferencesHandler.h; path = Shared/PreferencesHandler.h; sourceTree = SOURCE_ROOT; };
 		876056AF21EB273300FC78AD /* PreferencesHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PreferencesHandler.m; path = Shared/PreferencesHandler.m; sourceTree = SOURCE_ROOT; };
 		8765F1762202C0560018B3F7 /* KextViewerWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KextViewerWindowController.h; sourceTree = "<group>"; };
@@ -335,6 +339,8 @@
 				873DFC482174966000B33DB5 /* MarkdownToHTML.m */,
 				87C60B10220444560099A929 /* AKUDiskManager.h */,
 				87C60B11220444560099A929 /* AKUDiskManager.m */,
+				875F5963220E5C3600B120A5 /* KextFinder.h */,
+				875F5964220E5C3700B120A5 /* KextFinder.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -441,6 +447,7 @@
 				87753DDF21D2238E0072FCAC /* KextAction.m in Sources */,
 				876056B221EB28DC00FC78AD /* PreferencesHandler.m in Sources */,
 				87753DD221D1AFFF0072FCAC /* Task.m in Sources */,
+				875F5966220E626B00B120A5 /* KextFinder.m in Sources */,
 				87753DD921D1B0390072FCAC /* ConfigKextVersionControl.m in Sources */,
 				87753DD721D1B02F0072FCAC /* ConfigMacOSVersionControl.m in Sources */,
 				87753DD521D1B0250072FCAC /* ConfigAuthor.m in Sources */,
@@ -483,6 +490,7 @@
 				87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */,
 				87F1AC6121E7A1D90091CD04 /* AboutWindowController.m in Sources */,
 				87897BAE21D8AE2600BB0CEE /* Preferences.m in Sources */,
+				875F5965220E5C3700B120A5 /* KextFinder.m in Sources */,
 				875564CE21D6AB190040E9F4 /* PreferencesWindowController.m in Sources */,
 				8773B715212BFD730096BFCC /* AppDelegate.m in Sources */,
 				879F609A2141FE390059D0ED /* PCI.m in Sources */,

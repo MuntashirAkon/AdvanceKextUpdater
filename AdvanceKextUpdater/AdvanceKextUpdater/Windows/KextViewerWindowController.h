@@ -21,7 +21,7 @@ typedef enum {
 } KextInstallerType;
 
 @interface KextViewerWindowController : NSWindowController <NSApplicationDelegate>
--(instancetype)initWithKextConfig: (KextConfig *) kextConfig andIsInstalled: (BOOL) installed;
+-(instancetype)initWithKextConfig: (KextConfig *) kextConfig;
 -(IBAction)installKext:(id)sender;
 -(IBAction)updateKext:(id)sender;
 -(IBAction)removeKext:(id)sender;

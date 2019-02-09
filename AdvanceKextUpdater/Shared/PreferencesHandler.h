@@ -55,6 +55,7 @@ typedef enum {
 @end
 
 @interface PreferencesHandler : NSObject
++(id)sharedPreferences;
 ///
 /// A wrapper for clover preferences
 @property (readonly) CloverPreference *clover;

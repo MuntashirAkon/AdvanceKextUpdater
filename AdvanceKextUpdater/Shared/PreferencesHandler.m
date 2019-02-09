@@ -13,6 +13,14 @@
 @implementation PreferencesHandler
 @synthesize clover;
 @synthesize kexts;
++(id)sharedPreferences {
+    static PreferencesHandler *preferences = nil;
+    static dispatch_once_t dispatch_token;
+    dispatch_once(&dispatch_token, ^{
+        preferences = [PreferencesHandler new];
+    });
+    return preferences;
+}
 -(instancetype)init {
     ZSSUserDefaults *defaults;
     defaults = [ZSSUserDefaults standardUserDefaults];

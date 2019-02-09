@@ -11,6 +11,7 @@
 #import "ConfigMacOSVersionControl.h"
 #import "Task.h"
 #import "utils.h"
+#import "KextFinder.h"
 
 // What it does:
 // - Loads catalog.json
@@ -39,7 +40,7 @@
         kextNames = [catalog allKeys];
         NSMutableArray *kextList = [NSMutableArray array];
         for(NSString *kextName in kextNames){
-            [kextList addObject:[kextName stringByAppendingPathExtension:@"kext"]];
+            [kextList addObject:kextName];
             id kextInfo = [catalog objectForKey:kextName];
             if([kextInfo isKindOfClass:NSDictionary.class]){
                 if([kextInfo objectForKey:@"remote_url"] != nil) {
@@ -183,22 +184,14 @@
  * List installed kext based on kext db, search them at SLE and LE (macOS 10.11 or later)
  *
  * @return An array of kexts (with extension)
- * @todo Use `kextfind -no-paths` to get the list
  */
 - (NSArray<NSString *> *) listInstalledKext {
     if(kexts == nil) return nil;
     // TODO: Cache installed kext for later
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSArray<NSString *> *kextList = [fm contentsOfDirectoryAtPath:kSLE error:nil];
     NSMutableArray *installedKexts = [NSMutableArray array];
-    // Also from LE if macOS version is greater than 10.10
-    if([ConfigMacOSVersionControl getMacOSVersionInInt] > 10){
-        NSArray *listAtLE = [fm contentsOfDirectoryAtPath:kLE error:nil];
-        kextList = [kextList arrayByAddingObjectsFromArray:listAtLE];
-    }
-    for(NSString *kext in kextList){
-        if([kexts indexOfObject:kext] != NSNotFound)
-            [installedKexts addObject:kext];
+    KextFinder *kf = [KextFinder sharedKextFinder];
+    for(NSString *kext in kextNames){
+        if([kf isInstalled:kext]) [installedKexts addObject:kext];
     }
     return [installedKexts copy];
 }
