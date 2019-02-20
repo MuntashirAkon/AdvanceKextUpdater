@@ -41,7 +41,7 @@
         kextName = [kextName stringByAppendingPathExtension:@"kext"];
     }
     NSArray *kextLoc = [self findLocations:kextName];
-    // Only find version for the first index
+    // Only find version for the first index: TODO ALL?
     NSString *kext = [kextLoc firstObject];
     if(kext == nil) {
         @throw [NSException exceptionWithName:@"KextNotInstalled" reason:@"The requested kext is not installed. So, can't get a version for a kext that's not installed!" userInfo:nil];
@@ -67,8 +67,12 @@
 }
 -(void)updateList{
     NSArray *tmpKexts = NSArray.array;
-    // TODO: Add directories based on preferences
-    tty([NSString stringWithFormat:@"kextfind"], &tmpKexts);
+    NSString *directories = NSString.string;
+    CloverPreference *clover = [PreferencesHandler.sharedPreferences clover];
+    if(clover.support){
+        directories = [clover.directories componentsJoinedByString:@" "];
+    }
+    tty([NSString stringWithFormat:@"kextfind %@ %@ %@", kSLE, kLE, directories], &tmpKexts);
     _installedKexts = tmpKexts;
 }
 @end

@@ -272,7 +272,7 @@
 		8773B712212BFD730096BFCC /* AdvanceKextUpdater */ = {
 			isa = PBXGroup;
 			children = (
-				87F1AC6221E7AE5C0091CD04 /* KEXT.icns */,
+				87F782C5221DAEEB000F7E2D /* Others */,
 				8786030A21D4927C00DC40CC /* Windows */,
 				879F609B21423B490059D0ED /* Utils */,
 				877CDB74213918CE00176777 /* Resources */,
@@ -280,12 +280,8 @@
 				8773B713212BFD730096BFCC /* AppDelegate.h */,
 				8773B714212BFD730096BFCC /* AppDelegate.m */,
 				8773B718212BFD760096BFCC /* MainMenu.xib */,
-				8773B71B212BFD760096BFCC /* Info.plist */,
-				8773B71C212BFD760096BFCC /* main.m */,
-				8773B71E212BFD760096BFCC /* AdvanceKextUpdater.entitlements */,
 				8773B724212BFEE40096BFCC /* KextHandler.h */,
 				8773B725212BFF0F0096BFCC /* KextHandler.m */,
-				87BB857A212FF1C3007F4D29 /* PrefixHeader.pch */,
 				872395D42171DD8600B6FE27 /* KIHelperAgrumentController.h */,
 				872395D52171DD9000B6FE27 /* KIHelperAgrumentController.m */,
 			);
@@ -343,6 +339,18 @@
 				875F5964220E5C3700B120A5 /* KextFinder.m */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		87F782C5221DAEEB000F7E2D /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				8773B71C212BFD760096BFCC /* main.m */,
+				87BB857A212FF1C3007F4D29 /* PrefixHeader.pch */,
+				8773B71B212BFD760096BFCC /* Info.plist */,
+				87F1AC6221E7AE5C0091CD04 /* KEXT.icns */,
+				8773B71E212BFD760096BFCC /* AdvanceKextUpdater.entitlements */,
+			);
+			name = Others;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

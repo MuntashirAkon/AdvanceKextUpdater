@@ -303,10 +303,11 @@
                                             </popUpButtonCell>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="lEE-Qi-fu7">
-                                            <rect key="frame" x="17" y="17" width="402" height="35"/>
+                                            <rect key="frame" x="17" y="-3" width="402" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <textFieldCell key="cell" selectable="YES" title="* Regardless of the partition, partition scheme, etc., Clover is always supposed to be located at {SelectedVolume}/EFI/CLOVER" id="lTj-BJ-cl7">
+                                            <textFieldCell key="cell" selectable="YES" id="lTj-BJ-cl7">
                                                 <font key="font" metaFont="system"/>
+                                                <string key="title">* The disk will be mounted at startup or starting of the app if it is not mounted by the system. Clover is always supposed to be located at {SelectedVolume}/EFI/CLOVER</string>
                                                 <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -349,7 +350,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="TsX-gU-Eym">
                             <rect key="frame" x="1" y="1" width="213" height="179"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" id="vYf-wK-8n1">
                                     <rect key="frame" x="0.0" y="0.0" width="213" height="179"/>

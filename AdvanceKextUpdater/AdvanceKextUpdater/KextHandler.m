@@ -177,8 +177,15 @@
     return NO;
 }
 
-- (void) checkForKextUpdate {
-    // Check for kext update
+- (NSArray<NSString *> *) listKextsWithUpdate {
+    NSMutableArray *kextNeedsUpdate = NSMutableArray.array;
+    for(NSString *kextName in [self listInstalledKext]){
+        if([self needUpdating:kextName]){
+            // TODO: Exclude from preferences?
+            [kextNeedsUpdate addObject:kextName];
+        }
+    }
+    return kextNeedsUpdate;
 }
 
 /**
@@ -206,9 +213,8 @@
 }
 
 - (BOOL)needUpdating:(NSString *)kextName {
-    KextFinder *kf = [KextFinder sharedKextFinder];
     @try{
-        NSString *installedVersion = [kf findVersion:kextName];
+        NSString *installedVersion = [KextFinder.sharedKextFinder findVersion:kextName];
         KextConfig *kextConfig = [self kextConfig:kextName];
         return [kextConfig.versions newerThanVersion:installedVersion];
     } @catch (NSException *e) {

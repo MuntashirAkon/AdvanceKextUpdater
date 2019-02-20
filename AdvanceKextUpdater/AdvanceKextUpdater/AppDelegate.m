@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 #import "KextConfig.h"
 #import "KextHandler.h"
-#import <Webkit/Webkit.h> // for WebView
-#import <DiskArbitration/DiskArbitration.h> // Disk
 #import "Task.h"
 #import "utils.h"
 #import "AKUDiskManager.h"
@@ -83,6 +81,17 @@
             if(tty([NSString stringWithFormat:@"%@ help", [NSBundle.mainBundle pathForResource:@"git" ofType:nil]], nil) != EXIT_SUCCESS){
                 @throw [NSException exceptionWithName:@"No Xcode Command Line Tools!" reason:@"Xcode command line tools are required! Unlike the  Xcode itself the command line tools don't take much space." userInfo:nil];
             }
+            // Init Preferences: mount clover if needed
+            CloverPreference *cp = [[PreferencesHandler sharedPreferences] clover];
+            if(cp.support){
+                AKUDiskManager *clover = [AKUDiskManager new];
+                [clover setDisk:cp.partition];
+                if(![clover isMounted]) [clover mountVolume];
+                if([clover getMountPoint] == nil){
+                    @throw [NSException exceptionWithName:@"Cannot mount Clover parition" reason:@"You have enabled support for Clover parition, but for some reason this partition cannot be mounted. Please, try starting the app again or report me." userInfo:nil];
+                }
+                [cp prefixDirectories];
+            }
             // Init kextFinder
             [KextFinder sharedKextFinder];
             // Init kextHandler
@@ -114,11 +123,6 @@
     // Handle kext:// url scheme
     NSAppleEventManager *appleEventManager = NSAppleEventManager.sharedAppleEventManager;
     [appleEventManager setEventHandler:self andSelector:@selector(handleGetURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
-    //[self getListOfCloverInstallationLocation];
-//    AKUDiskManager *clover = [AKUDiskManager new];
-//    [clover setDisk:@"disk0s1"];
-//    [clover mountVolume];
-//    _printf([clover getMountPoint]);
 }
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
@@ -216,6 +220,12 @@
                 NSRunCriticalAlertPanel(e.name, @"%@", @"OK", nil, nil, e.reason);
             });
         }
+    });
+}
+
+-(IBAction)reportAnError:(id)sender{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://github.com/MuntashirAkon/AdvanceKextUpdater/issues/new"]];
     });
 }
 

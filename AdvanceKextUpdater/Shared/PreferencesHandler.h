@@ -29,6 +29,7 @@ typedef enum {
 @property (readonly) BOOL support;
 
 -(instancetype)initWithDict: (NSDictionary *)cloverPref;
+-(void)prefixDirectories;
 @end
 
 @interface KextPreference : NSObject

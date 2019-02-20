@@ -113,9 +113,10 @@
         @"Directories":cloverDirs.copy
     };
     [defaults setObject:clover forKey:@"Clover"];
-    /// @todo Warn user if an start-up mount script is required
-    /// when the parition is not mounted by default
     [defaults synchronizeChanges];
+    // TODO: Add/Enable an startup LaunchAgent to check for updates automaatically
+    // if user requested for auto updates/check for updates
+    
 }
 
 -(void)setPreferences{
@@ -187,19 +188,6 @@
                     }];
                 }
             }
-            //            CFURLRef fspath = CFDictionaryGetValue(diskInfo,kDADiskDescriptionVolumePathKey);
-            //
-            //            char buf[MAXPATHLEN];
-            //            if (CFURLGetFileSystemRepresentation(fspath, false, (UInt8 *)buf, sizeof(buf))) {
-            //                printf("Disk %s mounted at %s\n",
-            //                       DADiskGetBSDName(disk),
-            //                       buf);
-            //
-            //                /* Print the complete dictionary for debugging. */
-            //                CFShow(diskInfo);
-            //            } else {
-            //                /* Something is *really* wrong. */
-            //            }
         }
         if (diskInfo != NULL) { CFRelease(diskInfo); }
         if (disk != NULL) { CFRelease(disk); }

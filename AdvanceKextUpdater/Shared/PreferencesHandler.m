@@ -9,6 +9,7 @@
 #import "PreferencesHandler.h"
 #import "../AdvanceKextUpdater/utils.h" // isRootUser
 #import "ZSSUserDefaults/ZSSUserDefaults.h"
+#import "../AdvanceKextUpdater/AKUDiskManager.h"
 
 @implementation PreferencesHandler
 @synthesize clover;
@@ -63,6 +64,22 @@
     partition = [cloverPref objectForKey:@"Partition"];
     support = ([[cloverPref objectForKey:@"Support"] integerValue] ? YES : NO);
     return self;
+}
+// Prefix directories if support for clover is enabled todo: check this on every request
+-(void)prefixDirectories{
+    if(support){
+        AKUDiskManager *clover = [AKUDiskManager new];
+        [clover setDisk:partition];
+        NSString *mountPoint = [clover getMountPoint];
+        if(mountPoint == nil){
+            @throw [NSException exceptionWithName:@"Clover parition is not mounted" reason:@"You have enabled support for Clover parition, but for some reason this partition is not mounted. Please, try starting the app again or report us." userInfo:nil];
+        }
+        NSMutableArray<NSString *> *prefixedDirectories = NSMutableArray.array;
+        for(NSString *directory in directories){
+            [prefixedDirectories addObject:[NSString stringWithFormat:@"%@/EFI/CLOVER/kexts/%@", mountPoint, directory]];
+        }
+        directories = prefixedDirectories.copy;
+    }
 }
 @end
 
