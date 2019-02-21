@@ -10,6 +10,7 @@
 #import <stdlib.h>
 #import "../AdvanceKextUpdater/utils.h"
 #import "../AdvanceKextUpdater/KextHandler.h"
+#import "../AdvanceKextUpdater/ConfigMacOSVersionControl.h"
 #import "../Shared/PreferencesHandler.h"
 #import "KextAction.h"
 
@@ -56,14 +57,7 @@ void _status(NSString *msg){
 /// @param msg
 /// The message containing the details of the status
 ///
-void _message(int status_code, NSString * _Nullable msg){
-    if(msg == nil){
-        if(status_code == EXIT_SUCCESS) {
-            msg = @"The kext was installed successfully!";
-        } else {
-            msg = @"Sorry, the kext couldn't be installed!";
-        }
-    }
+void _message(int status_code, NSString * _Nonnull msg){
     FILE *fp = fopen(KextHandler.messageFile.UTF8String, "w");
     _fprintf(fp, [NSString stringWithFormat:@"%d\n%@", status_code, msg]);
     fclose(fp);
@@ -137,9 +131,43 @@ int main(int argc, const char *argv[]) {
                 return _return(1);
             }
         } else if ([verb isEqualToString:ARG_CACHE]){
-            /// @todo Rebuild kernel cache
+            @try {
+                int ret_val;
+                if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){ // For 10.11 or later
+                    ret_val = tty(@"/usr/sbin/kextcache -i /", nil);
+                } else { // For 10.10 or earlier
+                    ret_val = tty([NSString stringWithFormat:@"/usr/bin/touch %@;/usr/sbin/kextcache -Boot -U /", kSLE], nil);
+                }
+                if(ret_val == EXIT_SUCCESS){
+                    _message(EXIT_SUCCESS, @"Kernel cache was rebuilt successfully!");
+                    return _return(EXIT_SUCCESS);
+                } else {
+                    _message(EXIT_FAILURE, @"Failed to rebuild kernel cache!");
+                    return _return(EXIT_FAILURE);
+                }
+            } @catch (NSError *e) {
+                _message(EXIT_FAILURE, [e.userInfo objectForKey:@"details"]);
+                return _return(EXIT_FAILURE);
+            }
         } else if ([verb isEqualToString:ARG_PERM]){
-            /// @todo Repair permissions
+            @try {
+                NSString *command = [NSString stringWithFormat:@"/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", kSLE, kSLE, kSLE, kSLE, kSLE];
+                if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){
+                    // Also repair permissions for LE if macOS versions is gte 10.11
+                    command = [NSString stringWithFormat:@"%@;/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", command, kLE, kLE, kLE, kLE, kLE];
+                }
+                int ret_val = tty(command, nil);
+                if(ret_val == EXIT_SUCCESS){
+                    _message(EXIT_SUCCESS, @"Successfully repaired permissions!");
+                    return _return(EXIT_SUCCESS);
+                } else {
+                    _message(EXIT_FAILURE, @"Failed to repair permissions!");
+                    return _return(EXIT_FAILURE);
+                }
+            } @catch (NSError *e) {
+                _message(EXIT_FAILURE, [e.userInfo objectForKey:@"details"]);
+                return _return(EXIT_FAILURE);
+            }
         } else {
             _fprintf(stderr, @"Unknown verb (%@)!\n", verb);
             return _return(1);

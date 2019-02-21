@@ -19,6 +19,7 @@
 #import "../Shared/ZSSUserDefaults/ZSSUserDefaults.h"
 #import "../Shared/PreferencesHandler.h"
 #import "KextFinder.h"
+#import "HelperController.h"
 
 @interface AppDelegate ()
 @property IBOutlet NSWindow *window;
@@ -131,7 +132,6 @@
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {}
 
-#pragma AppDelegate - Preferences
 -(IBAction)preferences:(id)sender{
     if(_preferences == nil){
         _preferences = [PreferencesWindowController new];
@@ -229,12 +229,10 @@
     });
 }
 
-#pragma AppDelegate - FetchInstalledKextInfo
 -(IBAction)fetchInstalledKextInfo:(NSTableView *)sender {
     [self fetchKextInfo:sender whichDB:NO];
 }
 
-#pragma AppDelegate - FetchAllKextInfo
 -(IBAction)fetchAllKextInfo:(NSTableView *)sender {
     [self fetchKextInfo:sender whichDB:YES];
 }
@@ -265,46 +263,43 @@
     });
 }
 
-#pragma AppDelegate - RepairPermissions
 -(IBAction)repairPermissions:(id)sender {
     [[_spinner setTitle:@"Repairing permissions..."] reload];
     [_spinner.window makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         @try {
-            NSString *command = [NSString stringWithFormat:@"/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", kSLE, kSLE, kSLE, kSLE, kSLE];
-            if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){
-                // Also repair permissions for LE if macOS versions is gte 10.11
-                command = [NSString stringWithFormat:@"%@;/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", command, kLE, kLE, kLE, kLE, kLE];
-            }
-            [AScript adminExec:command];
-        } @catch (NSError *e) {
-            printf("Error: %s\n", [[[e userInfo] objectForKey:@"details"] UTF8String]);
+            [HelperController.sharedHelper repairPermissions];
+            while([HelperController.sharedHelper isTaskRunning]) { sleep(1); }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self->_spinner close];
+            });
+        } @catch (NSException *e) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self->_spinner close];
+                NSRunCriticalAlertPanel(e.name, @"%@", @"OK", nil, nil, e.reason);
+            });
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self->_spinner close];
-        });
     });
 }
 
-#pragma AppDelegate - RebuildCache
 -(IBAction)rebuildCache:(id)sender {
     [[_spinner setTitle:@"Rebuilding kernel cache..."] reload];
     [_spinner.window makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         @try {
-            if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){ // `kextcache -i /` for 10.11 or later
-                [AScript adminExec:@"/usr/sbin/kextcache -i /; "];
-            } else { // `touch /S*/L*/Extensions; kextcache -Boot -U /` for 10.10 or earlier
-                [AScript adminExec:[NSString stringWithFormat:@"/usr/bin/touch %@;/usr/sbin/kextcache -Boot -U /", kSLE]];
-            }
-        } @catch (NSError *e) {
-            printf("Error: %s\n", [[[e userInfo] objectForKey:@"details"] UTF8String]);
+            [HelperController.sharedHelper rebuildCache];
+            while([HelperController.sharedHelper isTaskRunning]) { sleep(1); }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self->_spinner close];
+            });
+        } @catch (NSException *e) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self->_spinner close];
+                NSRunCriticalAlertPanel(e.name, @"%@", @"OK", nil, nil, e.reason);
+            });
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self->_spinner close];
-        });
     });
 }
 
