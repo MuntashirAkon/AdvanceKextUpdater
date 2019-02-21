@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(instancetype)initWithTitle: (NSString *)title AndSubtitle: (NSString *)subtitle;
 -(instancetype)setTitle:(NSString *)title;
 -(instancetype)setTitle:(NSString *)title AndSubtitile:(NSString *)subtitle;
+-(instancetype)setSubtitile:(NSString *)subtitle;
 -(instancetype)reload;
 @end
 

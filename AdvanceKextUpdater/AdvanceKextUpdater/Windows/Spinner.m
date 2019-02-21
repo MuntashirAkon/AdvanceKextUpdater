@@ -66,6 +66,11 @@
     return self;
 }
 
+-(instancetype)setSubtitile:(NSString *)subtitle {
+    _subtitleText = subtitle;
+    return self;
+}
+
 -(instancetype)reload {
     [_titleTextField setStringValue:_titleText];
     [_subtitleTextField setStringValue:_subtitleText];

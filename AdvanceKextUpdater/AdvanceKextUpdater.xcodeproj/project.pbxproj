@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		872395D62171DD9000B6FE27 /* KIHelperAgrumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872395D52171DD9000B6FE27 /* KIHelperAgrumentController.m */; };
 		872395E22171E55700B6FE27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 872395E12171E55700B6FE27 /* main.m */; };
 		873DFC492174966000B33DB5 /* MarkdownToHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 873DFC482174966000B33DB5 /* MarkdownToHTML.m */; };
 		875032EA21341C8800F5278D /* ConfigKextVersionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 875032E921341C8800F5278D /* ConfigKextVersionControl.m */; };
@@ -56,6 +55,7 @@
 		87BB8577212FB567007F4D29 /* KextConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB8576212FB567007F4D29 /* KextConfig.m */; };
 		87BB8579212FC0CD007F4D29 /* git in Resources */ = {isa = PBXBuildFile; fileRef = 87BB8578212FC0CD007F4D29 /* git */; };
 		87BB858021308177007F4D29 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BB857E21308177007F4D29 /* Task.m */; };
+		87BC3AEB221DC15700287065 /* AKUDiskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C60B11220444560099A929 /* AKUDiskManager.m */; };
 		87C60B12220444560099A929 /* AKUDiskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C60B11220444560099A929 /* AKUDiskManager.m */; };
 		87E3DC9E21D348BD00462D27 /* ConfigTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E3DC9D21D348BD00462D27 /* ConfigTarget.m */; };
 		87E3DC9F21D348BD00462D27 /* ConfigTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E3DC9D21D348BD00462D27 /* ConfigTarget.m */; };
@@ -64,6 +64,7 @@
 		87F1AC6321E7AE5D0091CD04 /* KEXT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 87F1AC6221E7AE5C0091CD04 /* KEXT.icns */; };
 		87F2485921395BBF0069DFC2 /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485821395BBF0069DFC2 /* JSONParser.m */; };
 		87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F2485B21399D650069DFC2 /* ConfigSuggestion.m */; };
+		87F782C8221DB12B000F7E2D /* HelperController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F782C7221DB12A000F7E2D /* HelperController.m */; };
 		87FAC53421486B6A00DAA453 /* ConfigBinary.m in Sources */ = {isa = PBXBuildFile; fileRef = 87FAC53321486B6A00DAA453 /* ConfigBinary.m */; };
 /* End PBXBuildFile section */
 
@@ -91,8 +92,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		872395D42171DD8600B6FE27 /* KIHelperAgrumentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KIHelperAgrumentController.h; sourceTree = "<group>"; };
-		872395D52171DD9000B6FE27 /* KIHelperAgrumentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KIHelperAgrumentController.m; sourceTree = "<group>"; };
 		872395DF2171E55700B6FE27 /* AdvanceKextUpdaterHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdvanceKextUpdaterHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		872395E12171E55700B6FE27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		873DFC472174965400B33DB5 /* MarkdownToHTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarkdownToHTML.h; sourceTree = "<group>"; };
@@ -165,6 +164,8 @@
 		87F2485821395BBF0069DFC2 /* JSONParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONParser.m; sourceTree = "<group>"; };
 		87F2485A21399D5A0069DFC2 /* ConfigSuggestion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigSuggestion.h; sourceTree = "<group>"; };
 		87F2485B21399D650069DFC2 /* ConfigSuggestion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigSuggestion.m; sourceTree = "<group>"; };
+		87F782C6221DB12A000F7E2D /* HelperController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperController.h; sourceTree = "<group>"; };
+		87F782C7221DB12A000F7E2D /* HelperController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperController.m; sourceTree = "<group>"; };
 		87FAC53221486B5E00DAA453 /* ConfigBinary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigBinary.h; sourceTree = "<group>"; };
 		87FAC53321486B6A00DAA453 /* ConfigBinary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigBinary.m; sourceTree = "<group>"; };
 		87FAC5372148FD4100DAA453 /* CacheController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CacheController.h; sourceTree = "<group>"; };
@@ -282,8 +283,8 @@
 				8773B718212BFD760096BFCC /* MainMenu.xib */,
 				8773B724212BFEE40096BFCC /* KextHandler.h */,
 				8773B725212BFF0F0096BFCC /* KextHandler.m */,
-				872395D42171DD8600B6FE27 /* KIHelperAgrumentController.h */,
-				872395D52171DD9000B6FE27 /* KIHelperAgrumentController.m */,
+				87F782C6221DB12A000F7E2D /* HelperController.h */,
+				87F782C7221DB12A000F7E2D /* HelperController.m */,
 			);
 			path = AdvanceKextUpdater;
 			sourceTree = "<group>";
@@ -461,6 +462,7 @@
 				87753DD521D1B0250072FCAC /* ConfigAuthor.m in Sources */,
 				87E3DC9F21D348BD00462D27 /* ConfigTarget.m in Sources */,
 				87753DDC21D1B05A0072FCAC /* ConfigBinary.m in Sources */,
+				87BC3AEB221DC15700287065 /* AKUDiskManager.m in Sources */,
 				87A6384521FFF9F900EEE1AA /* ZSSUserDefaults.m in Sources */,
 				87753DD821D1B0340072FCAC /* KextConfig.m in Sources */,
 				872395E22171E55700B6FE27 /* main.m in Sources */,
@@ -479,13 +481,13 @@
 			files = (
 				879F609D21423C070059D0ED /* utils.m in Sources */,
 				87BB858021308177007F4D29 /* Task.m in Sources */,
-				872395D62171DD9000B6FE27 /* KIHelperAgrumentController.m in Sources */,
 				876BD994212DFC2D00D10B9D /* ConfigAuthor.m in Sources */,
 				8765F17E220330EB0018B3F7 /* Spinner.m in Sources */,
 				87A6384421FFF9F900EEE1AA /* ZSSUserDefaults.m in Sources */,
 				8765F1792202C0560018B3F7 /* KextViewerWindowController.m in Sources */,
 				879F6094214112E10059D0ED /* ConfigRequirments.m in Sources */,
 				87C60B12220444560099A929 /* AKUDiskManager.m in Sources */,
+				87F782C8221DB12B000F7E2D /* HelperController.m in Sources */,
 				87FAC53421486B6A00DAA453 /* ConfigBinary.m in Sources */,
 				87BB8577212FB567007F4D29 /* KextConfig.m in Sources */,
 				87F2485C21399D650069DFC2 /* ConfigSuggestion.m in Sources */,
