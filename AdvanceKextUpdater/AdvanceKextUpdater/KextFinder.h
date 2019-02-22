@@ -10,12 +10,42 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// @interface KextFinder
+/// @abstract
+/// Find whether the kext is installed, its version and locations
+/// @discussion
+/// KextFinder is a singleton object to find whether a kext is installed.
+/// And if installed, it can be used to get its version and install
+/// locations.
 @interface KextFinder : NSObject
+/// A list of installed kexts (with system kexts)
 @property NSArray<NSString *> *installedKexts;
+/// @abstract
+/// KextFinder singleton caller
 +(id)sharedKextFinder;
+/// @abstract
+/// Find whether the kext is installed
+/// @param kextName
+/// Name of the kext with or without the "kext" extension
+/// @return
+/// YES if installed, NO otherwise
 -(BOOL)isInstalled: (NSString *)kextName;
--(NSString *)findVersion: (NSString *)kextName;
--(NSArray<NSString *> *)findLocations: (NSString *)kextName;
+/// @abstract
+/// Find the installed version of a kext (if installed)
+/// @param kextName
+/// Name of the kext with or without the "kext" extension
+/// @return
+/// Kext version, nil if not installed or version not present in the Info.plist
+-(NSString * _Nullable)findVersion: (NSString *)kextName;
+/// @abstract
+/// Find the location(s) of the kext (if installed)
+/// @param kextName
+/// Name of the kext with or without the "kext" extension
+/// @return
+/// Kext installation location(s)
+-(NSArray<NSString *> * _Nonnull)findLocations: (NSString *)kextName;
+/// @abstract
+/// Update installed kext list (recommended after an action)
 -(void)updateList;
 @end
 
