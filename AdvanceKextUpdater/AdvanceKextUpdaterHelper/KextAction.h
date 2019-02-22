@@ -10,23 +10,31 @@
 #define KextAction_h
 
 #import "../AdvanceKextUpdater/KextConfig.h"
+#import "../AdvanceKextUpdater/KextFinder.h"
+#import "../Shared/PreferencesHandler.h"
 
 @interface KextAction : NSObject {
     NSString *kextLocation;
+    @protected
+    NSString *kextName;
+    NSString *backupLocation;
+    KextFinder *kextFinder;
+    PreferencesHandler *preference;
 }
-@property (strong, nonatomic, readonly) NSString *kextName;
 - (instancetype) initWithKext: (NSString *) kextName;
+- (BOOL) removeKext: (NSString *) kextName;
 - (BOOL) doAction;
-+ (NSString * _Nullable) find: (NSString *) kextName;
 + (BOOL) load: (NSString *) kextLocation;
 + (BOOL) unload: (NSString *) kextLocation;
-+ (BOOL) removeKext: (NSString *) kextName;
-+ (NSString * _Nullable) findInstalledVersion: (NSString *) kextName;
 @end
 
-@interface KextInstall : KextAction
-@property (strong, nonatomic, readonly) KextConfig *config;
+@interface KextInstall : KextAction {
+    @protected
+    KextConfig *config;
+    NSString *targetFolder; // Unzipped location
+}
 - (instancetype) initWithKext: (NSString *) kextName;
+- (BOOL) downloadRequirments;
 - (BOOL) removeConflicts;
 - (BOOL) installRequirements;
 - (BOOL) runPreInstallTask;

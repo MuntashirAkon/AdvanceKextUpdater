@@ -34,8 +34,8 @@
                 @"RunAtLoad": @YES,
                 @"WorkingDirectory": KextHandler.tmpPath,
                 @"StandardInPath": KextHandler.stdinPath,
-//                @"StandardOutPath": KextHandler.stdoutPath,
-//                @"StandardErrorPath": KextHandler.stderrPath
+                @"StandardOutPath": KextHandler.stdoutPath,
+                @"StandardErrorPath": KextHandler.stderrPath
             };
             if(![plist writeToFile:_launchDaemonFile atomically:YES])
                 @throw [NSException exceptionWithName:@"Failed creating launch daemon" reason:@"Launch daemon file to run helper could not be created" userInfo:nil];
@@ -73,14 +73,14 @@
 }
 
 - (BOOL) runTask {
-    _taskStarted = YES;
-    _taskEnded = NO;
     // Create the lockfile
     if(![NSFileManager.defaultManager createFileAtPath:KextHandler.lockFile contents:[@"Checking..." dataUsingEncoding:NSUTF8StringEncoding] attributes:nil])
         @throw [NSException exceptionWithName:@"Lockfile creation failed!" reason:@"Failed to create the lock file. Please try again or report us." userInfo:nil];
     //
     // Copy and Load the launch agent
     //
+    _taskStarted = YES;
+    _taskEnded = NO;
     @try{
         if (![NSFileManager.defaultManager fileExistsAtPath:KextHandler.launchDaemonPlistFile]) {
             // Copy & load
@@ -111,10 +111,11 @@
         dispatch_resume(source);
     } @catch (NSError *e){
 #ifdef DEBUG
-        NSLog(@"Task cancelled");
+        NSLog(@"HelperController::RunTask: %@", [e.userInfo objectForKey:@"details"]);
 #endif
         self->_taskEnded = YES;
         self->_taskStarted = NO;
+        @throw [NSException exceptionWithName:@"Operation failed!" reason:[e.userInfo objectForKey:@"details"] userInfo:nil];
     }
     return YES;
 }

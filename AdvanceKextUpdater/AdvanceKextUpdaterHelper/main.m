@@ -11,7 +11,6 @@
 #import "../AdvanceKextUpdater/utils.h"
 #import "../AdvanceKextUpdater/KextHandler.h"
 #import "../AdvanceKextUpdater/ConfigMacOSVersionControl.h"
-#import "../Shared/PreferencesHandler.h"
 #import "KextAction.h"
 
 #define ACTION_STDIN 1 // Read arguments from STDIN
@@ -72,8 +71,6 @@ void _message(int status_code, NSString * _Nonnull msg){
 
 int main(int argc, const char *argv[]) {
     @autoreleasepool {
-        PreferencesHandler *preference = [PreferencesHandler new];
-        _printf(@"%@", preference.clover.directories);
 #if 1
         if(!isRootUser()){
             fprintf(stderr, "Helper tool must be run as root!\n");
