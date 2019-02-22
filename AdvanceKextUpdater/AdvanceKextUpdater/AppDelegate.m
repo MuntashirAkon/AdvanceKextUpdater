@@ -95,7 +95,7 @@
             }
             // Init kextFinder
             [KextFinder sharedKextFinder];
-#if 1 // Don't disturb me on DEBUG builds
+#ifndef DEBUG // Don't disturb me on DEBUG builds
             if(hasInternetConnection()){
                 [KextHandler checkForDBUpdate];
                 [pciDevice checkForDBUpdate];
