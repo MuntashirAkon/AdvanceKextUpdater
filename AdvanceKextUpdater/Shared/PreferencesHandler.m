@@ -27,7 +27,15 @@
     defaults = [ZSSUserDefaults standardUserDefaults];
     [defaults registerDefaults:[PreferencesHandler appDefaults]];
     NSDictionary *pref = [defaults dictionaryRepresentation];
-    //NSLog(@"%@", [pref objectForKey:@"Kext"]);
+    clover = [CloverPreference.alloc initWithDict:[pref objectForKey:@"Clover"]];
+    kexts = [KextPreference.alloc initWithDict:[pref objectForKey:@"Kext"]];
+    return self;
+}
+
+-(instancetype)reload {
+    ZSSUserDefaults *defaults;
+    defaults = [ZSSUserDefaults standardUserDefaults];
+    NSDictionary *pref = [defaults dictionaryRepresentation];
     clover = [CloverPreference.alloc initWithDict:[pref objectForKey:@"Clover"]];
     kexts = [KextPreference.alloc initWithDict:[pref objectForKey:@"Kext"]];
     return self;

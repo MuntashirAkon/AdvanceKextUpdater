@@ -12,6 +12,7 @@
 #import "utils.h"
 
 @implementation HelperController
+@synthesize async;
 + (instancetype)sharedHelper {
     static HelperController *helper = nil;
     static dispatch_once_t dispatch_token;
@@ -23,8 +24,7 @@
 
 - (id) init{
     @try{
-        _taskStarted = NO;
-        _taskEnded = YES;
+        async = NO;
         if (![NSFileManager.defaultManager fileExistsAtPath:KextHandler.launchDaemonPlistFile]) {
             _launchDaemonFile = [[KextHandler.appCachePath stringByAppendingPathComponent:launchDaemonName] stringByAppendingPathExtension:@"plist"];
             NSDictionary *plist = @{
@@ -55,8 +55,8 @@
     return [self runWithArg:[NSString stringWithFormat:@"update %@", kextName]];
 }
 
-- (BOOL) batchUpdate: (NSArray<NSString *> *) kextNames {
-    return [self runWithArg:[NSString stringWithFormat:@"update %@", [kextNames componentsJoinedByString:@" "]]];
+- (BOOL) autoUpdate {
+    return [self runWithArg:@"auto_update"];
 }
 
 - (BOOL) remove: (NSString *) kextName {
@@ -78,8 +78,6 @@
     //
     // Copy and Load the launch agent
     //
-    _taskStarted = YES;
-    _taskEnded = NO;
     @try{
         if (![NSFileManager.defaultManager fileExistsAtPath:KextHandler.launchDaemonPlistFile]) {
             // Copy & load
@@ -89,7 +87,8 @@
             // Launch daemon already exist, simply load it
             [AScript adminExec:[NSString stringWithFormat:@"launchctl load %@", KextHandler.launchDaemonPlistFile]];
         }
-        // Awake until the task is completed
+        if(async){
+            // Awake until the task is completed
 //        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 //        int lockfile = open([KextHandler.lockFile UTF8String], O_EVTONLY);
 //        __block dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, lockfile, DISPATCH_VNODE_DELETE | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_EXTEND | DISPATCH_VNODE_ATTRIB | DISPATCH_VNODE_LINK | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE, queue);
@@ -98,8 +97,6 @@
 //            if(flags & DISPATCH_VNODE_DELETE) {
 //                dispatch_source_cancel(source);
 //                // TODO: Store final message
-//                self->_taskEnded = YES;
-//                self->_taskStarted = NO;
 //            } else {
 //            // TODO: Update message
 //            }
@@ -108,18 +105,16 @@
 //            close(lockfile);
 //        });
 //        dispatch_resume(source);
-        // Workaround since the above doesn't always work
-        while ([NSFileManager.defaultManager fileExistsAtPath:KextHandler.lockFile]) {
-            sleep(1);
+            // Workaround since the above doesn't always work
+            while ([NSFileManager.defaultManager fileExistsAtPath:KextHandler.lockFile]) {
+                sleep(1);
+            }
+            async = false; // Reset async
         }
-        self->_taskEnded = YES;
-        self->_taskStarted = NO;
     } @catch (NSError *e){
 #ifdef DEBUG
         NSLog(@"HelperController::RunTask: %@", [e.userInfo objectForKey:@"details"]);
 #endif
-        self->_taskEnded = YES;
-        self->_taskStarted = NO;
         @throw [NSException exceptionWithName:@"Operation failed!" reason:[e.userInfo objectForKey:@"details"] userInfo:nil];
     }
     return YES;
@@ -136,7 +131,7 @@
 }
 
 - (BOOL) isTaskRunning {
-    if(_taskStarted && !_taskEnded) return YES;
+    if([NSFileManager.defaultManager fileExistsAtPath:KextHandler.lockFile]) return YES;
     return NO;
 }
 
@@ -150,7 +145,7 @@
 }
 
 - (NSDictionary * _Nullable) getFinalMessage {
-    if(_taskEnded){
+    if(![self isTaskRunning]){
         NSString *messageStr = [NSString stringWithContentsOfFile:KextHandler.messageFile encoding:NSUTF8StringEncoding error:nil];
         if(!isNull(messageStr)){
             NSArray *messageArr = [messageStr componentsSeparatedByString:@"\n"];

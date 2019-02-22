@@ -13,6 +13,7 @@
 #import "utils.h"
 #import "KextFinder.h"
 #import "KextConfig.h"
+#import "../Shared/PreferencesHandler.h"
 
 // What it does:
 // - Loads catalog.json
@@ -182,11 +183,19 @@
 }
 
 - (NSArray<NSString *> *) listKextsWithUpdate {
+    // Update kext_db
+    if(hasInternetConnection()){
+        [KextHandler checkForDBUpdate];
+    }
+    // Find kexts that need updating
     NSMutableArray *kextNeedsUpdate = NSMutableArray.array;
-    for(NSString *kextName in [self listInstalledKext]){
-        if([self needUpdating:kextName]){
-            // TODO: Exclude from preferences?
-            [kextNeedsUpdate addObject:kextName];
+    NSArray *excludedKexts = [[PreferencesHandler.sharedPreferences kexts] excluded];
+#ifdef DEBUG
+    _printf(@"Excluded %@\n", excludedKexts);
+#endif
+    for(NSString *kext in [self listInstalledKext]){
+        if([excludedKexts indexOfObject:kext] == NSNotFound && [self needUpdating:kext]){
+            [kextNeedsUpdate addObject:kext];
         }
     }
     return kextNeedsUpdate;

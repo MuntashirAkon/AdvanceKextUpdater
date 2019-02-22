@@ -122,7 +122,7 @@
 @implementation KextInstall
 - (instancetype) initWithKext: (NSString *) kextName {
     if([super initWithKext:kextName]){
-        self->config = [KextConfig.alloc initWithKextName:kextName];
+        self->config = [KextHandler.sharedKextHandler kextConfig:kextName];
         return self;
     }
     return nil;

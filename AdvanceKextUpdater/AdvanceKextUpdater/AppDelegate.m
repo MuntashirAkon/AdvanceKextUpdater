@@ -243,19 +243,35 @@
     [_spinner.window makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSMutableArray *kextNeedsUpdate = NSMutableArray.array;
-        for(NSString *kext in self->installedKexts){
-            if([self->kextHandler needUpdating:kext]){
-                [kextNeedsUpdate addObject:kext];
-            }
-        }
+        // Find kexts that need updating
+        NSArray<NSString *> *kextNeedsUpdate = [self->kextHandler listKextsWithUpdate];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self->_spinner close];
-            NSLog(@"%@", kextNeedsUpdate);
+#ifdef DEBUG
+            _printf(@"To be updated %@\n", kextNeedsUpdate);
+#endif
             if(kextNeedsUpdate.count > 0){
                 NSInteger res = NSRunAlertPanel(@"Update available!", @"The following kext(s) will be updated:\n%@", @"Proceed", @"Cancel Update", nil, [kextNeedsUpdate componentsJoinedByString:@", "]);
                 if(res == NSAlertDefaultReturn){
-                    // TODO: batch update
+                    // TODO: Display progress as well?
+                    [[self->_spinner setTitle:@"Checking for updates..."] reload];
+                    [self->_spinner.window makeKeyAndOrderFront:self];
+                    [NSApp activateIgnoringOtherApps:YES];
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        @try {
+                            HelperController.sharedHelper.async = YES;
+                            [HelperController.sharedHelper autoUpdate];
+                            while([HelperController.sharedHelper isTaskRunning]) { sleep(1); }
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self->_spinner close];
+                            });
+                        } @catch (NSException *e) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self->_spinner close];
+                                NSRunCriticalAlertPanel(e.name, @"%@", @"OK", nil, nil, e.reason);
+                            });
+                        }
+                    });
                 }
             } else {
                 NSRunAlertPanel(@"No update found!", @"No new update is available.", @"OK", nil, nil);
@@ -270,6 +286,7 @@
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         @try {
+            HelperController.sharedHelper.async = YES;
             [HelperController.sharedHelper repairPermissions];
             while([HelperController.sharedHelper isTaskRunning]) { sleep(1); }
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -290,6 +307,7 @@
     [NSApp activateIgnoringOtherApps:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         @try {
+            HelperController.sharedHelper.async = YES;
             [HelperController.sharedHelper rebuildCache];
             while([HelperController.sharedHelper isTaskRunning]) { sleep(1); }
             dispatch_async(dispatch_get_main_queue(), ^{

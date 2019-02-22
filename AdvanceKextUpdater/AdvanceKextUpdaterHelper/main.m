@@ -62,7 +62,8 @@ void _message(int status_code, NSString * _Nonnull msg){
     fclose(fp);
 }
 
-// Arguments TODO: Merge them with KIHelperArgumentController
+// Arguments TODO: Merge them with HelperController
+#define ARG_AUTO    @"auto_update"
 #define ARG_INSTALL @"install"
 #define ARG_UPDATE  @"update"
 #define ARG_REMOVE  @"remove"
@@ -169,6 +170,34 @@ int main(int argc, const char *argv[]) {
                 }
             } @catch (NSError *e) {
                 _message(EXIT_FAILURE, [e.userInfo objectForKey:@"details"]);
+                return _return(EXIT_FAILURE);
+            }
+        } else if ([verb isEqualToString:ARG_AUTO]){
+#ifdef DEBUG
+            _fprintf(stderr, @"== Auto updating ==\n");
+#endif
+            NSArray<NSString *> *kextsNeedUpdate = [KextHandler.sharedKextHandler listKextsWithUpdate];
+            NSMutableArray *failedKexts = NSMutableArray.array;
+#ifdef DEBUG
+            _fprintf(stderr, @"Needs update %@\n", kextsNeedUpdate);
+#endif
+            if(hasInternetConnection()){
+                for(NSString *kext in kextsNeedUpdate){
+                    if(![[KextUpdate.alloc initWithKext:kext] doAction]){
+                        [failedKexts addObject:kext];
+                    }
+                }
+                if(failedKexts.count > 0){
+                    _message(EXIT_FAILURE, [NSString stringWithFormat:@"Failed to update %@.", [failedKexts componentsJoinedByString:@", "]]);
+#ifdef DEBUG
+                    _fprintf(stderr, @"Failed to update %@\n", failedKexts);
+#endif
+                    return _return(EXIT_FAILURE);
+                }
+            } else {
+#ifdef DEBUG
+                _fprintf(stderr, @"Aborted since no internet connection is detected.\n", kextsNeedUpdate);
+#endif
                 return _return(EXIT_FAILURE);
             }
         } else {

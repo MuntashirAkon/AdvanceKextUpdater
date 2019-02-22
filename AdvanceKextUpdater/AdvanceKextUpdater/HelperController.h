@@ -15,21 +15,20 @@ NS_ASSUME_NONNULL_BEGIN
 // Verbs with args:
 // install <kextName> - install a kext
 // update <kextName> - update a kext
-// update <kextName ...> - update kexts
 // remove <kextName> - remove/uninstall a kext
 // rebuildcache - Rebuild kernel cache
 // repairpermissions - Repair permissions
 
 @interface HelperController : NSObject
 @property NSString *launchDaemonFile;
-@property BOOL taskStarted;
 @property BOOL taskEnded;
+@property BOOL async;
 
 + (instancetype) sharedHelper;
 
 - (BOOL) install: (NSString *) kextName;
 - (BOOL) update: (NSString *) kextName;
-- (BOOL) batchUpdate: (NSArray<NSString *> *) kextNames;
+- (BOOL) autoUpdate;
 - (BOOL) remove: (NSString *) kextName;
 - (BOOL) rebuildCache;
 - (BOOL) repairPermissions;

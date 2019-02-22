@@ -59,6 +59,7 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
+    // DO NOT CHANGE THE ORDER!! This order is respected by KextUpdatePref
     updateTitles = @[
         @"Do not check",
         @"Check on every boot",
@@ -114,9 +115,12 @@
     };
     [defaults setObject:clover forKey:@"Clover"];
     [defaults synchronizeChanges];
-    // TODO: Add/Enable an startup LaunchAgent to check for updates automaatically
-    // if user requested for auto updates/check for updates
-    
+    [PreferencesHandler.sharedPreferences reload];
+    if([[PreferencesHandler.sharedPreferences kexts] check] != KextUpdateDoNotCheck){
+        // TODO: Add/Enable an startup LaunchAgent to check for updates automatically
+        // if user requested for auto updates/check for updates
+    }
+    [(AppDelegate *)[[NSApplication sharedApplication] delegate] updateTables];
 }
 
 -(void)setPreferences{

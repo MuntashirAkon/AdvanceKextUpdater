@@ -63,7 +63,9 @@ typedef enum {
 ///
 /// A wrapper for kext-related preferences
 @property (readonly) KextPreference *kexts;
-
+///
+/// Reload preferences
+-(instancetype)reload;
 ///
 /// Default preferences
 +(NSDictionary *)appDefaults;
