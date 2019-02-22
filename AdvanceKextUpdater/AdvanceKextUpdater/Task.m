@@ -145,6 +145,8 @@
     if (![[NSData dataWithContentsOfURL:url] writeToFile:file options:NSDataWritingAtomic error:&err]){
         if (err != nil) return [self revert:file error:err suppress:suppressErr];
     }
+    if(![[NSFileManager.defaultManager attributesOfItemAtPath:file error:&err] fileSize])
+        return [self revert:file error:err suppress:suppressErr];
     return true;
 }
 
