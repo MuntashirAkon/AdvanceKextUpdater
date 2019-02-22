@@ -6,7 +6,6 @@
 //  Copyright © 2019 Muntashir Al-Islam. All rights reserved.
 //
 
-//#import <dispatch/dispatch.h>
 #import "HelperController.h"
 #import "KextHandler.h"
 #import "Task.h"
@@ -91,24 +90,30 @@
             [AScript adminExec:[NSString stringWithFormat:@"launchctl load %@", KextHandler.launchDaemonPlistFile]];
         }
         // Awake until the task is completed
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        int lockfile = open([KextHandler.lockFile UTF8String], O_EVTONLY);
-        __block dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, lockfile, DISPATCH_VNODE_DELETE | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_EXTEND | DISPATCH_VNODE_ATTRIB | DISPATCH_VNODE_LINK | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE, queue);
-        dispatch_source_set_event_handler(source, ^{
-            unsigned long flags = dispatch_source_get_data(source);
-            if(flags & DISPATCH_VNODE_DELETE) {
-                dispatch_source_cancel(source);
-                // TODO: Store final message
-                self->_taskEnded = YES;
-                self->_taskStarted = NO;
-            } else {
-            // TODO: Update message
-            }
-        });
-        dispatch_source_set_cancel_handler(source, ^(void){
-            close(lockfile);
-        });
-        dispatch_resume(source);
+//        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//        int lockfile = open([KextHandler.lockFile UTF8String], O_EVTONLY);
+//        __block dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, lockfile, DISPATCH_VNODE_DELETE | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_EXTEND | DISPATCH_VNODE_ATTRIB | DISPATCH_VNODE_LINK | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE, queue);
+//        dispatch_source_set_event_handler(source, ^{
+//            unsigned long flags = dispatch_source_get_data(source);
+//            if(flags & DISPATCH_VNODE_DELETE) {
+//                dispatch_source_cancel(source);
+//                // TODO: Store final message
+//                self->_taskEnded = YES;
+//                self->_taskStarted = NO;
+//            } else {
+//            // TODO: Update message
+//            }
+//        });
+//        dispatch_source_set_cancel_handler(source, ^(void){
+//            close(lockfile);
+//        });
+//        dispatch_resume(source);
+        // Workaround since the above doesn't always work
+        while ([NSFileManager.defaultManager fileExistsAtPath:KextHandler.lockFile]) {
+            sleep(1);
+        }
+        self->_taskEnded = YES;
+        self->_taskStarted = NO;
     } @catch (NSError *e){
 #ifdef DEBUG
         NSLog(@"HelperController::RunTask: %@", [e.userInfo objectForKey:@"details"]);
