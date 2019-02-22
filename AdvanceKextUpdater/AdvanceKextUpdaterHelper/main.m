@@ -128,6 +128,9 @@ int main(int argc, const char *argv[]) {
                 return _return(1);
             }
         } else if ([verb isEqualToString:ARG_CACHE]){
+#ifdef DEBUG
+            _fprintf(stderr, @"== Rebuilding Cache ==\n");
+#endif
             @try {
                 int ret_val;
                 if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){ // For 10.11 or later
@@ -147,6 +150,9 @@ int main(int argc, const char *argv[]) {
                 return _return(EXIT_FAILURE);
             }
         } else if ([verb isEqualToString:ARG_PERM]){
+#ifdef DEBUG
+            _fprintf(stderr, @"== Repairing permissions ==\n");
+#endif
             @try {
                 NSString *command = [NSString stringWithFormat:@"/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", kSLE, kSLE, kSLE, kSLE, kSLE];
                 if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){
