@@ -42,6 +42,7 @@
 + (NSString *) stderrPath;
 + (NSString *) launchDaemonPlistFile;
 + (NSString *) PreferencesFile;
++ (void) createFilesIfNotExist;
 /*!
  * Singleton
  */

@@ -95,9 +95,7 @@
             }
             // Init kextFinder
             [KextFinder sharedKextFinder];
-            // Init kextHandler
-            self->kextHandler = [KextHandler sharedKextHandler];
-#ifndef DEBUG // Don't disturb me on DEBUG builds
+#if 1 // Don't disturb me on DEBUG builds
             if(hasInternetConnection()){
                 [KextHandler checkForDBUpdate];
                 [pciDevice checkForDBUpdate];
@@ -105,6 +103,9 @@
 #else
         _printf(@"INITIALIZED\n");
 #endif
+            // Init kextHandler
+            [KextHandler createFilesIfNotExist];
+            self->kextHandler = [KextHandler sharedKextHandler];
             // Main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self->_spinner close];

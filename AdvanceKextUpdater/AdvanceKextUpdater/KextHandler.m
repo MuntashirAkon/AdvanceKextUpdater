@@ -23,16 +23,20 @@
 
 @implementation KextHandler
 + (id)sharedKextHandler {
-    static KextHandler *kextHandler = nil;
-    static dispatch_once_t dispatch_token;
-    dispatch_once(&dispatch_token, ^{
-        kextHandler = [KextHandler new];
-    });
-    return kextHandler;
+    @try{
+        static KextHandler *kextHandler = nil;
+        static dispatch_once_t dispatch_token;
+        dispatch_once(&dispatch_token, ^{
+            kextHandler = [KextHandler new];
+        });
+        return kextHandler;
+    } @catch (NSException *e) {
+        @throw [NSException exceptionWithName:e.name reason:e.reason userInfo:nil];
+    }
 }
 
 - (instancetype) init {
-    [self createFilesIfNotExist];
+    [KextHandler createFilesIfNotExist];
     NSString *path = [KextHandler kextDBPath];
     // Read catalog.json and list kexts
     path = [path stringByAppendingPathComponent:@"catalog"];
@@ -241,8 +245,7 @@
     return kextConfig;
 }
 
-// Privates
--(void)createFilesIfNotExist{
++(void)createFilesIfNotExist{
     // Create necessary paths
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString *appPath = [KextHandler appPath];
