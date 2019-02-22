@@ -190,9 +190,7 @@
     // Find kexts that need updating
     NSMutableArray *kextNeedsUpdate = NSMutableArray.array;
     NSArray *excludedKexts = [[PreferencesHandler.sharedPreferences kexts] excluded];
-#ifdef DEBUG
-    _printf(@"Excluded %@\n", excludedKexts);
-#endif
+    debugPrint(@"Excluded %@\n", excludedKexts);
     for(NSString *kext in [self listInstalledKext]){
         if([excludedKexts indexOfObject:kext] == NSNotFound && [self needUpdating:kext]){
             [kextNeedsUpdate addObject:kext];

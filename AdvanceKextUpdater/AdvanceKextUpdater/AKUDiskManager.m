@@ -42,7 +42,7 @@
             [self reloadDiskInfo];
             return YES;
         } @catch (NSError *e) {
-            printf("Error: %s\n", [[[e userInfo] objectForKey:@"details"] UTF8String]);
+            debugPrint(@"Error: %@\n", [[e userInfo] objectForKey:@"details"]);
         }
         return NO;
     }

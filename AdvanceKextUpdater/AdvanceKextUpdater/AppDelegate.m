@@ -101,7 +101,7 @@
                 [pciDevice checkForDBUpdate];
             }
 #else
-        _printf(@"INITIALIZED\n");
+        debugPrint(@"INITIALIZED\n");
 #endif
             // Init kextHandler
             [KextHandler createFilesIfNotExist];
@@ -247,9 +247,7 @@
         NSArray<NSString *> *kextNeedsUpdate = [self->kextHandler listKextsWithUpdate];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self->_spinner close];
-#ifdef DEBUG
-            _printf(@"To be updated %@\n", kextNeedsUpdate);
-#endif
+            debugPrint(@"To be updated %@\n", kextNeedsUpdate);
             if(kextNeedsUpdate.count > 0){
                 NSInteger res = NSRunAlertPanel(@"Update available!", @"The following kext(s) will be updated:\n%@", @"Proceed", @"Cancel Update", nil, [kextNeedsUpdate componentsJoinedByString:@", "]);
                 if(res == NSAlertDefaultReturn){

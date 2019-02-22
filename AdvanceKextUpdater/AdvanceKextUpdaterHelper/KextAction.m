@@ -44,47 +44,35 @@
 }
 - (BOOL) removeKext: (NSString *) kextName {
     NSArray<NSString *> *kextLocations = [kextFinder findLocations:kextName];
-#ifdef DEBUG
-    _fprintf(stderr, @"Locations %@\n", kextLocations);
-#endif
+    debugPrint(@"Locations %@\n", kextLocations);
     BOOL backed_up = !preference.kexts.backup; // Little bit of hack to backup the removed kext!
     BOOL remove_non_systems = preference.kexts.anywhere;
     NSFileManager *fm = NSFileManager.defaultManager;
     for(NSString *kextLocation in kextLocations){
         if([fm fileExistsAtPath:kextLocation]) {
-#ifdef DEBUG
-            _fprintf(stderr, @"Removing %@: ", kextLocation);
-#endif
+            debugPrint(@"Removing %@: ", kextLocation);
             if(!remove_non_systems && !([kextLocation hasPrefix:kSLE] || [kextLocation hasPrefix:kLE])){
-#ifdef DEBUG
-                _fprintf(stderr, @"Skipped\n");
-#endif
+                debugPrint(@"Skipped\n");
                 continue;
             }
             [KextAction unload:kextLocation]; // Don't care about the return value
             if(backed_up){
                 if(tty([NSString stringWithFormat:@"rm -Rf '%@'", kextLocation], nil) != EXIT_SUCCESS) {
-#ifdef DEBUG
-                    _fprintf(stderr, @"Couldn't remove!\n");
-#endif
+                    debugPrint(@"Couldn't remove!\n");
                     return NO;
                 }
 #ifdef DEBUG
                 else {
-                    _fprintf(stderr, @"Removed\n");
+                    debugPrint(@"Removed\n");
                 }
 #endif
             } else {
                 if(tty([NSString stringWithFormat:@"mv '%@' '%@'", kextLocation, backupLocation], nil) != EXIT_SUCCESS) {
-#ifdef DEBUG
-                    _fprintf(stderr, @"Couldn't remove!\n");
-#endif
+                    debugPrint(@"Couldn't remove!\n");
                     return NO;
                 } else {
                     tty([NSString stringWithFormat:@"chown -R %@:staff '%@'", getMainUser(), KextHandler.kextBackupPath], nil);
-#ifdef DEBUG
-                    _fprintf(stderr, @"Backed up & removed\n");
-#endif
+                    debugPrint(@"Backed up & removed\n");
                 }
             }
         }
@@ -139,9 +127,7 @@
     if(current.location != nil){ // Requested downloading the binary file
         // Download zip
         if([URLTask get:[NSURL URLWithString:current.url] toFile:zipFile supress:YES]){
-#ifdef DEBUG
-            _fprintf(stderr, @"Downloaded: %@\n", zipFile);
-#endif
+            debugPrint(@"Downloaded: %@\n", zipFile);
             // Extract and save it to somewhere else
             if([KextInstall unzip:zipFile to:targetFolder]){
                 return YES;
@@ -169,30 +155,24 @@
     for(ConfigRequiredKexts *kext in kexts) {
         @try{
             NSString *version = [kextFinder findVersion:kext.kextName];
-#ifdef DEBUG
-            _fprintf(stderr, @"%@ (%@): ", kext.kextName, version);
-#endif
+            debugPrint(@"%@ (%@): ", kext.kextName, version);
             NSComparisonResult result = kext.uptoLatest ? NSOrderedDescending : NSOrderedSame;
             if(![kext.version isEqual:@"*"] && [version.shortenedVersionNumberString compare:kext.version options:NSNumericSearch] != result){
-#ifdef DEBUG
-                _fprintf(stderr, @"Need updating.\n");
-#endif
+                debugPrint(@"Need updating.\n");
                 if(![[KextUpdate.alloc initWithKext:kext.kextName] doAction]) {// Update kext
                     return NO;
                 }
             }
 #ifdef DEBUG
             else {
-                _fprintf(stderr, @"No need to update.\n");
+                debugPrint(@"No need to update.\n");
             }
 #endif
         } @catch (NSException *e){
             if(![[KextInstall.alloc initWithKext:kext.kextName] doAction]) {// Install kext
                 return NO;
             }
-#ifdef DEBUG
-            _fprintf(stderr, @"%@: Need installing (%@)\n", kext.kextName, e.reason);
-#endif
+            debugPrint(@"%@: Need installing (%@)\n", kext.kextName, e.reason);
         }
     }
     return YES;
@@ -232,9 +212,7 @@
             [KextAction load:[NSString stringWithFormat:@"%@/%@", config.target.target, config.kextName]];
             // Copy to Clover directories
             if(preference.clover.support){
-#ifdef DEBUG
-                _fprintf(stderr, @"Clover directories %@\n", preference.clover.directories);
-#endif
+                debugPrint(@"Clover directories %@\n", preference.clover.directories);
                 for(NSString *kextLocation in preference.clover.directories){
                     [KextInstall copy:kextPath to:kextLocation];
                     tty([NSString stringWithFormat:@"/usr/sbin/chown -R 0:0 %@/%@", kextLocation, config.kextName], nil);
@@ -265,9 +243,7 @@
 }
 
 - (BOOL) doAction {
-#ifdef DEBUG
-    _fprintf(stderr, @"== Installing %@ ==\n", kextName);
-#endif
+    debugPrint(@"== Installing %@ ==\n", kextName);
     // 1. Find and check
     [KextAction status:@"Checking..."];
     if(config.matchesAllCriteria == KCCNoneMatched) {
@@ -367,9 +343,7 @@
     return NO;
 }
 - (BOOL) doAction {
-#ifdef DEBUG
-    _fprintf(stderr, @"== Updating %@ ==\n", kextName);
-#endif
+    debugPrint(@"== Updating %@ ==\n", kextName);
     // 1. Find and check
     [KextAction status:@"Checking..."];
     if(config.matchesAllCriteria == KCCNoneMatched) {
@@ -432,9 +406,7 @@
 #pragma KextRemove
 @implementation KextRemove
 - (BOOL) doAction {
-#ifdef DEBUG
-    _fprintf(stderr, @"== Removing %@ ==\n", kextName);
-#endif
+    debugPrint(@"== Removing %@ ==\n", kextName);
     [KextAction status:@"Removing the kext..."];
     if(![self removeKext:kextName]){
         [KextAction message:@"Sorry, the kext couldn't be removed." withStatusCode:EXIT_FAILURE];

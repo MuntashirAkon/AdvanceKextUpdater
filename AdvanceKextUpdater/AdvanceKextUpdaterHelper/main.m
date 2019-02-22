@@ -35,7 +35,7 @@ int _return(int ret_value){
     [NSFileManager.defaultManager removeItemAtPath:KextHandler.lockFile error:nil];
     // Unload the launch agent
     tty([NSString stringWithFormat:@"launchctl unload %@", KextHandler.launchDaemonPlistFile], nil);
-    if(tty([NSString stringWithFormat:@"chown -R %@:wheel '%@'", getMainUser(), KextHandler.tmpPath], nil) != EXIT_SUCCESS) _fprintf(stderr, @"Cannot chown");
+    if(tty([NSString stringWithFormat:@"chown -R %@:wheel '%@'", getMainUser(), KextHandler.tmpPath], nil) != EXIT_SUCCESS) { debugPrint(@"Cannot chown!\n"); }
     return ret_value;
 }
 
@@ -74,7 +74,7 @@ int main(int argc, const char *argv[]) {
     @autoreleasepool {
 #if 1
         if(!isRootUser()){
-            fprintf(stderr, "Helper tool must be run as root!\n");
+            debugPrint(@"Helper tool must be run as root!\n");
             return _return(1);
         }
 #endif
@@ -88,7 +88,7 @@ int main(int argc, const char *argv[]) {
         NSError *error;
         NSString *arg = [[NSString stringWithContentsOfFile:KextHandler.stdinPath encoding:NSUTF8StringEncoding error:&error] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if(error) {
-            fprintf(stderr, "Error reading arguments!\n");
+            debugPrint(@"Error reading arguments!\n");
             return _return(1);
         }
         NSArray<NSString *> *args = [arg componentsSeparatedByString:@" "];
@@ -98,40 +98,36 @@ int main(int argc, const char *argv[]) {
             [args addObject:[NSString stringWithUTF8String:argv[i]];
 #endif
         if(args.count < 1) {
-            fprintf(stderr, "Error reading arguments!\n");
+            debugPrint(@"Error reading arguments!\n");
             return _return(1);
         }
         // Handle agruments
         NSString *verb = [args objectAtIndex:0];
-#ifdef DEBUG
-             _fprintf(stderr, @"Service ran with verb '%@'\n", verb);
-#endif
+        debugPrint(@"Service ran with verb '%@'\n", verb);
         @try {
         if([verb isEqualToString:ARG_INSTALL]){
             if(args.count == 2){
                 [[KextInstall.alloc initWithKext:[args objectAtIndex:1]] doAction];
             } else {
-                _fprintf(stderr, @"Too few arguments supplied!\n", verb);
+                debugPrint(@"Too few arguments supplied!\n");
                 return _return(1);
             }
         } else if ([verb isEqualToString:ARG_UPDATE]){
             if(args.count == 2){
                 [[KextUpdate.alloc initWithKext:[args objectAtIndex:1]] doAction];
             } else {
-                _fprintf(stderr, @"Too few arguments supplied!\n", verb);
+                debugPrint(@"Too few arguments supplied!\n");
                 return _return(1);
             }
         } else if ([verb isEqualToString:ARG_REMOVE]){
             if(args.count == 2){
                 [[KextRemove.alloc initWithKext:[args objectAtIndex:1]] doAction];
             } else {
-                _fprintf(stderr, @"Too few arguments supplied!\n", verb);
+                debugPrint(@"Too few arguments supplied!\n");
                 return _return(1);
             }
         } else if ([verb isEqualToString:ARG_CACHE]){
-#ifdef DEBUG
-            _fprintf(stderr, @"== Rebuilding Cache ==\n");
-#endif
+            debugPrint(@"== Rebuilding Cache ==\n");
             @try {
                 int ret_val;
                 if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){ // For 10.11 or later
@@ -151,9 +147,7 @@ int main(int argc, const char *argv[]) {
                 return _return(EXIT_FAILURE);
             }
         } else if ([verb isEqualToString:ARG_PERM]){
-#ifdef DEBUG
-            _fprintf(stderr, @"== Repairing permissions ==\n");
-#endif
+            debugPrint(@"== Repairing permissions ==\n");
             @try {
                 NSString *command = [NSString stringWithFormat:@"/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", kSLE, kSLE, kSLE, kSLE, kSLE];
                 if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){
@@ -173,14 +167,10 @@ int main(int argc, const char *argv[]) {
                 return _return(EXIT_FAILURE);
             }
         } else if ([verb isEqualToString:ARG_AUTO]){
-#ifdef DEBUG
-            _fprintf(stderr, @"== Auto updating ==\n");
-#endif
+            debugPrint(@"== Auto updating ==\n");
             NSArray<NSString *> *kextsNeedUpdate = [KextHandler.sharedKextHandler listKextsWithUpdate];
             NSMutableArray *failedKexts = NSMutableArray.array;
-#ifdef DEBUG
-            _fprintf(stderr, @"Needs update %@\n", kextsNeedUpdate);
-#endif
+            debugPrint(@"Needs update %@\n", kextsNeedUpdate);
             if(hasInternetConnection()){
                 for(NSString *kext in kextsNeedUpdate){
                     if(![[KextUpdate.alloc initWithKext:kext] doAction]){
@@ -189,19 +179,15 @@ int main(int argc, const char *argv[]) {
                 }
                 if(failedKexts.count > 0){
                     _message(EXIT_FAILURE, [NSString stringWithFormat:@"Failed to update %@.", [failedKexts componentsJoinedByString:@", "]]);
-#ifdef DEBUG
-                    _fprintf(stderr, @"Failed to update %@\n", failedKexts);
-#endif
+                    debugPrint(@"Failed to update %@\n", failedKexts);
                     return _return(EXIT_FAILURE);
                 }
             } else {
-#ifdef DEBUG
-                _fprintf(stderr, @"Aborted since no internet connection is detected.\n", kextsNeedUpdate);
-#endif
+                debugPrint(@"Aborted since no internet connection is detected.\n", kextsNeedUpdate);
                 return _return(EXIT_FAILURE);
             }
         } else {
-            _fprintf(stderr, @"Unknown verb (%@)!\n", verb);
+            debugPrint(@"Unknown verb (%@)!\n", verb);
             return _return(1);
         }
         } @catch (NSError *e){
