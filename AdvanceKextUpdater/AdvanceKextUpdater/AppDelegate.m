@@ -367,6 +367,7 @@
         // Open a new window
         _kextViewer = [KextViewerWindowController.alloc initWithKextConfig:[kextHandler kextConfig:kext]];
         [self.window addChildWindow:_kextViewer.window ordered:NSWindowAbove];
+        [_kextViewer.window makeKeyWindow];
     } @catch (NSException *e) {}
 }
 

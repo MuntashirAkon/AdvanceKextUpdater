@@ -29,6 +29,9 @@
                 <outlet property="required" destination="Pi7-mv-Bk7" id="qTh-sA-UUX"/>
                 <outlet property="requiredTable" destination="Sat-ky-qiZ" id="veJ-KR-cy7"/>
                 <outlet property="since" destination="Xb5-Gf-IsR" id="7Gu-OK-yWJ"/>
+                <outlet property="suggestedBtn" destination="lO2-bC-2RZ" id="yQp-TS-aWq"/>
+                <outlet property="suggestedPanel" destination="Phk-tk-nuo" id="eT3-Fo-9ZL"/>
+                <outlet property="suggestedView" destination="yJY-87-iDu" id="LX0-HO-QdR"/>
                 <outlet property="taskInfoView" destination="i3f-Fd-YLW" id="Spx-pV-qN9"/>
                 <outlet property="taskPanel" destination="Sxa-ro-faL" id="Hgv-Bb-hjO"/>
                 <outlet property="updateBtn" destination="w5A-Qd-LnL" id="Gfd-9s-KZ2"/>
@@ -425,6 +428,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="fetchSuggestion:" target="-2" id="WpY-py-26I"/>
+                        </connections>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="5xV-Zo-Nvb">
                         <rect key="frame" x="18" y="138" width="99" height="56"/>
@@ -570,5 +576,41 @@ Gw
             </view>
             <point key="canvasLocation" x="85" y="761"/>
         </window>
+        <window title="Suggested" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="Phk-tk-nuo" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" utility="YES" documentModal="YES"/>
+            <rect key="contentRect" x="130" y="63" width="420" height="282"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="768"/>
+            <view key="contentView" id="VoN-68-G1f">
+                <rect key="frame" x="0.0" y="0.0" width="420" height="282"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <webView id="yJY-87-iDu">
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="282"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" plugInsEnabled="NO" javaEnabled="NO" javaScriptEnabled="NO" javaScriptCanOpenWindowsAutomatically="NO">
+                            <nil key="identifier"/>
+                        </webPreferences>
+                    </webView>
+                    <button id="szv-lQ-CEO" userLabel="Close Button">
+                        <rect key="frame" x="5" y="283" width="13" height="13"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSStopProgressFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="wgP-vj-b12">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="closeSuggestion:" target="-2" id="3Z4-AQ-kRc"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="46" y="199"/>
+        </window>
     </objects>
+    <resources>
+        <image name="NSStopProgressFreestandingTemplate" width="14" height="14"/>
+    </resources>
 </document>

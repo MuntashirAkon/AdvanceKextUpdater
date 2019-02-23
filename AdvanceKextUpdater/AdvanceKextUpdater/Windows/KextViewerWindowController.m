@@ -22,6 +22,9 @@
 // Task view
 @property IBOutlet NSPanel *taskPanel;
 @property IBOutlet WebView *taskInfoView;
+// Suggested view
+@property IBOutlet NSPanel *suggestedPanel;
+@property IBOutlet WebView *suggestedView;
 // Kext Properties
 @property IBOutlet NSTextField *kextName;
 @property IBOutlet NSTextField *currentVersion;
@@ -29,6 +32,7 @@
 @property IBOutlet NSTextView *descriptionView;
 @property IBOutlet NSButton *guideBtn;
 @property IBOutlet NSButton *websiteBtn;
+@property IBOutlet NSButton *suggestedBtn;
 @property IBOutlet NSTextField *license;
 @property IBOutlet NSTextField *authors;
 @property IBOutlet NSTextField *since;
@@ -78,6 +82,7 @@
     // Make Webviews transparent
     _guideView.drawsBackground = NO;
     _taskInfoView.drawsBackground = NO;
+    _suggestedView.drawsBackground = NO;
     // Set kext properties
     [_kextName setStringValue:kextConfig.kextName];
     [_currentVersion setStringValue:kextConfig.version];
@@ -87,6 +92,7 @@
     [_since setStringValue:[NSString stringWithFormat:@"macOS %@", kextConfig.macOSVersion.lowestVersion]];
     _guideBtn.enabled = [kextConfig.guide isEqual:@""] ? NO : YES;
     _websiteBtn.hidden = isNull(kextConfig.homepage) ? YES : NO;
+    _suggestedBtn.hidden = kextConfig.suggestions.count == 0 ? YES : NO;
     for(ConfigRequiredKexts *kext in kextConfig.requirments){
         [_required addObject:@{
            @"kext": kext.kextName,
@@ -217,10 +223,30 @@
                 [spinner close];
                 [self->_guideView.mainFrame loadHTMLString:[[guideInfo objectForKey:@"guide"] stringByReplacingOccurrencesOfString:@"<a " withString:@"<a target='_blank' "] baseURL:url];
                 [self.window addChildWindow:self->_guidePanel ordered:NSWindowAbove];
-                [NSApp activateIgnoringOtherApps:YES];
+                [self->_guidePanel makeKeyWindow];
             });
         });
     }
+}
+
+-(IBAction)fetchSuggestion:(id)sender {
+    [self.window addChildWindow:_suggestedPanel ordered:NSWindowAbove];
+    [_suggestedPanel makeKeyWindow];
+    NSMutableString *suggestStr = NSMutableString.string;
+    [suggestStr appendString:@"### Suggestions\n\n<dl>"];
+    for(ConfigSuggestion *suggestion in kextConfig.suggestions){
+        if([suggestion.name hasSuffix:@".app"] || [suggestion.name hasSuffix:@".sh"] || [suggestion.name hasSuffix:@".pkg"] || [suggestion.name hasSuffix:@".mpkg"] || [suggestion.name hasSuffix:@".dmg"] || [suggestion.name hasSuffix:@".dylib"] || [suggestion.name hasSuffix:@".efi"]){ //.app, .sh, .pkg, .mkpg, .dmg, .dylib, .efi
+            [suggestStr appendFormat:@"<dt>%@</dt><dd>%@</dd>", suggestion.name, suggestion.text];
+        } else {
+            [suggestStr appendFormat:@"<dt><a href=\"kext://%@\">%@</a></dt><dd>%@</dd>", suggestion.name, suggestion.name, suggestion.text];
+        }
+    }
+    [suggestStr appendString:@"</dl>"];
+    [_suggestedView.mainFrame loadHTMLString:[MarkdownToHTML.alloc initWithMarkdown:suggestStr].render baseURL:nil];
+}
+
+-(IBAction)closeSuggestion:(id)sender {
+    [_suggestedPanel close];
 }
 
 -(IBAction)runTask:(NSButton *)sender {
