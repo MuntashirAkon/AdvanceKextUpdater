@@ -1,3 +1,4 @@
-AdvanceKextUpdater/AdvanceKextUpdater.xcodeproj/xcuserdata/*
-AdvanceKextUpdater/AdvanceKextUpdater.xcworkspace/xcuserdata/*
-AdvanceKextUpdater/KextStatViewer/KextStatViewer.xcodeproj/xcuserdata/*
+AdvanceKextUpdater/AdvanceKextUpdater.xcodeproj/xcuserdata
+AdvanceKextUpdater/AdvanceKextUpdater.xcworkspace/xcuserdata
+AdvanceKextUpdater/KextStatViewer/KextStatViewer.xcodeproj/xcuserdata
+AdvanceKextUpdater/AdvanceKextUpdater.xcodeproj/project.xcworkspace
