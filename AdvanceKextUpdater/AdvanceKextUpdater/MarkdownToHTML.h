@@ -12,6 +12,7 @@
 @interface MarkdownToHTML : NSObject {
     NSString *html_text;
     NSString *mkdown_text;
+    BOOL wasRawHTML;
 }
 
 - (instancetype) initWithMarkdown: (NSString *) text;

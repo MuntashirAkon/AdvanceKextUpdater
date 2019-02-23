@@ -22,6 +22,12 @@
     // Parse Markdown
     NSError *error;
     mkdown_text = text;
+    if([mkdown_text hasPrefix:@"<!DOCTYPE html>"] || [mkdown_text hasPrefix:@"<html>"]){ // TODO: need more enhancement
+        wasRawHTML = YES;
+        html_text = mkdown_text;
+        return self;
+    }
+    wasRawHTML = NO;
     html_text = [MMMarkdown HTMLStringWithMarkdown:mkdown_text extensions:MMMarkdownExtensionsGitHubFlavored error:&error];
     if(error != nil){
         html_text = @"<p>Incomplete Markdown systax!</p>";
@@ -30,6 +36,7 @@
 }
 
 -(NSString *)render {
+    if(wasRawHTML) return html_text;
     NSString *cssFile = [NSBundle.mainBundle pathForResource:@"github-markdown" ofType:@"css"];
     return [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>%@ %@</style><style> .markdown-body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px;} @media (max-width: 767px) {.markdown-body{padding:15px;}}</style><article class=\"markdown-body\">%@</article>", (isDarkMode() ? @"html{-webkit-filter:invert(95%) hue-rotate(180deg) contrast(70%) !important;} .line-content {background-color: #fefefe;}" : @""), [NSString stringWithContentsOfFile:cssFile encoding:NSUTF8StringEncoding error:nil], html_text];
 }
