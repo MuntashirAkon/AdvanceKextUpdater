@@ -21,7 +21,6 @@
 		87638BEA220785D100651D64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		87638BEF220785D100651D64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87638BF0220785D100651D64 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		87638BF2220785D100651D64 /* KextStatViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KextStatViewer.entitlements; sourceTree = "<group>"; };
 		87638BF8220785D100651D64 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		87638BFB220785D100651D64 /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utils.h; path = ../../AdvanceKextUpdater/utils.h; sourceTree = "<group>"; };
 		87638BFE220785D100651D64 /* utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = utils.m; path = ../../AdvanceKextUpdater/utils.m; sourceTree = "<group>"; };
@@ -65,7 +64,6 @@
 				87638BEC220785D100651D64 /* MainMenu.xib */,
 				87638BEF220785D100651D64 /* Info.plist */,
 				87638BF0220785D100651D64 /* main.m */,
-				87638BF2220785D100651D64 /* KextStatViewer.entitlements */,
 			);
 			path = KextStatViewer;
 			sourceTree = "<group>";
