@@ -295,6 +295,7 @@
     [KextAction status:@"Running post-install task(s)..."];
     @try {
         NSString *output = [self runPostInstallTask];
+        debugPrint(@"Post install: %@", output);
         [KextAction message:@"The installation was successful!" withStatusCode:EXIT_SUCCESS];
     } @catch (NSException *e) {
         [KextAction message:e.reason withStatusCode:EXIT_FAILURE];
@@ -395,6 +396,7 @@
     [KextAction status:@"Running post-install task(s)..."];
     @try {
         NSString *output = [self runPostInstallTask];
+        debugPrint(@"Post install: %@", output);
         [KextAction message:@"The update was successful!" withStatusCode:EXIT_SUCCESS];
     } @catch (NSException *e) {
         [KextAction message:e.reason withStatusCode:EXIT_FAILURE];

@@ -11,6 +11,7 @@
 #import "../AdvanceKextUpdater/utils.h"
 #import "../AdvanceKextUpdater/KextHandler.h"
 #import "../AdvanceKextUpdater/ConfigMacOSVersionControl.h"
+#import "../Shared/helper_args.h"
 #import "KextAction.h"
 
 #define ACTION_STDIN 1 // Read arguments from STDIN
@@ -62,13 +63,25 @@ void _message(int status_code, NSString * _Nonnull msg){
     fclose(fp);
 }
 
-// Arguments TODO: Merge them with HelperController
-#define ARG_AUTO    @"auto_update"
-#define ARG_INSTALL @"install"
-#define ARG_UPDATE  @"update"
-#define ARG_REMOVE  @"remove"
-#define ARG_CACHE   @"rebuildcache"
-#define ARG_PERM    @"repairpermissions"
+void auto_update(){
+    debugPrint(@"== Auto updating ==\n");
+    NSArray<NSString *> *kextsNeedUpdate = [KextHandler.sharedKextHandler listKextsWithUpdate];
+    NSMutableArray *failedKexts = NSMutableArray.array;
+    debugPrint(@"Needs update %@\n", kextsNeedUpdate);
+    if(hasInternetConnection()){
+        for(NSString *kext in kextsNeedUpdate){
+            if(![[KextUpdate.alloc initWithKext:kext] doAction]){
+                [failedKexts addObject:kext];
+            }
+        }
+        if(failedKexts.count > 0){
+            [NSException exceptionWithName:@"Failed to update some kexts!" reason:[NSString stringWithFormat:@"Failed to update %@.", [failedKexts componentsJoinedByString:@", "]] userInfo:nil];
+            _message(EXIT_FAILURE, [NSString stringWithFormat:@"Failed to update %@.", [failedKexts componentsJoinedByString:@", "]]);
+        }
+    } else {
+        [NSException exceptionWithName:@"Update aborted!" reason:@"Update aborted since no internet connection is detected!" userInfo:nil];
+    }
+}
 
 int main(int argc, const char *argv[]) {
     @autoreleasepool {
@@ -102,97 +115,86 @@ int main(int argc, const char *argv[]) {
             return _return(1);
         }
         // Handle agruments
-        NSString *verb = [args objectAtIndex:0];
-        debugPrint(@"Service ran with verb '%@'\n", verb);
+        AKUHelperArgs verb = [args objectAtIndex:0].intValue;
+        debugPrint(@"Service ran with verb '%u'\n", verb);
         @try {
-        if([verb isEqualToString:ARG_INSTALL]){
-            if(args.count == 2){
-                [[KextInstall.alloc initWithKext:[args objectAtIndex:1]] doAction];
-            } else {
-                debugPrint(@"Too few arguments supplied!\n");
-                return _return(1);
-            }
-        } else if ([verb isEqualToString:ARG_UPDATE]){
-            if(args.count == 2){
-                [[KextUpdate.alloc initWithKext:[args objectAtIndex:1]] doAction];
-            } else {
-                debugPrint(@"Too few arguments supplied!\n");
-                return _return(1);
-            }
-        } else if ([verb isEqualToString:ARG_REMOVE]){
-            if(args.count == 2){
-                [[KextRemove.alloc initWithKext:[args objectAtIndex:1]] doAction];
-            } else {
-                debugPrint(@"Too few arguments supplied!\n");
-                return _return(1);
-            }
-        } else if ([verb isEqualToString:ARG_CACHE]){
-            debugPrint(@"== Rebuilding Cache ==\n");
-            @try {
-                int ret_val;
-                if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){ // For 10.11 or later
-                    ret_val = tty(@"/usr/sbin/kextcache -i /", nil);
-                } else { // For 10.10 or earlier
-                    ret_val = tty([NSString stringWithFormat:@"/usr/bin/touch %@;/usr/sbin/kextcache -Boot -U /", kSLE], nil);
-                }
-                if(ret_val == EXIT_SUCCESS){
-                    _message(EXIT_SUCCESS, @"Kernel cache was rebuilt successfully!");
-                    return _return(EXIT_SUCCESS);
-                } else {
-                    _message(EXIT_FAILURE, @"Failed to rebuild kernel cache!");
-                    return _return(EXIT_FAILURE);
-                }
-            } @catch (NSError *e) {
-                _message(EXIT_FAILURE, [e.userInfo objectForKey:@"details"]);
-                return _return(EXIT_FAILURE);
-            }
-        } else if ([verb isEqualToString:ARG_PERM]){
-            debugPrint(@"== Repairing permissions ==\n");
-            @try {
-                NSString *command = [NSString stringWithFormat:@"/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", kSLE, kSLE, kSLE, kSLE, kSLE];
-                if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){
-                    // Also repair permissions for LE if macOS versions is gte 10.11
-                    command = [NSString stringWithFormat:@"%@;/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", command, kLE, kLE, kLE, kLE, kLE];
-                }
-                int ret_val = tty(command, nil);
-                if(ret_val == EXIT_SUCCESS){
-                    _message(EXIT_SUCCESS, @"Successfully repaired permissions!");
-                    return _return(EXIT_SUCCESS);
-                } else {
-                    _message(EXIT_FAILURE, @"Failed to repair permissions!");
-                    return _return(EXIT_FAILURE);
-                }
-            } @catch (NSError *e) {
-                _message(EXIT_FAILURE, [e.userInfo objectForKey:@"details"]);
-                return _return(EXIT_FAILURE);
-            }
-        } else if ([verb isEqualToString:ARG_AUTO]){
-            debugPrint(@"== Auto updating ==\n");
-            NSArray<NSString *> *kextsNeedUpdate = [KextHandler.sharedKextHandler listKextsWithUpdate];
-            NSMutableArray *failedKexts = NSMutableArray.array;
-            debugPrint(@"Needs update %@\n", kextsNeedUpdate);
-            if(hasInternetConnection()){
-                for(NSString *kext in kextsNeedUpdate){
-                    if(![[KextUpdate.alloc initWithKext:kext] doAction]){
-                        [failedKexts addObject:kext];
+            switch(verb){
+                case AKUHelperArgAutoUpdate:
+                    auto_update();
+                    break;
+                case AKUHelperArgInstall:
+                    if(args.count == 2){
+                        [[KextInstall.alloc initWithKext:[args objectAtIndex:1]] doAction];
+                    } else {
+                        debugPrint(@"Too few arguments supplied!\n");
+                        return _return(1);
                     }
-                }
-                if(failedKexts.count > 0){
-                    _message(EXIT_FAILURE, [NSString stringWithFormat:@"Failed to update %@.", [failedKexts componentsJoinedByString:@", "]]);
-                    debugPrint(@"Failed to update %@\n", failedKexts);
-                    return _return(EXIT_FAILURE);
-                }
-            } else {
-                debugPrint(@"Aborted since no internet connection is detected.\n", kextsNeedUpdate);
-                return _return(EXIT_FAILURE);
+                    break;
+                case AKUHelperArgRebuildCache:
+                    debugPrint(@"== Rebuilding Cache ==\n");
+                    @try {
+                        int ret_val;
+                        if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){ // For 10.11 or later
+                            ret_val = tty(@"/usr/sbin/kextcache -i /", nil);
+                        } else { // For 10.10 or earlier
+                            ret_val = tty([NSString stringWithFormat:@"/usr/bin/touch %@;/usr/sbin/kextcache -Boot -U /", kSLE], nil);
+                        }
+                        if(ret_val == EXIT_SUCCESS){
+                            _message(EXIT_SUCCESS, @"Kernel cache was rebuilt successfully!");
+                            return _return(EXIT_SUCCESS);
+                        } else {
+                            _message(EXIT_FAILURE, @"Failed to rebuild kernel cache!");
+                            return _return(EXIT_FAILURE);
+                        }
+                    } @catch (NSError *e) {
+                        _message(EXIT_FAILURE, [e.userInfo objectForKey:@"details"]);
+                        return _return(EXIT_FAILURE);
+                    }
+                    break;
+                case AKUHelperArgRepairPermissions:
+                    debugPrint(@"== Repairing permissions ==\n");
+                    @try {
+                        NSString *command = [NSString stringWithFormat:@"/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", kSLE, kSLE, kSLE, kSLE, kSLE];
+                        if([ConfigMacOSVersionControl getMacOSVersionInInt] >= 11){
+                            // Also repair permissions for LE if macOS versions is gte 10.11
+                            command = [NSString stringWithFormat:@"%@;/bin/chmod -RN %@;/usr/bin/find %@ -type d -print0 | /usr/bin/xargs -0 /bin/chmod 0755;/usr/bin/find %@ -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0644;/usr/sbin/chown -R 0:0 %@;/usr/bin/xattr -cr %@", command, kLE, kLE, kLE, kLE, kLE];
+                        }
+                        int ret_val = tty(command, nil);
+                        if(ret_val == EXIT_SUCCESS){
+                            _message(EXIT_SUCCESS, @"Successfully repaired permissions!");
+                            return _return(EXIT_SUCCESS);
+                        } else {
+                            _message(EXIT_FAILURE, @"Failed to repair permissions!");
+                            return _return(EXIT_FAILURE);
+                        }
+                    } @catch (NSError *e) {
+                        _message(EXIT_FAILURE, [e.userInfo objectForKey:@"details"]);
+                        return _return(EXIT_FAILURE);
+                    }
+                    break;
+                case AKUHelperArgRemove:
+                    if(args.count == 2){
+                        [[KextRemove.alloc initWithKext:[args objectAtIndex:1]] doAction];
+                    } else {
+                        debugPrint(@"Too few arguments supplied!\n");
+                        return _return(1);
+                    }
+                    break;
+                case AKUHelperArgUpdate:
+                    if(args.count == 2){
+                        [[KextUpdate.alloc initWithKext:[args objectAtIndex:1]] doAction];
+                    } else {
+                        debugPrint(@"Too few arguments supplied!\n");
+                        return _return(1);
+                    }
+                    break;
+                default:
+                    debugPrint(@"Unknown verb (%@)!\n", verb);
+                    return _return(1);
             }
-        } else {
-            debugPrint(@"Unknown verb (%@)!\n", verb);
-            return _return(1);
-        }
-        } @catch (NSError *e){
-            return _return(1);
-        } @catch (NSException *e){
+        }@catch (NSException *e){
+            debugPrint(@"Error: %@\n", e.name);
+            _message(EXIT_FAILURE, e.reason);
             return _return(1);
         }
     }

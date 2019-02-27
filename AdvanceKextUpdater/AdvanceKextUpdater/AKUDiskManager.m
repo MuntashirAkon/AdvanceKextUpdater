@@ -39,6 +39,7 @@
     if(tty([NSString stringWithFormat:@"diskutil mount %@", _diskBSD], nil) != EXIT_SUCCESS){
         @try {
             [AScript adminExec:[NSString stringWithFormat:@"diskutil mount %@", _diskBSD]];
+            debugPrint(@"%@ mounted.\n", _diskBSD);
             [self reloadDiskInfo];
             return YES;
         } @catch (NSError *e) {

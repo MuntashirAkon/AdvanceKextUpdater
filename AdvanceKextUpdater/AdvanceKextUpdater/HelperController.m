@@ -10,6 +10,7 @@
 #import "KextHandler.h"
 #import "Task.h"
 #import "utils.h"
+#import "../Shared/helper_args.h"
 
 @implementation HelperController
 @synthesize async;
@@ -48,27 +49,27 @@
 }
 
 - (BOOL) install: (NSString *) kextName {
-    return [self runWithArg:[NSString stringWithFormat:@"install %@", kextName]];
+    return [self runWithArg:[NSString stringWithFormat:@"%u %@", AKUHelperArgInstall, kextName]];
 }
 
 - (BOOL) update: (NSString *) kextName {
-    return [self runWithArg:[NSString stringWithFormat:@"update %@", kextName]];
+    return [self runWithArg:[NSString stringWithFormat:@"%u %@", AKUHelperArgUpdate, kextName]];
 }
 
 - (BOOL) autoUpdate {
-    return [self runWithArg:@"auto_update"];
+    return [self runWithArg:[NSString stringWithFormat:@"%u", AKUHelperArgAutoUpdate]];
 }
 
 - (BOOL) remove: (NSString *) kextName {
-    return [self runWithArg:[NSString stringWithFormat:@"remove %@", kextName]];
+    return [self runWithArg:[NSString stringWithFormat:@"%u %@", AKUHelperArgRemove, kextName]];
 }
 
 - (BOOL) rebuildCache {
-    return [self runWithArg:@"rebuildcache"];
+    return [self runWithArg:[NSString stringWithFormat:@"%u", AKUHelperArgRebuildCache]];
 }
 
 - (BOOL) repairPermissions {
-    return [self runWithArg:@"repairpermissions"];
+    return [self runWithArg:[NSString stringWithFormat:@"%u", AKUHelperArgRepairPermissions]];
 }
 
 - (BOOL) runTask {

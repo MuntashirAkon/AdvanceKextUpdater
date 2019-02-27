@@ -118,6 +118,7 @@
 		876BD996212E11A800D10B9D /* ConfigVersionControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigVersionControl.m; sourceTree = "<group>"; };
 		876BD998212EB93B00D10B9D /* ConfigMacOSVersionControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigMacOSVersionControl.h; sourceTree = "<group>"; };
 		876BD999212EB94700D10B9D /* ConfigMacOSVersionControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigMacOSVersionControl.m; sourceTree = "<group>"; };
+		8773690A2226C31700F64EF6 /* helper_args.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = helper_args.h; sourceTree = "<group>"; };
 		8773B710212BFD730096BFCC /* AdvanceKextUpdater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdvanceKextUpdater.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8773B713212BFD730096BFCC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8773B714212BFD730096BFCC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -168,7 +169,6 @@
 		87F782C7221DB12A000F7E2D /* HelperController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperController.m; sourceTree = "<group>"; };
 		87FAC53221486B5E00DAA453 /* ConfigBinary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigBinary.h; sourceTree = "<group>"; };
 		87FAC53321486B6A00DAA453 /* ConfigBinary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigBinary.m; sourceTree = "<group>"; };
-		87FAC5372148FD4100DAA453 /* CacheController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CacheController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +220,7 @@
 				87A6384321FFF9F900EEE1AA /* ZSSUserDefaults.m */,
 				876056AE21EB273300FC78AD /* PreferencesHandler.h */,
 				876056AF21EB273300FC78AD /* PreferencesHandler.m */,
+				8773690A2226C31700F64EF6 /* helper_args.h */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -331,7 +332,6 @@
 				879F60982141FE380059D0ED /* PCI.m */,
 				879F609E2142A4CE0059D0ED /* utils.h */,
 				879F609C21423C070059D0ED /* utils.m */,
-				87FAC5372148FD4100DAA453 /* CacheController.h */,
 				873DFC472174965400B33DB5 /* MarkdownToHTML.h */,
 				873DFC482174966000B33DB5 /* MarkdownToHTML.m */,
 				87C60B10220444560099A929 /* AKUDiskManager.h */,
