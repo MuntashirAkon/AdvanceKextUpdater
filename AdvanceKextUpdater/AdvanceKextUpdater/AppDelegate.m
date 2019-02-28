@@ -119,6 +119,7 @@
                 [self->_spinner close];
                 NSRunCriticalAlertPanel(e.name, @"%@", nil, nil, nil, e.reason);
                 [self applicationWillTerminate:aNotification]; // Terminate
+                [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
             });
         }
     });
