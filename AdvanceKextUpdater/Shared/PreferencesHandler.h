@@ -18,6 +18,7 @@ typedef enum {
 } KextUpdatePref;
 
 @interface CloverPreference : NSObject
+@property (readonly) NSArray<NSString *> *directory_names;
 ///
 /// A list of directories
 @property (readonly) NSArray<NSString *> *directories;

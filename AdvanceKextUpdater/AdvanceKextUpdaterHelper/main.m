@@ -65,6 +65,8 @@ void _message(int status_code, NSString * _Nonnull msg){
 
 void auto_update(){
     debugPrint(@"== Auto updating ==\n");
+    PreferencesHandler *preference = [PreferencesHandler sharedPreferences];
+    [preference.clover prefixDirectories];
     NSArray<NSString *> *kextsNeedUpdate = [KextHandler.sharedKextHandler listKextsWithUpdate];
     NSMutableArray *failedKexts = NSMutableArray.array;
     debugPrint(@"Needs update %@\n", kextsNeedUpdate);
@@ -73,10 +75,10 @@ void auto_update(){
             if(![[KextUpdate.alloc initWithKext:kext] doAction]){
                 [failedKexts addObject:kext];
             }
+            [KextFinder.sharedKextFinder updateList];
         }
         if(failedKexts.count > 0){
             [NSException exceptionWithName:@"Failed to update some kexts!" reason:[NSString stringWithFormat:@"Failed to update %@.", [failedKexts componentsJoinedByString:@", "]] userInfo:nil];
-            _message(EXIT_FAILURE, [NSString stringWithFormat:@"Failed to update %@.", [failedKexts componentsJoinedByString:@", "]]);
         }
     } else {
         [NSException exceptionWithName:@"Update aborted!" reason:@"Update aborted since no internet connection is detected!" userInfo:nil];
@@ -120,7 +122,13 @@ int main(int argc, const char *argv[]) {
         @try {
             switch(verb){
                 case AKUHelperArgAutoUpdate:
-                    auto_update();
+                    @try{
+                        auto_update();
+                        _message(EXIT_SUCCESS, @"The update was successful! Have a nice day!");
+                    } @catch (NSException *e){
+                        _message(EXIT_FAILURE, e.reason);
+                        return _return(1);
+                    }
                     break;
                 case AKUHelperArgInstall:
                     if(args.count == 2){

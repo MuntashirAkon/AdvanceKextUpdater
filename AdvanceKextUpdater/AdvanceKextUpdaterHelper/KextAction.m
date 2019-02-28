@@ -20,7 +20,7 @@
     [preference.clover prefixDirectories];
     kextFinder = [KextFinder sharedKextFinder];
     NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setDateFormat:@"yyyyMMdd"];
+    [formatter setDateFormat:@"yyyyMMddHHmmss"];
     backupLocation = [NSString stringWithFormat:@"%@/%@", KextHandler.kextBackupPath, [formatter stringFromDate:[NSDate date]]];
     if(![NSFileManager.defaultManager fileExistsAtPath:backupLocation]){
         [NSFileManager.defaultManager createDirectoryAtPath:backupLocation withIntermediateDirectories:YES attributes:nil error:nil];
@@ -72,6 +72,7 @@
                     return NO;
                 } else {
                     tty([NSString stringWithFormat:@"chown -R %@:staff '%@'", getMainUser(), KextHandler.kextBackupPath], nil);
+                    backed_up = YES;
                     debugPrint(@"Backed up & removed\n");
                 }
             }
@@ -82,6 +83,7 @@
 }
 
 + (void) status:(NSString *) msg {
+    debugPrint(@"==> %@\n", msg);
     FILE *fp = fopen(KextHandler.lockFile.UTF8String, "w");
     _fprintf(fp, msg);
     fclose(fp);
@@ -169,10 +171,10 @@
             }
 #endif
         } @catch (NSException *e){
+            debugPrint(@"%@: Need installing (%@)\n", kext.kextName, e.reason);
             if(![[KextInstall.alloc initWithKext:kext.kextName] doAction]) {// Install kext
                 return NO;
             }
-            debugPrint(@"%@: Need installing (%@)\n", kext.kextName, e.reason);
         }
     }
     return YES;
@@ -295,7 +297,7 @@
     [KextAction status:@"Running post-install task(s)..."];
     @try {
         NSString *output = [self runPostInstallTask];
-        debugPrint(@"Post install: %@", output);
+        debugPrint(@"Post install: %@\n", output);
         [KextAction message:@"The installation was successful!" withStatusCode:EXIT_SUCCESS];
     } @catch (NSException *e) {
         [KextAction message:e.reason withStatusCode:EXIT_FAILURE];
@@ -396,7 +398,7 @@
     [KextAction status:@"Running post-install task(s)..."];
     @try {
         NSString *output = [self runPostInstallTask];
-        debugPrint(@"Post install: %@", output);
+        debugPrint(@"Post install: %@\n", output);
         [KextAction message:@"The update was successful!" withStatusCode:EXIT_SUCCESS];
     } @catch (NSException *e) {
         [KextAction message:e.reason withStatusCode:EXIT_FAILURE];

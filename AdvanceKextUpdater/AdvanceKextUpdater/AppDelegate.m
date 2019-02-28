@@ -253,7 +253,7 @@
                 NSInteger res = NSRunAlertPanel(@"Update available!", @"The following kext(s) will be updated:\n%@", @"Proceed", @"Cancel Update", nil, [kextNeedsUpdate componentsJoinedByString:@", "]);
                 if(res == NSAlertDefaultReturn){
                     // TODO: Display progress as well?
-                    [[self->_spinner setTitle:@"Checking for updates..."] reload];
+                    [[self->_spinner setTitle:@"Updating..."] reload];
                     [self->_spinner.window makeKeyAndOrderFront:self];
                     [NSApp activateIgnoringOtherApps:YES];
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -263,6 +263,21 @@
                             while([HelperController.sharedHelper isTaskRunning]) { sleep(1); }
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self->_spinner close];
+                                // Run complete, now get result
+                                int status = EXIT_FAILURE;
+                                NSString *message = @"Failed executing the task. Please, try again.";
+                                NSDictionary *result = [HelperController.sharedHelper getFinalMessage];
+                                if(result != nil){
+                                    status = [(NSNumber *)[result objectForKey:@"status"] intValue];
+                                    message = [result objectForKey:@"message"];
+                                }
+                                if(status == EXIT_SUCCESS){
+                                    NSRunAlertPanel(@"Success!", @"%@", @"OK", nil, nil, message);
+                                } else {
+                                    NSRunCriticalAlertPanel(@"Failed!", @"%@", @"OK", nil, nil, message);
+                                }
+                                // Update kext list
+                                [self updateTables];
                             });
                         } @catch (NSException *e) {
                             dispatch_async(dispatch_get_main_queue(), ^{

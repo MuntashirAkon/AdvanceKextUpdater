@@ -41,20 +41,15 @@
         kextName = [kextName stringByAppendingPathExtension:@"kext"];
     }
     NSArray *kextLoc = [self findLocations:kextName];
-    // Only find version for the first index: TODO ALL?
-    NSString *kext = [kextLoc firstObject];
-    if(kext == nil) {
-        @throw [NSException exceptionWithName:@"KextNotInstalled" reason:@"The requested kext is not installed. So, can't get a version for a kext that's not installed!" userInfo:nil];
+    NSString *version;
+    NSString *min_version = [self _get_version:[kextLoc firstObject]];
+    for (NSUInteger i = 1; i<kextLoc.count; ++i) {
+        version = [self _get_version:[kextLoc objectAtIndex:i]];
+        if([version.shortenedVersionNumberString compare:min_version.shortenedVersionNumberString options:NSNumericSearch] == NSOrderedAscending){
+            min_version = version;
+        }
     }
-    NSString *plist = [NSString stringWithFormat:@"%@/Contents/Info.plist", kext];
-    if(![NSFileManager.defaultManager fileExistsAtPath:plist]){
-        @throw [NSException exceptionWithName:@"InfoPlistNotFound" reason:@"The Info.plist of the requested kext is not found. So, can't get a version!" userInfo:nil];
-    }
-    NSString *version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleShortVersionString"];
-    if(version == nil){
-        version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleVersion"];
-    }
-    return version;
+    return min_version;
 }
 -(NSArray<NSString *> *)findLocations: (NSString *)kextName {
     if(![kextName hasSuffix:@".kext"]){
@@ -74,5 +69,21 @@
     }
     tty([NSString stringWithFormat:@"kextfind %@ %@ %@", kSLE, kLE, directories], &tmpKexts);
     _installedKexts = tmpKexts;
+}
+
+-(NSString * _Nullable)_get_version: (NSString *)kextLocation{
+    NSString *version;
+    if(kextLocation == nil) {
+        @throw [NSException exceptionWithName:@"KextNotInstalled" reason:@"The requested kext is not installed. So, can't get a version for a kext that's not installed!" userInfo:nil];
+    }
+    NSString *plist = [NSString stringWithFormat:@"%@/Contents/Info.plist", kextLocation];
+    if(![NSFileManager.defaultManager fileExistsAtPath:plist]){
+        @throw [NSException exceptionWithName:@"InfoPlistNotFound" reason:@"The Info.plist of the requested kext is not found. So, can't get a version!" userInfo:nil];
+    }
+    version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleShortVersionString"];
+    if(version == nil){
+        version = [[NSDictionary dictionaryWithContentsOfFile:plist] objectForKey:@"CFBundleVersion"];
+    }
+    return version;
 }
 @end

@@ -68,7 +68,7 @@
 @synthesize partition;
 @synthesize support;
 -(instancetype)initWithDict: (NSDictionary *)cloverPref {
-    directories = [cloverPref objectForKey:@"Directories"];
+    _directory_names = [cloverPref objectForKey:@"Directories"];
     partition = [cloverPref objectForKey:@"Partition"];
     support = ([[cloverPref objectForKey:@"Support"] integerValue] ? YES : NO);
     return self;
@@ -83,7 +83,7 @@
             @throw [NSException exceptionWithName:@"Clover parition is not mounted" reason:@"You have enabled support for Clover parition, but for some reason this partition is not mounted. Please, try starting the app again or report us." userInfo:nil];
         }
         NSMutableArray<NSString *> *prefixedDirectories = NSMutableArray.array;
-        for(NSString *directory in directories){
+        for(NSString *directory in _directory_names){
             [prefixedDirectories addObject:[NSString stringWithFormat:@"%@/EFI/CLOVER/kexts/%@", mountPoint, directory]];
         }
         directories = prefixedDirectories.copy;
