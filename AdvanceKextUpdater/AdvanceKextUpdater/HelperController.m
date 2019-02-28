@@ -165,4 +165,8 @@
     return nil;
 }
 
+- (void) resetTask {
+    [NSFileManager.defaultManager removeItemAtPath:KextHandler.lockFile error:nil];
+}
+
 @end

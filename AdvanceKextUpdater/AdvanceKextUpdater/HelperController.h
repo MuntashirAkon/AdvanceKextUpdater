@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL) isTaskRunning;
 - (NSString * _Nullable) getLastMessage;
 - (NSDictionary * _Nullable) getFinalMessage;
+- (void) resetTask;
 @end
 
 NS_ASSUME_NONNULL_END

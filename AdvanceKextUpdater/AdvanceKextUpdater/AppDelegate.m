@@ -291,6 +291,7 @@
                 [self->_spinner close];
             });
         } @catch (NSException *e) {
+            [HelperController.sharedHelper resetTask];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self->_spinner close];
                 NSRunCriticalAlertPanel(e.name, @"%@", @"OK", nil, nil, e.reason);
@@ -312,6 +313,7 @@
                 [self->_spinner close];
             });
         } @catch (NSException *e) {
+            [HelperController.sharedHelper resetTask];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self->_spinner close];
                 NSRunCriticalAlertPanel(e.name, @"%@", @"OK", nil, nil, e.reason);
