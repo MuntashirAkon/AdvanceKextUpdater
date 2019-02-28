@@ -377,15 +377,14 @@
                                     <action selector="checkForUpdates:" target="Voe-Tx-rLC" id="2Li-m8-Zcy"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Repair Permissions" id="Fal-I4-PZk">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Rebuild Cache" keyEquivalent="k" id="pFx-5h-tCj">
                                 <connections>
-                                    <action selector="repairPermissions:" target="Voe-Tx-rLC" id="ESv-G8-GP2"/>
+                                    <action selector="rebuildCache:" target="Voe-Tx-rLC" id="5LU-cJ-pSb"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Rebuild Cache" keyEquivalent="k" id="IND-7U-gQg">
+                            <menuItem title="Repair Permissions" keyEquivalent="l" id="Fal-I4-PZk">
                                 <connections>
-                                    <action selector="rebuildCache:" target="Voe-Tx-rLC" id="KiZ-MV-otS"/>
+                                    <action selector="repairPermissions:" target="Voe-Tx-rLC" id="ESv-G8-GP2"/>
                                 </connections>
                             </menuItem>
                         </items>
