@@ -1,0 +1,55 @@
+{
+  "name": "VoodooPS2Controller",
+  "kext": "VoodooPS2Controller.kext",
+  "description": "Contains updated Voodoo PS/2 Controller, improved Keyboard & Synaptics TouchPad",
+  "homepage": "https://github.com/RehabMan/OS-X-Voodoo-PS2-Controller",
+  "version": "1.9.2",
+  "versions": null,
+  "target": "LE",
+  "since": "10.8",
+  "last": null,
+  "bin": {
+    "recommend": "rel",
+    "dev": {
+      "url": "https://bitbucket.org/RehabMan/os-x-voodoo-ps2-controller/downloads/RehabMan-Voodoo-2018-1008.zip",
+      "script": null,
+      "loc": "Debug/VoodooPS2Controller.kext"
+    },
+    "rel": {
+      "url": "https://bitbucket.org/RehabMan/os-x-voodoo-ps2-controller/downloads/RehabMan-Voodoo-2018-1008.zip",
+      "script": null,
+      "loc": "Release/VoodooPS2Controller.kext"
+    }
+  },
+  "changes": "- Tapping stability: ignore moves while waiting for tap gestures (eg. pointer will not move while making a tap or double tap gesture)\n- Increase TapThreasholdX/Y, DoubleTapThresholdX/Y (from 50/100 to 75/150)",
+  "guide": "@see https://raw.githubusercontent.com/RehabMan/OS-X-Voodoo-PS2-Controller/master/README.md",
+  "time": "2018-10-08 14:45:33",
+  "license": "APSL-2.0",
+  "authors": [
+    {
+      "name": "Rehabman",
+      "email": "racerrehabman@gmail.com",
+      "homepage": null
+    },
+    {
+      "name": "Darkvoid",
+      "email": null,
+      "homepage": "https://github.com/the-darkvoid"
+    },
+    {
+      "name": "JC Snider",
+      "email": null,
+      "homepage": "http://ascensiongamedev.com"
+    }
+  ],
+  "require": null,
+  "conflict": {
+    "kexts": {
+      "ApplePS2Controller": "*",
+      "AppleACPIPS2Nub": "*",
+      "AppleSmartPS2TouchPad": "*"
+    }
+  },
+  "replaced_by": null,
+  "suggest": null
+}

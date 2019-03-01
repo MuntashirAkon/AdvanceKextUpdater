@@ -122,6 +122,9 @@
   "VirtualSMC": {
     "id": "as.vit9696.VirtualSMC"
   },
+  "VoodooPS2Controller": {
+    "id": "org.rehabman.voodoo.driver.PS2Controller"
+  },
   "WhateverGreen": {
     "id": "as.vit9696.WhateverGreen"
   }
