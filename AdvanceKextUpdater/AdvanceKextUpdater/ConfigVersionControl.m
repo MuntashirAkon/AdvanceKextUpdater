@@ -6,7 +6,6 @@
 //  Copyright © 2018 Muntashir Al-Islam. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "ConfigVersionControl.h"
 
 @implementation ConfigVersion
@@ -20,7 +19,7 @@
     self.currentVersion = baseConfig.version;
     NSMutableArray<ConfigVersion *> *availableVersions = NSMutableArray.array;
     // Add the base config to the list first
-    ConfigVersion *tmpConfig = [ConfigVersion.alloc init];
+    ConfigVersion *tmpConfig = [ConfigVersion new];
     tmpConfig.version = baseConfig.version;
     tmpConfig.config  = baseConfig;
     tmpConfig.macOSVersion = baseConfig.macOSVersion;
@@ -28,7 +27,7 @@
     // Add other config based on version
     if([otherVersions isKindOfClass:NSArray.class]){
         for(NSDictionary *version in otherVersions){
-            ConfigVersion *tmpConfig = [ConfigVersion.alloc init];
+            ConfigVersion *tmpConfig = [ConfigVersion new];
             tmpConfig.version = [version objectForKey:@"version"];
             [versions addObject:tmpConfig.version];
             if(baseConfig.url == nil) { // Not a URL
@@ -45,11 +44,6 @@
 }
 
 // BUG ALERT!!!
-/**
- * Finds the best version of the kext for the current macOS
- *
- * @return -1 for none, positive integer if avialable
- */
 - (NSInteger) findTheBestVersion {
     // Since the first version in the availableVersions is the latest version
     // (others may or may not be sequencial), check if it supports the current
@@ -58,8 +52,8 @@
         return 0;
     }
     NSInteger n = [versions count];
-    // If there are no other versions, return -1
-    if(n == 0) return -1;
+    // If there are no other versions, return NSNotFound
+    if(n == 0) return NSNotFound;
     else if (n >= 2){ // Sort the versions only if n>=2
         for(NSUInteger i = 0; i<n-1; ++i){
             for(NSUInteger j = 0; j<n-i-1; ++j) {
@@ -75,7 +69,7 @@
         index = [self installable:version];
         if(index > 0) return index;
     }
-    return -1;
+    return NSNotFound;
 }
 
 // 0 = false, > 0 means true

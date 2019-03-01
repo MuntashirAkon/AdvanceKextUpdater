@@ -62,6 +62,7 @@
     // DO NOT CHANGE THE ORDER!! This order is respected by KextUpdatePref
     updateTitles = @[
         @"Do not check",
+        @"Check when app starts",
         @"Check on every boot",
         @"Check on every week",
         @"Check on every month"

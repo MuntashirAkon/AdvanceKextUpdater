@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef enum {
     KextUpdateDoNotCheck,
+    KextUpdateCheckWhenAppStarts,
     KextUpdateCheckOnBoot,
     KextUpdateCheckWeekly,
     KextUpdateCheckMonthly

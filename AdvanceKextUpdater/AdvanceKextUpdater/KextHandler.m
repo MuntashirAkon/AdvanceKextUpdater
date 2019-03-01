@@ -250,7 +250,7 @@
     }
     // Find the best version for the running macOS version
     NSInteger best_version = kextConfig.versions.findTheBestVersion;
-    if(best_version != -1) kextConfig = [kextConfig.versions.availableVersions objectAtIndex:best_version].config;
+    if(best_version != NSNotFound) kextConfig = [kextConfig.versions.availableVersions objectAtIndex:best_version].config;
     return kextConfig;
 }
 
