@@ -46,12 +46,13 @@
         catalog = [JSONParser parseFromFile:path];
         kextNames = [catalog allKeys];
         NSMutableArray *kextList = [NSMutableArray array];
+        remoteKexts = NSMutableDictionary.dictionary;
         for(NSString *kextName in kextNames){
             [kextList addObject:kextName];
             id kextInfo = [catalog objectForKey:kextName];
             if([kextInfo isKindOfClass:NSDictionary.class]){
                 if([kextInfo objectForKey:@"remote_url"] != nil) {
-                    [remoteKexts setObject:[NSURL URLWithString:[kextInfo objectForKey:@"remote_url"]] forKey:kextName];
+                    [remoteKexts setValue:[NSURL URLWithString:[kextInfo objectForKey:@"remote_url"]] forKey:kextName];
                 }
             }
         }
@@ -237,6 +238,7 @@
     // Load kext config
     KextConfig *kextConfig;
     if([remoteKexts objectForKey:kextName] != nil) {
+        debugPrint(@"Found kext with remote URL: %@\n", kextName);
         kextConfig = [KextConfig.alloc initWithKextName:kextName URL:[remoteKexts objectForKey:kextName]];
     } else {
         kextConfig = [KextConfig.alloc initWithKextName:kextName];

@@ -32,10 +32,11 @@
     else return nil;
 }
 
-// BUG ALERT!!!
 - (instancetype) initWithKextName: (NSString *) kextName URL: (NSURL *) configURL {
     kextName = [kextName stringByDeletingPathExtension];
-    configPath = [self appendConfigJSON:[[KextHandler kextCachePath] stringByAppendingPathComponent:kextName]];
+    NSString *kextPath = [KextHandler.kextCachePath stringByAppendingPathComponent:kextName];
+    [NSFileManager.defaultManager createDirectoryAtPath:kextPath withIntermediateDirectories:YES attributes:nil error:nil];
+    configPath = [self appendConfigJSON:kextPath];
     // Save config.json from URL to cache
     [URLTask get:configURL toFile:configPath supress:YES];
     self.path = [configPath stringByDeletingLastPathComponent];
