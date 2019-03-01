@@ -1,7 +1,7 @@
 # Kext Configurations Database
 This branch doesn't contain any kext file, but only kext configurations.
 
-**Configuration Version: 0.9.0**
+**Configuration Version: 0.9.2**
 
 ## Adding a kext configuration
 In order to add a kext configuration to this database, you have to edit ***catalog.json*** file first.
@@ -26,8 +26,9 @@ this:
  **NOTE:** `remote_url` contains the remote ***config.json*** file instead of the one hosted here. All the document
        locations inside this config is relative to the URL, except unzipped locations (ie. `bin.rel.loc` and `bin.dev.loc`)
        which are relative to the zipped file. In this way, `config.json` can be changed directly from a remote repository
-       containing the kext.  The zip file locations (ie. `bin.dev.url` and `bin.rel.url`) can be either a relative URL or an
-       absolute URL. Make sure the absolute URL contains `http://` or `https://` prefix.
+       containing the kext.  The zip file locations (ie. `bin.dev.url` and `bin.rel.url`) and `info` (ie. ***Info.plist*** file)
+       location can be either a relative URL or an absolute URL. Make sure the absolute URL contains `http://` or `https://`
+       prefix.
   
  ### Adding a *config.json* file
 Create a directory same as the `title` mentioned above (in this example, `FooBar`). Now, create a ***config.json*** file
@@ -54,6 +55,7 @@ authors[].email
 #### `config.json` Schema
 - `name` : (String) Name of the Kext (same as the `title` of the **config.json**)
 - `kext`: (String) Kext binary file name
+- `info`: (String) Relative or absolute URL to the ***Info.plist*** file of the kext. If it is a I/O Kit based extension, eligibility of installing the kext is determined automatically using the plist file (you can manually edit this file instead of using the original ***Info.plist***)
 - `description`: (String) A short description of the Kext
 - `homepage`: (String) The main location of the kext or kext source
 - `version`: (String) Current version of the kext
@@ -181,7 +183,7 @@ The optional output should contain a friendly message.
 
 | Code | Output           | Meaning
 | ---- | ---------------- | -------
-| `0`  | Optional Message | Everything's alright, let's proceed
+| `0`  | Optional Message | Everything's all right, let's proceed
 | `1`  | Optional Message | Something's went wrong, let's give the user a hint
 | `2`  | Optional Message | Something's went wrong, let's give the user a hint and also revert the kext installation
 
