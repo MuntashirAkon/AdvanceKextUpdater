@@ -235,10 +235,15 @@
     NSMutableString *suggestStr = NSMutableString.string;
     [suggestStr appendString:@"### Suggestions\n\n<dl>"];
     for(ConfigSuggestion *suggestion in kextConfig.suggestions){
-        if([suggestion.name hasSuffix:@".app"] || [suggestion.name hasSuffix:@".sh"] || [suggestion.name hasSuffix:@".pkg"] || [suggestion.name hasSuffix:@".mpkg"] || [suggestion.name hasSuffix:@".dmg"] || [suggestion.name hasSuffix:@".dylib"] || [suggestion.name hasSuffix:@".efi"]){ //.app, .sh, .pkg, .mkpg, .dmg, .dylib, .efi
-            [suggestStr appendFormat:@"<dt>%@</dt><dd>%@</dd>", suggestion.name, suggestion.text];
+        if(suggestion.type == KCCSKext && [KextHandler.sharedKextHandler existsInDB:suggestion.name]){
+            [suggestStr appendFormat:@"<dt><a href=\"kext://%@\">%@</a></dt>", suggestion.name, suggestion.name];
+        } else if(suggestion.url != nil){
+            [suggestStr appendFormat:@"<dt><a href=\"%@\">%@</a></dt>", suggestion.url, suggestion.name];
         } else {
-            [suggestStr appendFormat:@"<dt><a href=\"kext://%@\">%@</a></dt><dd>%@</dd>", suggestion.name, suggestion.name, suggestion.text];
+            [suggestStr appendFormat:@"<dt>%@</dt>", suggestion.name];
+        }
+        if(suggestion.text != nil){
+            [suggestStr appendFormat:@"<dd>%@</dd>", suggestion.text];
         }
     }
     [suggestStr appendString:@"</dl>"];

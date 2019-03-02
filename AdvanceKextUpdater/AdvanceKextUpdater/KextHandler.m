@@ -234,6 +234,13 @@
     }
 }
 
+- (BOOL)existsInDB:(NSString *)kextName {
+    if([kextName hasSuffix:@".kext"]){
+        kextName = [kextName stringByDeletingPathExtension];
+    }
+    return [kexts indexOfObject:kextName] != NSNotFound;
+}
+
 - (id _Nullable)kextConfig:(NSString *)kextName {
     // Load kext config
     KextConfig *kextConfig;

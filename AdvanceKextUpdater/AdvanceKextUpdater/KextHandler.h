@@ -52,6 +52,7 @@
 - (NSDictionary<NSString *, NSURL *> *) listRemoteKext;
 - (NSArray<NSString *> *) listKextsWithUpdate;
 - (BOOL)needUpdating:(NSString *)kextName;
+- (BOOL)existsInDB:(NSString *)kextName;
 - (id _Nullable) kextConfig:(NSString *)kextName;
 @end
 #endif /* KextHandler_h */
