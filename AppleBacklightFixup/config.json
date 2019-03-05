@@ -43,7 +43,10 @@
     "action": "delete"
   },
   "replaced_by": {
-    "WhateverGreen": "1.2.5^"
+    "since": "10.13",
+    "kexts": {
+      "WhateverGreen": "1.2.5^"
+    }
   },
   "suggest": null
 }
