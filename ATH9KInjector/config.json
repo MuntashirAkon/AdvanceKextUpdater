@@ -34,8 +34,7 @@
     }
   ],
   "require": {
-    "Lilu": "1.2.0^",
-    "ATH9KFixup": "*"
+    "Lilu": "1.2.0^"
   },
   "conflict": null,
   "replaced_by": null,
