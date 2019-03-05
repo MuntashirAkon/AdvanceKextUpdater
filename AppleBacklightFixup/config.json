@@ -42,6 +42,8 @@
     },
     "action": "delete"
   },
-  "replaced_by": null,
+  "replaced_by": {
+    "WhateverGreen": "1.2.5^"
+  },
   "suggest": null
 }
