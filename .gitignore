@@ -1,3 +1,4 @@
+*.DS_Store
 AdvanceKextUpdater/AdvanceKextUpdater.xcodeproj/xcuserdata
 AdvanceKextUpdater/AdvanceKextUpdater.xcworkspace/xcuserdata
 AdvanceKextUpdater/KextStatViewer/KextStatViewer.xcodeproj/xcuserdata
