@@ -55,7 +55,7 @@ authors[].email
 #### `config.json` Schema
 - `name` : (String) Name of the Kext (same as the `title` of the **config.json**)
 - `kext`: (String) Kext binary file name
-- `info`: [Optional] (String) Relative or absolute URL to the ***Info.plist*** file of the kext, useful I/O Kit based extensions as the eligibility of installing the kext can be determined automatically using the plist file (you can manually edit this file instead of using the original ***Info.plist***). Only the `IOKitPersonalities` and `OSBundleLibraries` will be validated, version and other info will not be evaluated.
+- `info`: [Optional] (String) Relative or absolute URL to the ***Info.plist*** file of the kext, useful I/O Kit based extensions as the eligibility of installing the kext can be determined automatically using the plist file (you can manually edit this file instead of using the original ***Info.plist***). Only the `IOKitPersonalities` and `OSBundleLibraries` will be validated, version and other info will not be evaluated. (Not implemented yet)
 - `description`: (String) A short description of the Kext
 - `homepage`: (String) The main location of the kext or kext source
 - `version`: (String) Current version of the kext
