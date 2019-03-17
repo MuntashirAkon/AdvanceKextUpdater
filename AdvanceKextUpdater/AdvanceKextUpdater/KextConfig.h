@@ -59,10 +59,10 @@ typedef enum {
 @property NSArray<NSString *>     *tags;                // OPTIONAL String: comma separated √
 @property ConfigTarget            *target;              // String: kSLE or kLE
 @property NSDate                  *time;                // String: YYYY-MM-DD HH:MM:SS or YYYY-MM-DD √
-
+@property NSString * _Nullable     url;
 @property NSString                *version;             // String
 @property ConfigVersionControl    *versions;            // Array|null
-@property NSString                *url;
+
 - (instancetype) initWithConfig: (NSString *) configFile;
 - (instancetype) initWithKextName: (NSString *) kextName;
 - (instancetype) initWithKextName: (NSString *) kextName URL: (NSURL *) configURL;
