@@ -48,6 +48,10 @@ typedef enum {
 /// Excluded kexts
 @property (readonly) NSArray<NSString *> *excluded;
 ///
+/// An UNIX timestamp showing the last time an update was checked
+/// (for kext database at startup)
+@property (readonly) time_t lastCheckTime;
+///
 /// Whether to replace old kext(s) with new one if the kext is replaced by a new kext
 @property (readonly) BOOL replace;
 ///
@@ -60,6 +64,10 @@ typedef enum {
 @interface PreferencesHandler : NSObject
 +(id)sharedPreferences;
 ///
+/// An UNIX timestamp showing the last time an update was checked
+/// (for Applicaton itself)
+@property (readonly) time_t lastCheckTime;
+///
 /// A wrapper for clover preferences
 @property (readonly) CloverPreference *clover;
 ///
@@ -70,6 +78,8 @@ typedef enum {
 -(instancetype)reload;
 ///
 /// Default preferences
+///
+/// See the respective object for information related to each property
 +(NSDictionary *)appDefaults;
 @end
 
