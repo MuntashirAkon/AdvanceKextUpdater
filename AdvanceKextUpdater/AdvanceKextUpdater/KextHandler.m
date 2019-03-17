@@ -38,28 +38,8 @@
 
 - (instancetype) init {
     [KextHandler createFilesIfNotExist];
-    NSString *path = [KextHandler kextDBPath];
-    // Read catalog.json and list kexts
-    path = [path stringByAppendingPathComponent:@"catalog"];
-    path = [path stringByAppendingPathExtension:@"json"];
-    if([NSFileManager.defaultManager fileExistsAtPath:path]){
-        catalog = [JSONParser parseFromFile:path];
-        kextNames = [catalog allKeys];
-        NSMutableArray *kextList = [NSMutableArray array];
-        remoteKexts = NSMutableDictionary.dictionary;
-        for(NSString *kextName in kextNames){
-            [kextList addObject:kextName];
-            id kextInfo = [catalog objectForKey:kextName];
-            if([kextInfo isKindOfClass:NSDictionary.class]){
-                if([kextInfo objectForKey:@"remote_url"] != nil) {
-                    [remoteKexts setValue:[NSURL URLWithString:[kextInfo objectForKey:@"remote_url"]] forKey:kextName];
-                }
-            }
-        }
-        kexts = kextList;
-        return self;
-    }
-    return nil;
+    [self _update_catalog];
+    return self;
 }
 
 + (NSString *) appPath {
@@ -187,6 +167,7 @@
     // Update kext_db
     if(hasInternetConnection()){
         [KextHandler checkForDBUpdate];
+        [self _update_catalog];
     }
     // Find kexts that need updating
     NSMutableArray *kextNeedsUpdate = NSMutableArray.array;
@@ -276,6 +257,29 @@
     [fm createDirectoryAtPath:KextHandler.kextBackupPath withIntermediateDirectories:YES attributes:nil error:nil];
     if(![fm fileExistsAtPath:KextHandler.kextDBPath]) {
         @throw [NSException exceptionWithName:@"Updating Kext database failed!" reason:@"Failed to update kext database, please check your internet connection and try again." userInfo:nil];
+    }
+}
+
+-(void)_update_catalog{
+    NSString *path = [KextHandler kextDBPath];
+    // Read catalog.json and list kexts
+    path = [path stringByAppendingPathComponent:@"catalog"];
+    path = [path stringByAppendingPathExtension:@"json"];
+    if([NSFileManager.defaultManager fileExistsAtPath:path]){
+        catalog = [JSONParser parseFromFile:path];
+        kextNames = [catalog allKeys];
+        NSMutableArray *kextList = [NSMutableArray array];
+        remoteKexts = NSMutableDictionary.dictionary;
+        for(NSString *kextName in kextNames){
+            [kextList addObject:kextName];
+            id kextInfo = [catalog objectForKey:kextName];
+            if([kextInfo isKindOfClass:NSDictionary.class]){
+                if([kextInfo objectForKey:@"remote_url"] != nil) {
+                    [remoteKexts setValue:[NSURL URLWithString:[kextInfo objectForKey:@"remote_url"]] forKey:kextName];
+                }
+            }
+        }
+        kexts = kextList;
     }
 }
 @end
