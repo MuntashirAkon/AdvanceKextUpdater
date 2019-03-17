@@ -38,6 +38,9 @@
     if([self isMounted]) return YES;
     if(tty([NSString stringWithFormat:@"diskutil mount %@", _diskBSD], nil) != EXIT_SUCCESS){
         @try {
+//            DASessionRef session = DASessionCreate(kCFAllocatorDefault);
+//            DADiskRef disk = DADiskCreateFromBSDName(kCFAllocatorDefault, session, _diskBSD.UTF8String);
+//            DADiskMount(disk, NULL, kDADiskMountOptionDefault, NULL, NULL);
             [AScript adminExec:[NSString stringWithFormat:@"diskutil mount %@", _diskBSD]];
             debugPrint(@"%@ mounted.\n", _diskBSD);
             [self reloadDiskInfo];
