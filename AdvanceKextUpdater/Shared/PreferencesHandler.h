@@ -10,11 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// How kext update should be checked
+///
+/// This also applies to auto update feature
 typedef enum {
+    /// Don't check for update
     KextUpdateDoNotCheck,
+    /// Check for update only when the application starts
     KextUpdateCheckWhenAppStarts,
+    /// Check for update on every boot
     KextUpdateCheckOnBoot,
+    /// Check for update on every week during boot
     KextUpdateCheckWeekly,
+    /// Check for update on every month during boot
     KextUpdateCheckMonthly
 } KextUpdatePref;
 
