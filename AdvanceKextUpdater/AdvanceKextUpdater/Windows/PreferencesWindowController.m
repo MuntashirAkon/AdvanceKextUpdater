@@ -183,7 +183,6 @@
             if (diskInfo == NULL) { err = EINVAL; }
         }
         if (err == 0) {
-            CFShow(diskInfo);
             CFTypeRef volume_kind  = CFDictionaryGetValue(diskInfo, kDADiskDescriptionVolumeKindKey);
             CFTypeRef volume_label = CFDictionaryGetValue(diskInfo, kDADiskDescriptionVolumeNameKey);
             if (volume_kind != NULL) { // Since Clover only supports ntfs and msdos
