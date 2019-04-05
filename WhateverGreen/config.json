@@ -3,7 +3,7 @@
   "kext": "WhateverGreen.kext",
   "description": "Various patches necessary for certain ATI/AMD/Intel/Nvidia GPUs.",
   "homepage": "https://github.com/acidanthera/WhateverGreen",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "versions": null,
   "target": "LE",
   "since": "10.8",
@@ -11,19 +11,19 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https:\/\/github.com\/acidanthera\/WhateverGreen\/releases\/download\/1.2.6\/1.2.6.DEBUG.zip",
+      "url": "https:\/\/github.com\/acidanthera\/WhateverGreen\/releases\/download\/1.2.7\/1.2.7.DEBUG.zip",
       "script": null,
       "loc": "WhateverGreen.kext"
     },
     "rel": {
-      "url": "https:\/\/github.com\/acidanthera\/WhateverGreen\/releases\/download\/1.2.6\/1.2.6.RELEASE.zip",
+      "url": "https:\/\/github.com\/acidanthera\/WhateverGreen\/releases\/download\/1.2.7\/1.2.7.RELEASE.zip",
       "script": null,
       "loc": "WhateverGreen.kext"
     }
   },
-  "changes": "#### v1.2.6\r\n- Added `applbkl=0` boot argument to termporarily disable `AppleBacklight` patching code\r\n- Fixed AMD Verde CAIL injection logic\r\n- Fixed breaking backlight on Apple hardware, on laptops with AMD GPUs, and on 10.11 or earlier\r\n- Changed CFL backlight patches to enable by default on CFL drivers only (avoids issues with faux \"KBL\" 8xxx CPUs)",
+  "changes": "#### v1.2.7\r\n- Added more IGPU device-ids to detected list",
   "guide": "@see https://raw.githubusercontent.com/acidanthera/WhateverGreen/master/README.md",
-  "time": "2018-12-24 09:31:02",
+  "time": "2019-03-08 01:43:23",
   "license": "BSD 3-Clause \"New\" or \"Revised\" License",
   "authors": [{
     "name": "vit9696",
