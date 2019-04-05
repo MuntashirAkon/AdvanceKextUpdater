@@ -3,7 +3,7 @@
   "kext": "Lilu.kext",
   "description": "An open source kernel extension bringing a platform for arbitrary kext, library, and program patching throughout the system for macOS.",
   "homepage": "https://github.com/acidanthera/Lilu",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "versions": null,
   "target": "LE",
   "since": "10.4",
@@ -11,19 +11,19 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https://github.com/acidanthera/Lilu/releases/download/1.3.4/1.3.4.DEBUG.zip",
+      "url": "https:\/\/github.com\/acidanthera\/Lilu\/releases\/download\/1.3.5\/1.3.5.DEBUG.zip",
       "script": null,
       "loc": "Lilu.kext"
     },
     "rel": {
-      "url": "https://github.com/acidanthera/Lilu/releases/download/1.3.4/1.3.4.RELEASE.zip",
+      "url": "https:\/\/github.com\/acidanthera\/Lilu\/releases\/download\/1.3.5\/1.3.5.RELEASE.zip",
       "script": null,
       "loc": "Lilu.kext"
     }
   },
-  "changes": "#### v1.3.3\n- Added support for modern AMD device scanning by @AlGreyy\n- Added support for VMware device scanning\n- Extended supported firmware vendor list",
+  "changes": "#### v1.3.5\r\n- Fixed analog audio device detection on certain laptops with Insyde firmware",
   "guide": "@see https://raw.githubusercontent.com/acidanthera/Lilu/master/README.md",
-  "time": "2019-01-27 18:07:49",
+  "time": "2019-03-17 09:14:27",
   "license": "BSD 3-Clause \"New\" or \"Revised\" License",
   "authors": [
     {
