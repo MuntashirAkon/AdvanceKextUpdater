@@ -3,7 +3,7 @@
   "kext": "VirtualSMC.kext",
   "description": "Advanced Apple SMC emulator in the kernel.",
   "homepage": "https://github.com/acidanthera/VirtualSMC",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "versions": null,
   "target": "LE",
   "since": "10.8",
@@ -11,19 +11,19 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https:\/\/github.com\/acidanthera\/VirtualSMC\/releases\/download\/1.0.2\/1.0.2.DEBUG.zip",
+      "url": "https:\/\/github.com\/acidanthera\/VirtualSMC\/releases\/download\/1.0.6\/1.0.6.DEBUG.zip",
       "script": null,
       "loc": "Kexts/VirtualSMC.kext"
     },
     "rel": {
-      "url": "https:\/\/github.com\/acidanthera\/VirtualSMC\/releases\/download\/1.0.2\/1.0.2.RELEASE.zip",
+      "url": "https:\/\/github.com\/acidanthera\/VirtualSMC\/releases\/download\/1.0.6\/1.0.6.RELEASE.zip",
       "script": null,
       "loc": "Kexts/VirtualSMC.kext"
     }
   },
-  "changes": "#### v1.0.2\r\n- Fixed TC0C\/TC1C selection in SMCProcessor to match mac models\r\n- Added per-plugin debug switches (`-scpudbg`, `-sbatdbg`, `-ssiodbg`, `-alsddbg`)",
+  "changes": "#### v1.0.6\r\n- Fixed `vsmcgen=1` support on select models\r\n- Improve SMCBatteryManager compatibility with 10.15",
   "guide": "@see https://raw.githubusercontent.com/acidanthera/VirtualSMC/master/README.md",
-  "time": "2018-12-20 23:11:13",
+  "time": "2019-07-05 10:41:06",
   "license": "BSD 3-Clause \"New\" or \"Revised\" License",
   "authors": [
     {
