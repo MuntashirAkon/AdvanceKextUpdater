@@ -16,13 +16,13 @@
 /// The file stream, can be any <code>FILE</code> stream or stdin/stdout/stderr
 /// @param format
 /// The string to be printed
-void _fprintf(FILE *stream, NSString *format, ...);
+void _fprintf(FILE * _Nonnull stream, NSString * _Nonnull format, ...);
 
 /// @function _printf
 /// @abstract
 /// Print to stdout
 /// @param format The string to be printed
-void _printf(NSString *format, ...);
+void _printf(NSString * _Nonnull format, ...);
 
 /// @function tty
 /// @abstract
@@ -34,7 +34,7 @@ void _printf(NSString *format, ...);
 /// The variable must be initialize in order to use it.
 /// @return
 /// Exit code or (-1) on error
-int tty(NSString *cmd, _Nullable id *output);
+int tty(NSString * _Nonnull cmd, id _Nullable * _Nullable output);
 
 /// @function hasInternetConnection
 /// @abstract
@@ -55,7 +55,7 @@ BOOL isRootUser(void);
 /// Get the currently logged in user
 /// @return
 /// Username of the current user
-NSString *getMainUser(void);
+NSString * _Nonnull getMainUser(void);
 
 /// @function unzip
 /// @abstract
@@ -66,7 +66,7 @@ NSString *getMainUser(void);
 /// The target directory
 /// @return
 /// <code>YES</code> on success and <code>NO</code> on failure
-BOOL unzip(NSString * zipFile, NSString * targetFolder);
+BOOL unzip(NSString * _Nonnull zipFile, NSString * _Nonnull targetFolder);
 
 /// @function isNull
 /// @abstract
@@ -75,7 +75,7 @@ BOOL unzip(NSString * zipFile, NSString * targetFolder);
 /// Any object
 /// @return
 /// YES on null, NO otherwise
-BOOL isNull(id anyID);
+BOOL isNull(id _Nonnull anyID);
 
 /// @function find
 /// @abstract
@@ -92,7 +92,7 @@ BOOL isNull(id anyID);
 /// Name of the kext: .kext extension is optional
 /// @return
 /// The location of the kext along with the kext name with extension, or <code>nil</code> on failure
-NSString * _Nullable find(NSString * kextName);
+NSString * _Nullable find(NSString * _Nonnull kextName);
 
 /// @function isDarkMode
 /// @abstract
@@ -107,7 +107,7 @@ BOOL isDarkMode(void);
 /// as they create problem when comparing with other version
 /// @return
 /// Shortened version
-- (NSString *) shortenedVersionNumberString;
+- (NSString * _Nullable) shortenedVersionNumberString;
 @end
 
 @interface NSArray (MatchFromStringToRegex)
@@ -117,7 +117,7 @@ BOOL isDarkMode(void);
 /// The string to be matched
 /// @return
 /// YES if matches, NO otherwise
-- (BOOL) usingArrayMemberAsRegexMatchString: (NSString *) string;
+- (BOOL) usingArrayMemberAsRegexMatchString: (NSString *_Nonnull) string;
 @end
 
 #endif /* utils_h */

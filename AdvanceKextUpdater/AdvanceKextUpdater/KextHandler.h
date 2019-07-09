@@ -22,37 +22,37 @@
 }
 + (BOOL) initDB;
 + (BOOL) checkForDBUpdate;
-+ (NSString *) appPath;
-+ (NSString *) appCachePath;
-+ (NSString *) kextBackupPath;
-+ (NSString *) kextDBPath;
-+ (NSString *) kextCachePath;
-+ (NSString *) guideCachePath;
-+ (NSString *) pciIDsCachePath;
++ (NSString * _Nonnull) appPath;
++ (NSString * _Nonnull) appCachePath;
++ (NSString * _Nonnull) kextBackupPath;
++ (NSString * _Nonnull) kextDBPath;
++ (NSString * _Nonnull) kextCachePath;
++ (NSString * _Nonnull) guideCachePath;
++ (NSString * _Nonnull) pciIDsCachePath;
 /// Temporary directory root
 /// <code>/tmp/AdvanceKextUpdater</code>
 /// @return
 /// Temporary directory root
-+ (NSString *) tmpPath;
-+ (NSString *) kextTmpPath;
-+ (NSString *) lockFile;
-+ (NSString *) messageFile;
-+ (NSString *) stdinPath;
-+ (NSString *) stdoutPath;
-+ (NSString *) stderrPath;
-+ (NSString *) launchDaemonPlistFile;
-+ (NSString *) PreferencesFile;
++ (NSString * _Nonnull) tmpPath;
++ (NSString * _Nonnull) kextTmpPath;
++ (NSString * _Nonnull) lockFile;
++ (NSString * _Nonnull) messageFile;
++ (NSString * _Nonnull) stdinPath;
++ (NSString * _Nonnull) stdoutPath;
++ (NSString * _Nonnull) stderrPath;
++ (NSString * _Nonnull) launchDaemonPlistFile;
++ (NSString * _Nonnull) PreferencesFile;
 + (void) createFilesIfNotExist;
 /*!
  * Singleton
  */
-+ (id)sharedKextHandler;
-- (NSArray<NSString *> *) listInstalledKext;
-- (NSArray<NSString *> *) listKext;
-- (NSDictionary<NSString *, NSURL *> *) listRemoteKext;
-- (NSArray<NSString *> *) listKextsWithUpdate;
-- (BOOL)needUpdating:(NSString *)kextName;
-- (BOOL)existsInDB:(NSString *)kextName;
-- (id _Nullable) kextConfig:(NSString *)kextName;
++ (id _Nonnull)sharedKextHandler;
+- (NSArray<NSString *> * _Nullable) listInstalledKext;
+- (NSArray<NSString *> * _Nullable) listKext;
+- (NSDictionary<NSString *, NSURL *> * _Nonnull) listRemoteKext;
+- (NSArray<NSString *> * _Nullable) listKextsWithUpdate;
+- (BOOL)needUpdating:(NSString * _Nonnull)kextName;
+- (BOOL)existsInDB:(NSString * _Nonnull)kextName;
+- (id _Nullable) kextConfig:(NSString * _Nonnull)kextName;
 @end
 #endif /* KextHandler_h */

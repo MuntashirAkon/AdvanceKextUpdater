@@ -18,6 +18,6 @@
 @property NSString * _Nullable urlVerb;
 @property NSString * _Nullable urlKextName;
 -(void)updateTables;
--(void)fetchKextInfo: (NSString *)kext;
+-(void)fetchKextInfo: (NSString * _Nonnull)kext;
 @end
 

@@ -32,7 +32,7 @@ typedef enum {
 
 @interface ConfigSuggestion: NSObject {}
 
-@property NSString * name;
+@property NSString * _Nonnull name;
 @property NSString * _Nullable text;
 @property KCCSType type;
 @property NSString * _Nullable url;
@@ -45,7 +45,7 @@ typedef enum {
  * @return
  * An array of ConfigSuggestion, if no suggestion is available, array count is 0.
  */
-+(NSArray<ConfigSuggestion *> *) createFromArray: (NSArray<NSDictionary *> * _Nullable) suggestions;
++(NSArray<ConfigSuggestion *> * _Nonnull) createFromArray: (NSArray<NSDictionary *> * _Nullable) suggestions;
 
 @end
 
