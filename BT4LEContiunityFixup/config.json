@@ -3,7 +3,7 @@
   "kext": "BT4LEContiunityFixup.kext",
   "description": "An open source kernel extension providing patches for IOBluetoothFamily.",
   "homepage": "https://github.com/acidanthera/BT4LEContiunityFixup",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "versions": null,
   "target": "LE",
   "since": "10.10",
@@ -11,19 +11,19 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https:\/\/github.com\/acidanthera\/BT4LEContiunityFixup\/releases\/download\/v1.1.2\/1.1.2.DEBUG.zip",
+      "url": "https:\/\/github.com\/acidanthera\/BT4LEContinuityFixup\/releases\/download\/v1.1.3\/1.1.3.DEBUG.zip",
       "script": null,
       "loc": "BT4LEContiunityFixup.kext"
     },
     "rel": {
-      "url": "https:\/\/github.com\/acidanthera\/BT4LEContiunityFixup\/releases\/download\/v1.1.2\/1.1.2.RELEASE.zip",
+      "url": "https:\/\/github.com\/acidanthera\/BT4LEContinuityFixup\/releases\/download\/v1.1.3\/1.1.3.RELEASE.zip",
       "script": null,
       "loc": "BT4LEContiunityFixup.kext"
     }
   },
-  "changes": "Plugin works in Yosemite (and probably in earlier versions)",
+  "changes": "#### v1.1.3\r\n- Allow loading on 10.15 without `-lilubetaall`\r\n- Rename BT4LEContiunityFixup to BT4LEContinuityFixup (ticket 375)",
   "guide": "#### Features\n- This tool makes the necessary changes to enable OS X 10.10 and 10.11 Continuity features on compatible hardware. \nContinuity features activated by this patch include Handoff, Instant Hotspot, and New Airdrop. \nOS X 10.11 (El Capitan) dongle support is not stable yet! (https://github.com/dokterdok/Continuity-Activation-Tool/)\n\n#### Boot-args\n- `-bt4lefxoff` disables kext loading\n- `-bt4lefxdbg` turns on debugging output\n- `-bt4lefxbeta` enables loading on unsupported osx",
-  "time": "2018-10-04 20:37:30",
+  "time": "2019-06-25 04:40:32",
   "license": "BSD 3-Clause \"New\" or \"Revised\" License",
   "authors": [
     {
