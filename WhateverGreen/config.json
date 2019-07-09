@@ -3,7 +3,7 @@
   "kext": "WhateverGreen.kext",
   "description": "Various patches necessary for certain ATI/AMD/Intel/Nvidia GPUs.",
   "homepage": "https://github.com/acidanthera/WhateverGreen",
-  "version": "1.2.7",
+  "version": "1.3.0",
   "versions": null,
   "target": "LE",
   "since": "10.8",
@@ -11,19 +11,19 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https:\/\/github.com\/acidanthera\/WhateverGreen\/releases\/download\/1.2.7\/1.2.7.DEBUG.zip",
+      "url": "https:\/\/github.com\/acidanthera\/WhateverGreen\/releases\/download\/1.3.0\/1.3.0.DEBUG.zip",
       "script": null,
       "loc": "WhateverGreen.kext"
     },
     "rel": {
-      "url": "https:\/\/github.com\/acidanthera\/WhateverGreen\/releases\/download\/1.2.7\/1.2.7.RELEASE.zip",
+      "url": "https:\/\/github.com\/acidanthera\/WhateverGreen\/releases\/download\/1.3.0\/1.3.0.RELEASE.zip",
       "script": null,
       "loc": "WhateverGreen.kext"
     }
   },
-  "changes": "#### v1.2.7\r\n- Added more IGPU device-ids to detected list",
+  "changes": "#### v1.3.0\r\n- Fixed custom connector support for Radeon GPUs, thx @lwfitzgerald\r\n- Added `disable-gfx-submit` property to back `ngfxsubmit=0` boot argument\r\n- Added GuC firmware loading patch for latest SKL+ drivers\r\n- Allow loading on 10.15 without `-lilubetaall`\r\n- Disabled NVIDIA performance fix on 10.15, as it now is built-in\r\n- Enable HDMI 2.0 patches on 10.14+ (Use at own risk in case of undiscovered change)\r\n- Added CFL graphics kernel panic workaround on 10.14.4+\r\n- Added infinite loop fix when calculating dividers for Intel HDMI connections on SKL, KBL and CFL platforms.\r\n- Added driver support for onboard LSPCON chips to enable DisplayPort to HDMI 2.0 output on Intel IGPUs (by @0xFireWolf)",
   "guide": "@see https://raw.githubusercontent.com/acidanthera/WhateverGreen/master/README.md",
-  "time": "2019-03-08 01:43:23",
+  "time": "2019-06-29 21:41:27",
   "license": "BSD 3-Clause \"New\" or \"Revised\" License",
   "authors": [{
     "name": "vit9696",
