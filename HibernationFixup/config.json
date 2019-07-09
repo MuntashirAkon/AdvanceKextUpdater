@@ -3,7 +3,7 @@
   "kext": "HibernationFixup.kext",
   "description": "An open source kernel extension providing a sync between RTC variables and NVRAM.",
   "homepage": "https://github.com/acidanthera/HibernationFixup",
-  "version": "1.2.4",
+  "version": "1.2.6",
   "versions": null,
   "target": "LE",
   "since": "10.10.5",
@@ -11,19 +11,19 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https:\/\/github.com\/acidanthera\/HibernationFixup\/releases\/download\/1.2.4\/1.2.4.DEBUG.zip",
+      "url": "https:\/\/github.com\/acidanthera\/HibernationFixup\/releases\/download\/1.2.6\/1.2.6.DEBUG.zip",
       "script": null,
       "loc": "HibernationFixup.kext"
     },
     "rel": {
-      "url": "https:\/\/github.com\/acidanthera\/HibernationFixup\/releases\/download\/1.2.4\/1.2.4.RELEASE.zip",
+      "url": "https:\/\/github.com\/acidanthera\/HibernationFixup\/releases\/download\/1.2.6\/1.2.6.RELEASE.zip",
       "script": null,
       "loc": "HibernationFixup.kext"
     }
   },
-  "changes": "Basic 10.14 support",
+  "changes": "#### v1.2.6\r\n- Allow loading on 10.15 without `-lilubetaall`\r\n- Fix minor typos in code and comments (credits to PMheart)",
   "guide": "#### v1.2.4\r\n- New feature:  forces hibernate mode depending on specified factors (auto hibernate modes)",
-  "time": "2018-12-06 11:33:08",
+  "time": "2019-06-24 18:14:56",
   "license": "BSD 3-Clause \"New\" or \"Revised\" License",
   "authors": [
     {
