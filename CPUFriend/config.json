@@ -3,7 +3,7 @@
   "kext": "CPUFriend.kext",
   "description": "A Lilu plug-in for dynamic CPU power management data injection.",
   "homepage": "https://github.com/acidanthera/CPUFriend",
-  "version": "1.1.6",
+  "version": "1.1.8",
   "versions": null,
   "target": "LE",
   "since": "10.8",
@@ -11,20 +11,20 @@
   "bin": {
     "recommend": "rel",
     "dev": {
-      "url": "https:\/\/github.com\/acidanthera\/CPUFriend\/releases\/download\/1.1.6\/1.1.6.DEBUG.zip",
+      "url": "https:\/\/github.com\/acidanthera\/CPUFriend\/releases\/download\/1.1.8\/1.1.8.DEBUG.zip",
       "script": null,
       "loc": "CPUFriend.kext"
     },
     "rel": {
-      "url": "https:\/\/github.com\/acidanthera\/CPUFriend\/releases\/download\/1.1.6\/1.1.6.RELEASE.zip",
+      "url": "https:\/\/github.com\/acidanthera\/CPUFriend\/releases\/download\/1.1.8\/1.1.8.RELEASE.zip",
       "script": null,
       "loc": "CPUFriend.kext"
     },
     "post-install": "post-install.sh"
   },
-  "changes": "- Fixed a fatal error in 1.1.5 (no real support for the old ACPI_SMC_Plugin)\r\n***Real support for ACPI_SMC_Plugin starts as of 1.1.6!***\r\n\r\nSorry for the inconvenience!",
+  "changes": "#### v1.1.8\r\n- Allow loading on 10.15 without `-lilubetaall`",
   "guide": "@see https://raw.githubusercontent.com/acidanthera/CPUFriend/master/Instructions.md",
-  "time": "2019-01-26 10:44:45",
+  "time": "2019-06-27 08:12:30",
   "license": "BSD 3-Clause License",
   "authors": [
     {
